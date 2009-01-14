@@ -1,0 +1,1012 @@
+--- !ruby/object:Gem::SourceIndex
+gems:
+  actionmailer-2.1.0: !ruby/object:Gem::Specification 
+    name: actionmailer
+    version: !ruby/object:Gem::Version 
+      version: 2.1.0
+    platform: ruby
+    authors: 
+    - David Heinemeier Hansson
+    autorequire: action_mailer
+    bindir: bin
+    cert_chain: []
+    
+    date: 2008-05-31 03:00:00 -04:00
+    default_executable: 
+    dependencies: 
+    - !ruby/object:Gem::Dependency 
+      name: actionpack
+      version_requirement: 
+      version_requirements: !ruby/object:Gem::Requirement 
+        requirements: 
+        - - "="
+          - !ruby/object:Gem::Version 
+            version: 2.1.0
+        version: 
+    description: Makes it trivial to test and deliver emails sent from a single service layer.
+    email: david@loudthinking.com
+    executables: []
+    
+    extensions: []
+    
+    extra_rdoc_files: []
+    
+    files: []
+    
+    has_rdoc: true
+    homepage: http://www.rubyonrails.org
+    post_install_message: 
+    rdoc_options: []
+    
+    require_paths: 
+    - lib
+    required_ruby_version: !ruby/object:Gem::Requirement 
+      requirements: 
+      - - ">="
+        - !ruby/object:Gem::Version 
+          version: "0"
+      version: 
+    required_rubygems_version: !ruby/object:Gem::Requirement 
+      requirements: 
+      - - ">="
+        - !ruby/object:Gem::Version 
+          version: "0"
+      version: 
+    requirements: 
+    - none
+    rubyforge_project: actionmailer
+    rubygems_version: 1.3.1
+    signing_key: 
+    specification_version: 2
+    summary: Service layer for easy email delivery and testing.
+    test_files: []
+    
+  actionmailer-2.1.1: !ruby/object:Gem::Specification 
+    name: actionmailer
+    version: !ruby/object:Gem::Version 
+      version: 2.1.1
+    platform: ruby
+    authors: 
+    - David Heinemeier Hansson
+    autorequire: action_mailer
+    bindir: bin
+    cert_chain: []
+    
+    date: 2008-09-03 18:00:00 -04:00
+    default_executable: 
+    dependencies: 
+    - !ruby/object:Gem::Dependency 
+      name: actionpack
+      type: :runtime
+      version_requirement: 
+      version_requirements: !ruby/object:Gem::Requirement 
+        requirements: 
+        - - "="
+          - !ruby/object:Gem::Version 
+            version: 2.1.1
+        version: 
+    description: Makes it trivial to test and deliver emails sent from a single service layer.
+    email: david@loudthinking.com
+    executables: []
+    
+    extensions: []
+    
+    extra_rdoc_files: []
+    
+    files: []
+    
+    has_rdoc: true
+    homepage: http://www.rubyonrails.org
+    post_install_message: 
+    rdoc_options: []
+    
+    require_paths: 
+    - lib
+    required_ruby_version: !ruby/object:Gem::Requirement 
+      requirements: 
+      - - ">="
+        - !ruby/object:Gem::Version 
+          version: "0"
+      version: 
+    required_rubygems_version: !ruby/object:Gem::Requirement 
+      requirements: 
+      - - ">="
+        - !ruby/object:Gem::Version 
+          version: "0"
+      version: 
+    requirements: 
+    - none
+    rubyforge_project: actionmailer
+    rubygems_version: 1.3.1
+    signing_key: 
+    specification_version: 2
+    summary: Service layer for easy email delivery and testing.
+    test_files: []
+  
+  actionpack-2.1.0: !ruby/object:Gem::Specification 
+    name: actionpack
+    version: !ruby/object:Gem::Version 
+      version: 2.1.0
+    platform: ruby
+    authors: 
+    - David Heinemeier Hansson
+    autorequire: action_controller
+    bindir: bin
+    cert_chain: []
+    
+    date: 2008-05-31 03:00:00 -04:00
+    default_executable: 
+    dependencies: 
+    - !ruby/object:Gem::Dependency 
+      name: activesupport
+      version_requirement: 
+      version_requirements: !ruby/object:Gem::Requirement 
+        requirements: 
+        - - "="
+          - !ruby/object:Gem::Version 
+            version: 2.1.0
+        version: 
+    description: Eases web-request routing, handling, and response as a half-way front, half-way page controller. Implemented with specific emphasis on enabling easy unit/integration testing that doesn't require a browser.
+    email: david@loudthinking.com
+    executables: []
+    
+    extensions: []
+    
+    extra_rdoc_files: []
+    
+    files: []
+    
+    has_rdoc: true
+    homepage: http://www.rubyonrails.org
+    post_install_message: 
+    rdoc_options: []
+    
+    require_paths: 
+    - lib
+    required_ruby_version: !ruby/object:Gem::Requirement 
+      requirements: 
+      - - ">="
+        - !ruby/object:Gem::Version 
+          version: "0"
+      version: 
+    required_rubygems_version: !ruby/object:Gem::Requirement 
+      requirements: 
+      - - ">="
+        - !ruby/object:Gem::Version 
+          version: "0"
+      version: 
+    requirements: 
+    - none
+    rubyforge_project: actionpack
+    rubygems_version: 1.3.1
+    signing_key: 
+    specification_version: 2
+    summary: Web-flow and rendering framework putting the VC in MVC.
+    test_files: []
+    
+  actionpack-2.1.1: !ruby/object:Gem::Specification 
+    name: actionpack
+    version: !ruby/object:Gem::Version 
+      version: 2.1.1
+    platform: ruby
+    authors: 
+    - David Heinemeier Hansson
+    autorequire: action_controller
+    bindir: bin
+    cert_chain: []
+    
+    date: 2008-09-03 18:00:00 -04:00
+    default_executable: 
+    dependencies: 
+    - !ruby/object:Gem::Dependency 
+      name: activesupport
+      type: :runtime
+      version_requirement: 
+      version_requirements: !ruby/object:Gem::Requirement 
+        requirements: 
+        - - "="
+          - !ruby/object:Gem::Version 
+            version: 2.1.1
+        version: 
+    description: Eases web-request routing, handling, and response as a half-way front, half-way page controller. Implemented with specific emphasis on enabling easy unit/integration testing that doesn't require a browser.
+    email: david@loudthinking.com
+    executables: []
+    
+    extensions: []
+    
+    extra_rdoc_files: []
+    
+    files: []
+    
+    has_rdoc: true
+    homepage: http://www.rubyonrails.org
+    post_install_message: 
+    rdoc_options: []
+    
+    require_paths: 
+    - lib
+    required_ruby_version: !ruby/object:Gem::Requirement 
+      requirements: 
+      - - ">="
+        - !ruby/object:Gem::Version 
+          version: "0"
+      version: 
+    required_rubygems_version: !ruby/object:Gem::Requirement 
+      requirements: 
+      - - ">="
+        - !ruby/object:Gem::Version 
+          version: "0"
+      version: 
+    requirements: 
+    - none
+    rubyforge_project: actionpack
+    rubygems_version: 1.3.1
+    signing_key: 
+    specification_version: 2
+    summary: Web-flow and rendering framework putting the VC in MVC.
+    test_files: []
+  
+  activerecord-2.1.0: !ruby/object:Gem::Specification 
+    name: activerecord
+    version: !ruby/object:Gem::Version 
+      version: 2.1.0
+    platform: ruby
+    authors: 
+    - David Heinemeier Hansson
+    autorequire: active_record
+    bindir: bin
+    cert_chain: []
+    
+    date: 2008-05-31 03:00:00 -04:00
+    default_executable: 
+    dependencies: 
+    - !ruby/object:Gem::Dependency 
+      name: activesupport
+      version_requirement: 
+      version_requirements: !ruby/object:Gem::Requirement 
+        requirements: 
+        - - "="
+          - !ruby/object:Gem::Version 
+            version: 2.1.0
+        version: 
+    description: Implements the ActiveRecord pattern (Fowler, PoEAA) for ORM. It ties database tables and classes together for business objects, like Customer or Subscription, that can find, save, and destroy themselves without resorting to manual SQL.
+    email: david@loudthinking.com
+    executables: []
+    
+    extensions: []
+    
+    extra_rdoc_files: []
+    
+    files: []
+    
+    has_rdoc: true
+    homepage: http://www.rubyonrails.org
+    post_install_message: 
+    rdoc_options: []
+    
+    require_paths: 
+    - lib
+    required_ruby_version: !ruby/object:Gem::Requirement 
+      requirements: 
+      - - ">="
+        - !ruby/object:Gem::Version 
+          version: "0"
+      version: 
+    required_rubygems_version: !ruby/object:Gem::Requirement 
+      requirements: 
+      - - ">="
+        - !ruby/object:Gem::Version 
+          version: "0"
+      version: 
+    requirements: []
+    
+    rubyforge_project: activerecord
+    rubygems_version: 1.3.1
+    signing_key: 
+    specification_version: 2
+    summary: Implements the ActiveRecord pattern for ORM.
+    test_files: []
+    
+  activerecord-2.1.1: !ruby/object:Gem::Specification 
+    name: activerecord
+    version: !ruby/object:Gem::Version 
+      version: 2.1.1
+    platform: ruby
+    authors: 
+    - David Heinemeier Hansson
+    autorequire: active_record
+    bindir: bin
+    cert_chain: []
+    
+    date: 2008-09-03 18:00:00 -04:00
+    default_executable: 
+    dependencies: 
+    - !ruby/object:Gem::Dependency 
+      name: activesupport
+      type: :runtime
+      version_requirement: 
+      version_requirements: !ruby/object:Gem::Requirement 
+        requirements: 
+        - - "="
+          - !ruby/object:Gem::Version 
+            version: 2.1.1
+        version: 
+    description: Implements the ActiveRecord pattern (Fowler, PoEAA) for ORM. It ties database tables and classes together for business objects, like Customer or Subscription, that can find, save, and destroy themselves without resorting to manual SQL.
+    email: david@loudthinking.com
+    executables: []
+    
+    extensions: []
+    
+    extra_rdoc_files: []
+    
+    files: []
+    
+    has_rdoc: true
+    homepage: http://www.rubyonrails.org
+    post_install_message: 
+    rdoc_options: []
+    
+    require_paths: 
+    - lib
+    required_ruby_version: !ruby/object:Gem::Requirement 
+      requirements: 
+      - - ">="
+        - !ruby/object:Gem::Version 
+          version: "0"
+      version: 
+    required_rubygems_version: !ruby/object:Gem::Requirement 
+      requirements: 
+      - - ">="
+        - !ruby/object:Gem::Version 
+          version: "0"
+      version: 
+    requirements: []
+    
+    rubyforge_project: activerecord
+    rubygems_version: 1.3.1
+    signing_key: 
+    specification_version: 2
+    summary: Implements the ActiveRecord pattern for ORM.
+    test_files: []
+  
+  activeresource-2.1.0: !ruby/object:Gem::Specification 
+    name: activeresource
+    version: !ruby/object:Gem::Version 
+      version: 2.1.0
+    platform: ruby
+    authors: 
+    - David Heinemeier Hansson
+    autorequire: active_resource
+    bindir: bin
+    cert_chain: []
+
+    date: 2008-05-31 03:00:00 -04:00
+    default_executable: 
+    dependencies: 
+    - !ruby/object:Gem::Dependency 
+      name: activesupport
+      version_requirement: 
+      version_requirements: !ruby/object:Gem::Requirement 
+        requirements: 
+        - - "="
+          - !ruby/object:Gem::Version 
+            version: 2.1.0
+        version: 
+    description: Wraps web resources in model classes that can be manipulated through XML over REST.
+    email: david@loudthinking.com
+    executables: []
+
+    extensions: []
+
+    extra_rdoc_files: []
+
+    files: []
+
+    has_rdoc: true
+    homepage: http://www.rubyonrails.org
+    post_install_message: 
+    rdoc_options: []
+
+    require_paths: 
+    - lib
+    required_ruby_version: !ruby/object:Gem::Requirement 
+      requirements: 
+      - - ">="
+        - !ruby/object:Gem::Version 
+          version: "0"
+      version: 
+    required_rubygems_version: !ruby/object:Gem::Requirement 
+      requirements: 
+      - - ">="
+        - !ruby/object:Gem::Version 
+          version: "0"
+      version: 
+    requirements: []
+
+    rubyforge_project: activeresource
+    rubygems_version: 1.3.1
+    signing_key: 
+    specification_version: 2
+    summary: Think Active Record for web resources.
+    test_files: []
+
+  activeresource-2.1.1: !ruby/object:Gem::Specification 
+    name: activeresource
+    version: !ruby/object:Gem::Version 
+      version: 2.1.1
+    platform: ruby
+    authors: 
+    - David Heinemeier Hansson
+    autorequire: active_resource
+    bindir: bin
+    cert_chain: []
+
+    date: 2008-09-03 18:00:00 -04:00
+    default_executable: 
+    dependencies: 
+    - !ruby/object:Gem::Dependency 
+      name: activesupport
+      type: :runtime
+      version_requirement: 
+      version_requirements: !ruby/object:Gem::Requirement 
+        requirements: 
+        - - "="
+          - !ruby/object:Gem::Version 
+            version: 2.1.1
+        version: 
+    description: Wraps web resources in model classes that can be manipulated through XML over REST.
+    email: david@loudthinking.com
+    executables: []
+
+    extensions: []
+
+    extra_rdoc_files: []
+
+    files: []
+
+    has_rdoc: true
+    homepage: http://www.rubyonrails.org
+    post_install_message: 
+    rdoc_options: []
+
+    require_paths: 
+    - lib
+    required_ruby_version: !ruby/object:Gem::Requirement 
+      requirements: 
+      - - ">="
+        - !ruby/object:Gem::Version 
+          version: "0"
+      version: 
+    required_rubygems_version: !ruby/object:Gem::Requirement 
+      requirements: 
+      - - ">="
+        - !ruby/object:Gem::Version 
+          version: "0"
+      version: 
+    requirements: []
+
+    rubyforge_project: activeresource
+    rubygems_version: 1.3.1
+    signing_key: 
+    specification_version: 2
+    summary: Think Active Record for web resources.
+    test_files: []
+  
+  activesupport-2.1.0: !ruby/object:Gem::Specification 
+    name: activesupport
+    version: !ruby/object:Gem::Version 
+      version: 2.1.0
+    platform: ruby
+    authors: 
+    - David Heinemeier Hansson
+    autorequire: 
+    bindir: bin
+    cert_chain: []
+    
+    date: 2008-05-31 03:00:00 -04:00
+    default_executable: 
+    dependencies: []
+    
+    description: Utility library which carries commonly used classes and goodies from the Rails framework
+    email: david@loudthinking.com
+    executables: []
+    
+    extensions: []
+    
+    extra_rdoc_files: []
+    
+    files: []
+    
+    has_rdoc: true
+    homepage: http://www.rubyonrails.org
+    post_install_message: 
+    rdoc_options: []
+    
+    require_paths: 
+    - lib
+    required_ruby_version: !ruby/object:Gem::Requirement 
+      requirements: 
+      - - ">="
+        - !ruby/object:Gem::Version 
+          version: "0"
+      version: 
+    required_rubygems_version: !ruby/object:Gem::Requirement 
+      requirements: 
+      - - ">="
+        - !ruby/object:Gem::Version 
+          version: "0"
+      version: 
+    requirements: []
+    
+    rubyforge_project: activesupport
+    rubygems_version: 1.3.1
+    signing_key: 
+    specification_version: 2
+    summary: Support and utility classes used by the Rails framework.
+    test_files: []
+    
+  activesupport-2.1.1: !ruby/object:Gem::Specification 
+    name: activesupport
+    version: !ruby/object:Gem::Version 
+      version: 2.1.1
+    platform: ruby
+    authors: 
+    - David Heinemeier Hansson
+    autorequire: 
+    bindir: bin
+    cert_chain: []
+    
+    date: 2008-09-03 18:00:00 -04:00
+    default_executable: 
+    dependencies: []
+    
+    description: Utility library which carries commonly used classes and goodies from the Rails framework
+    email: david@loudthinking.com
+    executables: []
+    
+    extensions: []
+    
+    extra_rdoc_files: []
+    
+    files: []
+    
+    has_rdoc: true
+    homepage: http://www.rubyonrails.org
+    post_install_message: 
+    rdoc_options: []
+    
+    require_paths: 
+    - lib
+    required_ruby_version: !ruby/object:Gem::Requirement 
+      requirements: 
+      - - ">="
+        - !ruby/object:Gem::Version 
+          version: "0"
+      version: 
+    required_rubygems_version: !ruby/object:Gem::Requirement 
+      requirements: 
+      - - ">="
+        - !ruby/object:Gem::Version 
+          version: "0"
+      version: 
+    requirements: []
+    
+    rubyforge_project: activesupport
+    rubygems_version: 1.3.1
+    signing_key: 
+    specification_version: 2
+    summary: Support and utility classes used by the Rails framework.
+    test_files: []
+      
+  rails-2.1.0: !ruby/object:Gem::Specification 
+    name: rails
+    version: !ruby/object:Gem::Version 
+      version: 2.1.0
+    platform: ruby
+    authors: 
+    - David Heinemeier Hansson
+    autorequire: 
+    bindir: bin
+    cert_chain: []
+  
+    date: 2008-05-31 03:00:00 -04:00
+    default_executable: rails
+    dependencies: 
+    - !ruby/object:Gem::Dependency 
+      name: rake
+      version_requirement: 
+      version_requirements: !ruby/object:Gem::Requirement 
+        requirements: 
+        - - ">="
+          - !ruby/object:Gem::Version 
+            version: 0.8.1
+        version: 
+    - !ruby/object:Gem::Dependency 
+      name: activesupport
+      version_requirement: 
+      version_requirements: !ruby/object:Gem::Requirement 
+        requirements: 
+        - - "="
+          - !ruby/object:Gem::Version 
+            version: 2.1.0
+        version: 
+    - !ruby/object:Gem::Dependency 
+      name: activerecord
+      version_requirement: 
+      version_requirements: !ruby/object:Gem::Requirement 
+        requirements: 
+        - - "="
+          - !ruby/object:Gem::Version 
+            version: 2.1.0
+        version: 
+    - !ruby/object:Gem::Dependency 
+      name: actionpack
+      version_requirement: 
+      version_requirements: !ruby/object:Gem::Requirement 
+        requirements: 
+        - - "="
+          - !ruby/object:Gem::Version 
+            version: 2.1.0
+        version: 
+    - !ruby/object:Gem::Dependency 
+      name: actionmailer
+      version_requirement: 
+      version_requirements: !ruby/object:Gem::Requirement 
+        requirements: 
+        - - "="
+          - !ruby/object:Gem::Version 
+            version: 2.1.0
+        version: 
+    - !ruby/object:Gem::Dependency 
+      name: activeresource
+      version_requirement: 
+      version_requirements: !ruby/object:Gem::Requirement 
+        requirements: 
+        - - "="
+          - !ruby/object:Gem::Version 
+            version: 2.1.0
+        version: 
+    description: Rails is a framework for building web-application using CGI, FCGI, mod_ruby, or WEBrick on top of either MySQL, PostgreSQL, SQLite, DB2, SQL Server, or Oracle with eRuby- or Builder-based templates.
+    email: david@loudthinking.com
+    executables: 
+    - rails
+    extensions: []
+  
+    extra_rdoc_files: []
+  
+    files: []
+  
+    has_rdoc: false
+    homepage: http://www.rubyonrails.org
+    post_install_message: 
+    rdoc_options: []
+  
+    require_paths: 
+    - lib
+    required_ruby_version: !ruby/object:Gem::Requirement 
+      requirements: 
+      - - ">="
+        - !ruby/object:Gem::Version 
+          version: "0"
+      version: 
+    required_rubygems_version: !ruby/object:Gem::Requirement 
+      requirements: 
+      - - ">="
+        - !ruby/object:Gem::Version 
+          version: "0"
+      version: 
+    requirements: []
+  
+    rubyforge_project: rails
+    rubygems_version: 1.3.1
+    signing_key: 
+    specification_version: 2
+    summary: Web-application framework with template engine, control-flow layer, and ORM.
+    test_files: []
+  
+  rails-2.1.1: !ruby/object:Gem::Specification 
+    name: rails
+    version: !ruby/object:Gem::Version 
+      version: 2.1.1
+    platform: ruby
+    authors: 
+    - David Heinemeier Hansson
+    autorequire: 
+    bindir: bin
+    cert_chain: []
+  
+    date: 2008-09-03 18:00:00 -04:00
+    default_executable: rails
+    dependencies: 
+    - !ruby/object:Gem::Dependency 
+      name: rake
+      type: :runtime
+      version_requirement: 
+      version_requirements: !ruby/object:Gem::Requirement 
+        requirements: 
+        - - ">="
+          - !ruby/object:Gem::Version 
+            version: 0.8.1
+        version: 
+    - !ruby/object:Gem::Dependency 
+      name: activesupport
+      type: :runtime
+      version_requirement: 
+      version_requirements: !ruby/object:Gem::Requirement 
+        requirements: 
+        - - "="
+          - !ruby/object:Gem::Version 
+            version: 2.1.1
+        version: 
+    - !ruby/object:Gem::Dependency 
+      name: activerecord
+      type: :runtime
+      version_requirement: 
+      version_requirements: !ruby/object:Gem::Requirement 
+        requirements: 
+        - - "="
+          - !ruby/object:Gem::Version 
+            version: 2.1.1
+        version: 
+    - !ruby/object:Gem::Dependency 
+      name: actionpack
+      type: :runtime
+      version_requirement: 
+      version_requirements: !ruby/object:Gem::Requirement 
+        requirements: 
+        - - "="
+          - !ruby/object:Gem::Version 
+            version: 2.1.1
+        version: 
+    - !ruby/object:Gem::Dependency 
+      name: actionmailer
+      type: :runtime
+      version_requirement: 
+      version_requirements: !ruby/object:Gem::Requirement 
+        requirements: 
+        - - "="
+          - !ruby/object:Gem::Version 
+            version: 2.1.1
+        version: 
+    - !ruby/object:Gem::Dependency 
+      name: activeresource
+      type: :runtime
+      version_requirement: 
+      version_requirements: !ruby/object:Gem::Requirement 
+        requirements: 
+        - - "="
+          - !ruby/object:Gem::Version 
+            version: 2.1.1
+        version: 
+    description: Rails is a framework for building web-application using CGI, FCGI, mod_ruby, or WEBrick on top of either MySQL, PostgreSQL, SQLite, DB2, SQL Server, or Oracle with eRuby- or Builder-based templates.
+    email: david@loudthinking.com
+    executables: 
+    - rails
+    extensions: []
+  
+    extra_rdoc_files: []
+  
+    files: []
+  
+    has_rdoc: false
+    homepage: http://www.rubyonrails.org
+    post_install_message: 
+    rdoc_options: []
+  
+    require_paths: 
+    - lib
+    required_ruby_version: !ruby/object:Gem::Requirement 
+      requirements: 
+      - - ">="
+        - !ruby/object:Gem::Version 
+          version: "0"
+      version: 
+    required_rubygems_version: !ruby/object:Gem::Requirement 
+      requirements: 
+      - - ">="
+        - !ruby/object:Gem::Version 
+          version: "0"
+      version: 
+    requirements: []
+  
+    rubyforge_project: rails
+    rubygems_version: 1.3.1
+    signing_key: 
+    specification_version: 2
+    summary: Web-application framework with template engine, control-flow layer, and ORM.
+    test_files: []
+
+  test-spec-0.2: !ruby/object:Gem::Specification 
+    name: test-spec
+    version: !ruby/object:Gem::Version 
+      version: "0.2"
+    platform: ruby
+    authors: 
+    - Christian Neukirchen
+    autorequire: 
+    bindir: bin
+    cert_chain: []
+
+    date: 2006-12-21 18:00:00 -05:00
+    default_executable: 
+    dependencies: 
+    - !ruby/object:Gem::Dependency 
+      name: flexmock
+      version_requirement: 
+      version_requirements: !ruby/object:Gem::Requirement 
+        requirements: 
+        - - ">="
+          - !ruby/object:Gem::Version 
+            version: 0.4.3
+        version: 
+    - !ruby/object:Gem::Dependency 
+      name: mocha
+      version_requirement: 
+      version_requirements: !ruby/object:Gem::Requirement 
+        requirements: 
+        - - ">="
+          - !ruby/object:Gem::Version 
+            version: 0.3.2
+        version: 
+    description: Behaviour Driven Development with Test::Unit
+    email: chneukirchen@gmail.com
+    executables: []
+
+    extensions: []
+
+    extra_rdoc_files: []
+
+    files: []
+
+    has_rdoc: true
+    homepage: http://test-spec.rubyforge.org
+    post_install_message: 
+    rdoc_options: []
+
+    require_paths: 
+    - lib
+    required_ruby_version: !ruby/object:Gem::Requirement 
+      requirements: 
+      - - ">"
+        - !ruby/object:Gem::Version 
+          version: 0.0.0
+      version: 
+    required_rubygems_version: 
+    requirements: []
+
+    rubyforge_project: test-spec
+    rubygems_version: 1.3.1
+    signing_key: 
+    specification_version: 1
+    summary: Behaviour Driven Development with Test::Unit
+    test_files: []
+
+  test-spec-0.3.0: !ruby/object:Gem::Specification 
+    name: test-spec
+    version: !ruby/object:Gem::Version 
+      version: 0.3.0
+    platform: ruby
+    authors: 
+    - Christian Neukirchen
+    autorequire: 
+    bindir: bin
+    cert_chain: []
+
+    date: 2007-01-23 18:00:00 -05:00
+    default_executable: 
+    dependencies: 
+    - !ruby/object:Gem::Dependency 
+      name: flexmock
+      version_requirement: 
+      version_requirements: !ruby/object:Gem::Requirement 
+        requirements: 
+        - - ">="
+          - !ruby/object:Gem::Version 
+            version: 0.4.1
+        version: 
+    - !ruby/object:Gem::Dependency 
+      name: mocha
+      version_requirement: 
+      version_requirements: !ruby/object:Gem::Requirement 
+        requirements: 
+        - - ">="
+          - !ruby/object:Gem::Version 
+            version: 0.3.2
+        version: 
+    description: a Behaviour Driven Development interface for Test::Unit
+    email: chneukirchen@gmail.com
+    executables: 
+    - specrb
+    extensions: []
+
+    extra_rdoc_files: []
+
+    files: []
+
+    has_rdoc: true
+    homepage: http://test-spec.rubyforge.org
+    post_install_message: 
+    rdoc_options: []
+
+    require_paths: 
+    - lib
+    required_ruby_version: !ruby/object:Gem::Requirement 
+      requirements: 
+      - - ">"
+        - !ruby/object:Gem::Version 
+          version: 0.0.0
+      version: 
+    required_rubygems_version: 
+    requirements: []
+
+    rubyforge_project: test-spec
+    rubygems_version: 1.3.1
+    signing_key: 
+    specification_version: 1
+    summary: test/spec layers an RSpec-inspired interface on top of Test::Unit, so you can mix TDD and BDD (Behavior-Driven Development).  test/spec is a clean-room implementation that maps most kinds of Test::Unit assertions to a `should'-like syntax.
+    test_files: []
+
+  test-spec-mock-0.3.0: !ruby/object:Gem::Specification 
+    name: test-spec-mock
+    version: !ruby/object:Gem::Version 
+      version: 0.3.0
+    platform: ruby
+    authors: 
+    - Christian Neukirchen
+    autorequire: 
+    bindir: bin
+    cert_chain: []
+
+    date: 2007-01-23 18:00:00 -05:00
+    default_executable: 
+    dependencies: 
+    - !ruby/object:Gem::Dependency 
+      name: flexmock
+      version_requirement: 
+      version_requirements: !ruby/object:Gem::Requirement 
+        requirements: 
+        - - ">="
+          - !ruby/object:Gem::Version 
+            version: 0.4.1
+        version: 
+    - !ruby/object:Gem::Dependency 
+      name: mocha
+      version_requirement: 
+      version_requirements: !ruby/object:Gem::Requirement 
+        requirements: 
+        - - ">="
+          - !ruby/object:Gem::Version 
+            version: 0.3.2
+        version: 
+    description: a Behaviour Driven Development interface for Test::Unit
+    email: chneukirchen@gmail.com
+    executables: 
+    - specrb
+    extensions: []
+
+    extra_rdoc_files: []
+
+    files: []
+
+    has_rdoc: true
+    homepage: http://test-spec-mock.rubyforge.org
+    post_install_message: 
+    rdoc_options: []
+
+    require_paths: 
+    - lib
+    required_ruby_version: !ruby/object:Gem::Requirement 
+      requirements: 
+      - - ">"
+        - !ruby/object:Gem::Version 
+          version: 0.0.0
+      version: 
+    required_rubygems_version: 
+    requirements: []
+
+    rubyforge_project: test-spec-mock
+    rubygems_version: 1.3.1
+    signing_key: 
+    specification_version: 1
+    summary: test/spec layers an RSpec-inspired interface on top of Test::Unit, so you can mix TDD and BDD (Behavior-Driven Development).  test/spec is a clean-room implementation that maps most kinds of Test::Unit assertions to a `should'-like syntax.
+    test_files: []
