@@ -23,4 +23,12 @@ describe "Gem::SourceIndex" do
     gem_specs.length.should.be 2
     gem_specs.each { |gem_spec| gem_spec.name.should.not == 'test-spec-mock' }
   end
+  
+  it "should return the matching gem specs sorted by version" do
+    def @index.gems # stub #gems to return the gems in reverse order
+      @gems.to_a.reverse
+    end
+    
+    @index.gem_specs('rails').map { |s| s.version.to_s }.should == %w{ 2.1.0 2.1.1 }
+  end
 end

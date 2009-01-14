@@ -6,10 +6,11 @@ module Gem
     
     attr_reader :gems
     
+    # Returns the gem specs matching the given +name+ and sorted by version.
     def gem_specs(name)
-      @gems.select do |name_and_version, _|
-        name_and_version =~ /^#{name}-[\d\.]+/
-      end.map { |ary| ary.last }
+      gems.select { |_, spec| spec.name == name }.
+        map { |ary| ary.last }.
+          sort_by { |spec| spec.version.to_s }
     end
   end
 end
