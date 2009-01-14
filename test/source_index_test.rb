@@ -26,7 +26,7 @@ describe "Gem::SourceIndex" do
   
   it "should return the matching gem specs sorted by version" do
     def @index.gems # stub #gems to return the gems in reverse order
-      @gems.to_a.reverse
+      @gems.to_a.sort_by { |_, spec| spec.version.to_s }.reverse
     end
     
     @index.gem_specs('rails').map { |s| s.version.to_s }.should == %w{ 2.1.0 2.1.1 }
