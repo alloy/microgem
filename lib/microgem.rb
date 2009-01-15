@@ -1,12 +1,12 @@
-require 'minigems/yamlable'
+require 'microgem/yamlable'
 
-require 'minigems/dependency'
-require 'minigems/installer'
-require 'minigems/requirement'
-require 'minigems/stubs'
-require 'minigems/source_index'
-require 'minigems/specification'
-require 'minigems/version'
+require 'microgem/dependency'
+require 'microgem/installer'
+require 'microgem/requirement'
+require 'microgem/stubs'
+require 'microgem/source_index'
+require 'microgem/specification'
+require 'microgem/version'
 
 module Gem
   module Micro
