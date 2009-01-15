@@ -10,4 +10,8 @@ describe "Gem::Specification" do
     
     gem_spec.dependencies.map { |dep| dep.name }.should == expected_dep_names
   end
+  
+  it "should return its gem filename" do
+    Gem::SourceIndex.instance.gem_specs('rake').last.gem_filename.should == 'rake-0.8.1.gem'
+  end
 end

@@ -1,6 +1,7 @@
 require 'minigems/yamlable'
 
 require 'minigems/dependency'
+require 'minigems/installer'
 require 'minigems/requirement'
 require 'minigems/stubs'
 require 'minigems/source_index'
