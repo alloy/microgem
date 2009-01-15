@@ -31,10 +31,10 @@ to make the test green is written.
 * Bring back to _one_ file, or at least less files if it doesn't harm
   readability.
 
-==== Manfreds whishlist
+==== Manfreds wish list
 * Be the first commandline utility to start with a multibyte character; µ
 
-==== Laurents whishlist
+==== Laurents wish list 
 * More commands:
   * +uninstall+
   * +search+
