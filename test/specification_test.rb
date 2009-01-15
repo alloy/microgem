@@ -1,7 +1,6 @@
 ##!/usr/bin/env macruby
 
 require File.expand_path('../test_helper', __FILE__)
-require 'minigems'
 
 describe "Gem::Specification" do
   def setup

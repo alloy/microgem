@@ -1,5 +1,14 @@
 module Gem
   class Dependency < MiniGems::YAMLable
     attr_reader :name, :version, :version_requirements
+    
+    # Returns whether or not any of the installed gems matches the requirements.
+    #
+    # For now we just compare against the last one which should be the highest.
+    def meets_requirements?
+      if dirname = MiniGems.installed_gem_dirnames(name).last
+        Gem::Version.from_gem_dirname(dirname) >= @version_requirements.version
+      end
+    end
   end
 end

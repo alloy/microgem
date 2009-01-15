@@ -1,7 +1,6 @@
 ##!/usr/bin/env macruby
 
 require File.expand_path('../test_helper', __FILE__)
-require 'minigems'
 
 class YAMLableSubclass < Gem::MiniGems::YAMLable
   attr_reader :foo, :bar
