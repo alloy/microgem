@@ -30,4 +30,13 @@ to make the test green is written.
 * Remove any unnecessary “complex” code.
 * Bring back to _one_ file, or at least less files if it doesn't harm
   readability.
+
+==== Manfreds whishlist
 * Be the first commandline utility to start with a multibyte character; µ
+
+==== Laurents whishlist
+* More commands:
+  * +uninstall+
+  * +search+
+  * +update+
+  * +list+
