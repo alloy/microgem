@@ -8,7 +8,7 @@ end
 
 describe "Gem::Dependency" do
   def setup
-    gem_spec = Gem::SourceIndex.load_from_file(fixture('source_index.yaml')).gem_specs('rails').last
+    gem_spec = Gem::SourceIndex.instance.gem_specs('rails').last
     @dependencies = gem_spec.dependencies
     @dependency = @dependencies.find { |d| d.name == 'rake' }
   end
@@ -21,5 +21,12 @@ describe "Gem::Dependency" do
     Gem::MiniGems.stubs(:gem_paths).returns(fixture('gems'))
     @dependencies.find { |d| d.name == 'rake' }.should.meet_requirements
     @dependencies.find { |d| d.name == 'activeresource' }.should.not.meet_requirements
+  end
+  
+  it "should return its gem spec" do
+    @dependency.gem_spec.should == Gem::SourceIndex.instance.gem_specs('rake').last
+    
+    @dependency.version_requirements.stubs(:version).returns(Gem::Version[:version => '0.8.0'])
+    @dependency.gem_spec.should == Gem::SourceIndex.instance.gem_specs('rake').first
   end
 end

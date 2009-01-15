@@ -3,6 +3,9 @@ require 'minigems'
 
 FIXTURE_PATH = File.expand_path('../fixtures', __FILE__)
 
+# load the tests source_index.yaml
+Gem::SourceIndex.load_from_file(File.join(FIXTURE_PATH, 'source_index.yaml'))
+
 require 'test/unit'
 class Test::Unit::TestCase
   private

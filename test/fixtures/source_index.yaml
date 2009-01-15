@@ -816,6 +816,112 @@ gems:
     summary: Web-application framework with template engine, control-flow layer, and ORM.
     test_files: []
 
+  rake-0.8.0: !ruby/object:Gem::Specification 
+    name: rake
+    version: !ruby/object:Gem::Version 
+      version: 0.8.0
+    platform: ruby
+    authors: 
+    - Jim Weirich
+    autorequire: 
+    bindir: bin
+    cert_chain: []
+
+    date: 2007-12-20 00:00:00 -05:00
+    default_executable: rake
+    dependencies: []
+
+    description: Rake is a Make-like program implemented in Ruby. Tasks and dependencies are specified in standard Ruby syntax.
+    email: jim@weirichhouse.org
+    executables: 
+    - rake
+    extensions: []
+
+    extra_rdoc_files: []
+
+    files: []
+
+    has_rdoc: true
+    homepage: http://rake.rubyforge.org
+    post_install_message: 
+    rdoc_options: []
+
+    require_paths: 
+    - lib
+    required_ruby_version: !ruby/object:Gem::Requirement 
+      requirements: 
+      - - ">="
+        - !ruby/object:Gem::Version 
+          version: "0"
+      version: 
+    required_rubygems_version: !ruby/object:Gem::Requirement 
+      requirements: 
+      - - ">="
+        - !ruby/object:Gem::Version 
+          version: "0"
+      version: 
+    requirements: []
+
+    rubyforge_project: rake
+    rubygems_version: 1.3.1
+    signing_key: 
+    specification_version: 2
+    summary: Ruby based make-like utility.
+    test_files: []
+
+  rake-0.8.1: !ruby/object:Gem::Specification 
+    name: rake
+    version: !ruby/object:Gem::Version 
+      version: 0.8.1
+    platform: ruby
+    authors: 
+    - Jim Weirich
+    autorequire: 
+    bindir: bin
+    cert_chain: []
+
+    date: 2007-12-26 00:00:00 -05:00
+    default_executable: rake
+    dependencies: []
+
+    description: Rake is a Make-like program implemented in Ruby. Tasks and dependencies are specified in standard Ruby syntax.
+    email: jim@weirichhouse.org
+    executables: 
+    - rake
+    extensions: []
+
+    extra_rdoc_files: []
+
+    files: []
+
+    has_rdoc: true
+    homepage: http://rake.rubyforge.org
+    post_install_message: 
+    rdoc_options: []
+
+    require_paths: 
+    - lib
+    required_ruby_version: !ruby/object:Gem::Requirement 
+      requirements: 
+      - - ">="
+        - !ruby/object:Gem::Version 
+          version: "0"
+      version: 
+    required_rubygems_version: !ruby/object:Gem::Requirement 
+      requirements: 
+      - - ">="
+        - !ruby/object:Gem::Version 
+          version: "0"
+      version: 
+    requirements: []
+
+    rubyforge_project: rake
+    rubygems_version: 1.3.1
+    signing_key: 
+    specification_version: 2
+    summary: Ruby based make-like utility.
+    test_files: []
+
   test-spec-0.2: !ruby/object:Gem::Specification 
     name: test-spec
     version: !ruby/object:Gem::Version 

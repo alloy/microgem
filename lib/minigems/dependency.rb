@@ -10,5 +10,12 @@ module Gem
         Gem::Version.from_gem_dirname(dirname) >= @version_requirements.version
       end
     end
+    
+    # Returns the Gem::Specification instance for this dependency.
+    def gem_spec
+      SourceIndex.instance.gem_specs(name).find do |gem_spec|
+        gem_spec.version == @version_requirements.version
+      end
+    end
   end
 end

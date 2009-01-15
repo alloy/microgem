@@ -1,7 +1,13 @@
 module Gem
   class SourceIndex < MiniGems::YAMLable
-    def self.load_from_file(file)
-      YAML.load(open(file))
+    class << self
+      attr_reader :instance
+      
+      def load_from_file(file)
+        index = YAML.load(open(file))
+        @instance = index
+        index
+      end
     end
     
     attr_reader :gems

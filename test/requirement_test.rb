@@ -8,7 +8,7 @@ describe "Gem::Requirement" do
   end
   
   it "should be equal to one in the gem specs dependencies" do
-    gem_spec = Gem::SourceIndex.load_from_file(fixture('source_index.yaml')).gem_specs('rails').last
+    gem_spec = Gem::SourceIndex.instance.gem_specs('rails').last
     version_requirement = gem_spec.dependencies.first.version_requirements
     
     version_requirement.should == @requirement

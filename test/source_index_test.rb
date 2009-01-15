@@ -4,7 +4,7 @@ require File.expand_path('../test_helper', __FILE__)
 
 describe "Gem::SourceIndex" do
   def setup
-    @index = Gem::SourceIndex.load_from_file(fixture('source_index.yaml'))
+    @index = Gem::SourceIndex.instance
   end
   
   it "should load from a YAML file" do
