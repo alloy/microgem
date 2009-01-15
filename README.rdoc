@@ -26,7 +26,7 @@ to make the test green is written.
 * Install gem dependencies.
 * Store/update source index cache.
 * Add a +minigem+ bin tool as a UI.
-* Add support for ~/.gemrc
+* Add support for <tt>~/.gemrc</tt>
 * Add support for multiple gem servers.
 * Remove any unnecessary “complex” code.
 * Bring back to _one_ file, or at least less files if it doesn't harm
