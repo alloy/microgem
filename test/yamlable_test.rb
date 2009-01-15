@@ -2,7 +2,7 @@
 
 require File.expand_path('../test_helper', __FILE__)
 
-class YAMLableSubclass < Gem::MiniGems::YAMLable
+class YAMLableSubclass < Gem::Micro::YAMLable
   attr_reader :foo, :bar
 end
 

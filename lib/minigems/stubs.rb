@@ -1,3 +1,3 @@
 module Gem
-  class Specification < MiniGems::YAMLable; end
+  class Specification < Micro::YAMLable; end
 end

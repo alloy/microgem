@@ -1,7 +1,7 @@
 require 'yaml'
 
 module Gem
-  module MiniGems
+  module Micro
     # Mainly a MacRuby workaround, because yaml transfer is broken.
     class YAMLable
       class << self
@@ -20,7 +20,7 @@ module Gem
         # Initializes an instance and assigns the hash of +values+ as its
         # instance variables.
         #
-        #   YAMLable[:foo => 'foo'] # => <#Gem::MiniGems::YAMLable:0x320154 @foo="foo">
+        #   YAMLable[:foo => 'foo'] # => <#Gem::Micro::YAMLable:0x320154 @foo="foo">
         def [](values)
           object = new
           values.each { |k,v| object.send(:instance_variable_set, "@#{k}", v) }

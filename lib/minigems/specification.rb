@@ -1,5 +1,5 @@
 module Gem
-  class Specification < MiniGems::YAMLable
+  class Specification < Micro::YAMLable
     attr_reader :name, :version, :dependencies
     
     def gem_filename

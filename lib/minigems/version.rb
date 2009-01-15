@@ -1,5 +1,5 @@
 module Gem
-  class Version < MiniGems::YAMLable
+  class Version < Micro::YAMLable
     # Returns a Gem::Version from a string:
     #
     #   Gem::Version.from_gem_dirname('rake-0.8.1').version # => "0.8.1"

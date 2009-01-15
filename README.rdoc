@@ -20,7 +20,6 @@ to make the test green is written.
 * Naive, no more code than necessary should be written. (YAGNI)
 
 === TODO (in order of priority)
-* Rename MiniGems module to Micro.
 * Download and install a gem.
 * Install gem dependencies.
 * Store/update source index cache.

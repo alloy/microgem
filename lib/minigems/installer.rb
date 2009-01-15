@@ -1,5 +1,5 @@
 module Gem
-  module MiniGems
+  module Micro
     class Installer
       def initialize(gem_spec)
         @gem_spec = gem_spec

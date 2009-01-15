@@ -9,7 +9,7 @@ require 'minigems/specification'
 require 'minigems/version'
 
 module Gem
-  module MiniGems
+  module Micro
     class << self
       # Returns an array of all installed gems their directory names,
       # optionally limited to gems matching the given +name+.

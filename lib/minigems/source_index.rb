@@ -1,5 +1,5 @@
 module Gem
-  class SourceIndex < MiniGems::YAMLable
+  class SourceIndex < Micro::YAMLable
     class << self
       attr_reader :instance
       

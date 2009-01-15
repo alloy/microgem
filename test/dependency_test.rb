@@ -18,7 +18,7 @@ describe "Gem::Dependency" do
   end
   
   it "should return whether or not its requirements are met" do
-    Gem::MiniGems.stubs(:gem_paths).returns(fixture('gems'))
+    Gem::Micro.stubs(:gem_paths).returns(fixture('gems'))
     @dependencies.find { |d| d.name == 'rake' }.should.meet_requirements
     @dependencies.find { |d| d.name == 'activeresource' }.should.not.meet_requirements
   end

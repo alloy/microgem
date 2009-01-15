@@ -1,5 +1,5 @@
 module Gem
-  class Requirement < MiniGems::YAMLable
+  class Requirement < Micro::YAMLable
     attr_reader :requirements
     
     def ==(other)
