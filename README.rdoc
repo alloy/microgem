@@ -1,0 +1,33 @@
+== MiniGems Command
+
+The aim of this project is, at first, to create a re-implementation of the
+RubyGems +install+ command, which should be easier to get up and running on
+Ruby implementations such as MacRuby.
+
+The way it's being developed is in a test and RubyGems data driven manner.
+For instance, there's a test fixture called source_index.yaml. As its name
+implies this is a YAML file which is returned by a gem server, with a listing
+of the gems that are available on said server.  First tests and code are
+written to get the YAML file to load. Then tests for the at _minimum_ needed
+functionality to get nearer to the next TODO item is written. Finally the code
+to make the test green is written.
+
+=== Goals
+* Install gems.
+* Small.
+* Test driven.
+* Clean room design.
+* Naive, no more code than necessary should be written. (YAGNI)
+
+=== TODO (in order of priority)
+* Rename MiniGems module to Mini. Because it should be singular and Gem::Mini
+  is pretty clear.
+* Download and install a gem.
+* Install gem dependencies.
+* Store/update source index cache.
+* Add a +minigem+ bin tool as a UI.
+* Add support for ~/.gemrc
+* Add support for multiple gem servers.
+* Remove any unnecessary “complex” code.
+* Bring back to _one_ file, or at least less files if it doesn't harm
+  readability.
