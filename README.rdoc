@@ -1,4 +1,4 @@
-== MiniGems Command
+== MicroGem
 
 The aim of this project is, at first, to create a re-implementation of the
 RubyGems +install+ command, which should be easier to get up and running on
@@ -20,12 +20,11 @@ to make the test green is written.
 * Naive, no more code than necessary should be written. (YAGNI)
 
 === TODO (in order of priority)
-* Rename MiniGems module to Mini. Because it should be singular and Gem::Mini
-  is pretty clear.
+* Rename MiniGems module to Micro.
 * Download and install a gem.
 * Install gem dependencies.
 * Store/update source index cache.
-* Add a +minigem+ bin tool as a UI.
+* Add a +microgem+ bin tool as a UI.
 * Add support for <tt>~/.gemrc</tt>
 * Add support for multiple gem servers.
 * Remove any unnecessary “complex” code.
