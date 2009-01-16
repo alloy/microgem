@@ -33,4 +33,12 @@ describe "Gem::Requirement" do
   it "should return its highest required version" do
     @requirement.version.should == Gem::Version[:version => '0.8.1']
   end
+  
+  it "should return the operator of the highest required version" do
+    @requirement.operator.should == '>='
+  end
+  
+  it "should return a string representation" do
+    @requirement.to_s.should == ">= 0.8.1"
+  end
 end

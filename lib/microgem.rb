@@ -17,6 +17,11 @@ module Gem
     }
     
     class << self
+      # TODO: Add Logger
+      def log(level, message)
+        puts "[#{level}] #{message}"
+      end
+      
       def load_source_index
         SourceIndex.load_from_file Config[:source_index_path]
       end
@@ -24,6 +29,12 @@ module Gem
       def run(*arguments)
         if arguments.length >= 2 && arguments.first == 'install'
           gem_spec = SourceIndex.instance.gem_specs(arguments[1]).last
+          
+          gem_spec.dependencies.each do |dep|
+            installed = dep.meets_requirements? ? "Installed." : "Not installed."
+            Micro.log(:info, "Has dependency: #{dep}. #{installed}")
+          end
+          
           Installer.new(gem_spec).download
         end
       end

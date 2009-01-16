@@ -29,4 +29,8 @@ describe "Gem::Dependency" do
     @dependency.version_requirements.stubs(:version).returns(Gem::Version[:version => '0.8.0'])
     @dependency.gem_spec.should == Gem::SourceIndex.instance.gem_specs('rake').first
   end
+  
+  it "should return a string representation of itself" do
+    @dependency.to_s.should == "rake >= 0.8.1"
+  end
 end

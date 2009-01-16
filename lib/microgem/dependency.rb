@@ -17,5 +17,9 @@ module Gem
         gem_spec.version == @version_requirements.version
       end
     end
+    
+    def to_s
+      "#{name} #{@version_requirements}"
+    end
   end
 end
