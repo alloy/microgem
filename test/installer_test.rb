@@ -12,13 +12,11 @@ describe "Gem::Micro::Installer" do
     @installer.url.should == "http://gems.rubyforge.org/gems/rake-0.8.1.gem"
   end
   
-  it "should download the gem with curl" do
-    def @installer.system(command)
-      @command = command
-    end
+  it "should download the gem using curl" do
+    url = File.join(Gem::Micro::Config[:gem_source_url], 'rake-0.8.1.gem')
+    path = File.join(Gem::Micro::Config[:install_dir], 'rake-0.8.1.gem')
+    @installer.expects(:system).with("/usr/bin/curl -o '#{path}' #{url}")
     
-    @installer.download_to('/path/to/download/dir')
-    @installer.instance_variable_get(:@command).should ==
-      "/usr/bin/curl -o '/path/to/download/dir/rake-0.8.1.gem' #{@installer.url}"
+    @installer.download
   end
 end

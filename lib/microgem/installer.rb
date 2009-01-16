@@ -7,12 +7,12 @@ module Gem
       
       # Returns the url for the gem.
       def url
-        "http://gems.rubyforge.org/gems/#{@gem_spec.gem_filename}"
+        File.join(Config[:gem_source_url], @gem_spec.gem_filename)
       end
       
-      # Downloads the gem into the +download_dir+.
-      def download_to(download_dir)
-        system "/usr/bin/curl -o '#{ File.join(download_dir, @gem_spec.gem_filename) }' #{url}"
+      # Downloads the gem into Gem::Micro::Config[:install_dir]
+      def download
+        system "/usr/bin/curl -o '#{ File.join(Config[:install_dir], @gem_spec.gem_filename) }' #{url}"
       end
     end
   end

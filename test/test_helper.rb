@@ -6,6 +6,8 @@ FIXTURE_PATH = File.expand_path('../fixtures', __FILE__)
 # load the tests source_index.yaml
 Gem::SourceIndex.load_from_file(File.join(FIXTURE_PATH, 'source_index.yaml'))
 
+Gem::Micro::Config[:install_dir] = '/path/to/download/dir'
+
 require 'test/unit'
 class Test::Unit::TestCase
   private
