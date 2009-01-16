@@ -18,6 +18,9 @@ module Gem
       end
     end
     
+    # Returns a ‘pretty’ string representation of the Dependency instance:
+    #
+    #   dependency.to_s # => "rake >= 0.8.1"
     def to_s
       "#{name} #{@version_requirements}"
     end

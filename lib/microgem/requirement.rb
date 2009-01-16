@@ -6,6 +6,9 @@ module Gem
       @requirements == other.requirements
     end
     
+    # Returns the operator for this the highest version.
+    #
+    #   requirement.operator # => ">="
     def operator
       @requirements.first.first
     end
@@ -18,6 +21,9 @@ module Gem
       @requirements.first.last
     end
     
+    # Returns a ‘pretty’ string representation of the Requirement instance:
+    #
+    #   requirement.to_s # => ">= 0.8.1"
     def to_s
       "#{operator} #{version}"
     end
