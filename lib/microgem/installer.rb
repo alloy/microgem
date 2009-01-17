@@ -40,9 +40,22 @@ module Gem
       # Downloads the gem to work_path. Raises a
       # Gem::Micro::Installer::DownloadError if downloading fails.
       def download
-        log(:debug, "Downloading #{url} to: #{work_path}")
+        log(:debug, "Downloading `#{url}' to `#{work_path}'")
         unless system("/usr/bin/curl --silent --location --output '#{work_path}' #{url}")
           raise DownloadError, "Failed to download: #{url}"
+        end
+      end
+      
+      def unpack
+        log(:debug, "Unpacking `#{work_path}' to `#{work_dir}'")
+        FileUtils.mkdir(work_dir)
+        
+        if system("/usr/bin/tar --directory='#{work_dir}' -xf '#{work_path}' > /dev/null 2>&1")
+          data_dir = File.join(work_dir, 'data')
+          data_path = "#{data_dir}.tar.gz"
+          FileUtils.mkdir(data_dir)
+          unless system("/usr/bin/tar --directory='#{data_dir}' -zxf '#{data_path}' > /dev/null 2>&1")
+          end
         end
       end
       
@@ -54,6 +67,7 @@ module Gem
         end
         
         download
+        unpack
       end
     end
   end

@@ -8,6 +8,10 @@ describe "Gem::Micro::Installer, in general" do
     @installer = Gem::Micro::Installer.new(@gem_spec)
   end
   
+  def teardown
+    remove_microgem_tmpdir!
+  end
+  
   it "should return the url to download the gem from" do
     @installer.url.should == "http://gems.rubyforge.org/gems/rake-0.8.1.gem"
   end
@@ -34,6 +38,13 @@ describe "Gem::Micro::Installer, in general" do
     @installer.stubs(:system).returns(false)
     lambda { @installer.download }.should.raise Gem::Micro::Installer::DownloadError
   end
+  
+  it "should unpack the gem using tar" do
+    @installer.stubs(:work_path).returns(fixture('rake-0.8.1.gem'))
+    
+    @installer.unpack
+    File.should.exist File.join(@installer.work_dir, 'data', 'README')
+  end
 end
 
 describe "Gem::Micro::Installer.install" do
@@ -41,6 +52,7 @@ describe "Gem::Micro::Installer.install" do
     @gem_spec = Gem::SourceIndex.instance.gem_specs('rake').last
     @installer = Gem::Micro::Installer.new(@gem_spec)
     @installer.stubs(:download)
+    @installer.stubs(:unpack)
   end
   
   it "should install its dependencies that are not installed yet" do
@@ -62,6 +74,11 @@ describe "Gem::Micro::Installer.install" do
   
   it "should download the gem" do
     @installer.expects(:download)
+    @installer.install!
+  end
+  
+  it "should unpack the gem" do
+    @installer.expects(:unpack)
     @installer.install!
   end
 end
