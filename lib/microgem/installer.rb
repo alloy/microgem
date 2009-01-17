@@ -2,6 +2,7 @@ module Gem
   module Micro
     class Installer
       class DownloadError < StandardError; end
+      class UnpackError < StandardError; end
       
       include Utils
       
@@ -30,6 +31,22 @@ module Gem
         File.join(tmpdir, @gem_spec.gem_filename)
       end
       
+      # Returns the full path to the gems data directory in the temporary
+      # directory.
+      #
+      #   installer.data_dir # => "/path/to/tmp/microgem/rake-0.8.1/data"
+      def data_dir
+        File.join(work_dir, 'data')
+      end
+      
+      # Returns the full path to the gems data archive in the temporary
+      # directory.
+      #
+      #   installer.data_file # => "/path/to/tmp/microgem/rake-0.8.1/data.tar.gz"
+      def data_file
+        "#{data_dir}.tar.gz"
+      end
+      
       # Returns the path to where the gem should be installed.
       #
       #   installer.install_path # => "/usr/local/lib/ruby/gems/1.8/gems/rake-0.8.1"
@@ -37,26 +54,22 @@ module Gem
         File.join(Config[:install_dir], @gem_spec.gem_dirname)
       end
       
-      # Downloads the gem to work_path. Raises a
-      # Gem::Micro::Installer::DownloadError if downloading fails.
+      # Downloads the gem to work_path.
+      #
+      # Raises a Gem::Micro::Installer::DownloadError if downloading fails.
       def download
         log(:debug, "Downloading `#{url}' to `#{work_path}'")
-        unless system("/usr/bin/curl --silent --location --output '#{work_path}' #{url}")
-          raise DownloadError, "Failed to download: #{url}"
-        end
+        curl(url, work_path)
       end
       
+      # Unpacks the gem to work_dir.
+      #
+      # Raises a Gem::Micro::Installer::UnpackError if unpacking fails.
       def unpack
         log(:debug, "Unpacking `#{work_path}' to `#{work_dir}'")
-        FileUtils.mkdir(work_dir)
         
-        if system("/usr/bin/tar --directory='#{work_dir}' -xf '#{work_path}' > /dev/null 2>&1")
-          data_dir = File.join(work_dir, 'data')
-          data_path = "#{data_dir}.tar.gz"
-          FileUtils.mkdir(data_dir)
-          unless system("/usr/bin/tar --directory='#{data_dir}' -zxf '#{data_path}' > /dev/null 2>&1")
-          end
-        end
+        untar(work_path, work_dir, false)
+        untar(data_file, data_dir, true)
       end
       
       def install!
@@ -68,6 +81,21 @@ module Gem
         
         download
         unpack
+      end
+      
+      private
+      
+      def curl(url, to)
+        unless system("/usr/bin/curl --silent --location --output '#{to}' #{url}")
+          raise DownloadError, "Failed to download `#{url}'"
+        end
+      end
+      
+      def untar(file, to, gzip)
+        FileUtils.mkdir(to) unless File.exist?(to)
+        unless system("/usr/bin/tar --directory='#{to}' -#{ 'z' if gzip }xf '#{file}' > /dev/null 2>&1")
+          raise UnpackError, "Failed to unpack `#{file}'"
+        end
       end
     end
   end

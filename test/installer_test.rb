@@ -26,6 +26,16 @@ describe "Gem::Micro::Installer, in general" do
       File.join(Gem::Micro::Utils.tmpdir, 'rake-0.8.1')
   end
   
+  it "should return the path to the gems data directory in the temporary directory" do
+    @installer.data_dir.should ==
+      File.join(@installer.work_dir, 'data')
+  end
+  
+  it "should return the path to the gems data archive in the temporary directory" do
+    @installer.data_file.should ==
+      File.join(@installer.work_dir, 'data.tar.gz')
+  end
+  
   it "should download the gem to the work directory using curl" do
     @installer.expects(:system).
       with("/usr/bin/curl --silent --location --output '#{@installer.work_path}' #{@installer.url}").
@@ -44,6 +54,12 @@ describe "Gem::Micro::Installer, in general" do
     
     @installer.unpack
     File.should.exist File.join(@installer.work_dir, 'data', 'README')
+  end
+  
+  it "should raise an UnpackError if tar failed to extract the gem" do
+    lambda do
+      @installer.send(:untar, '/does/not/exist/rake-0.8.1.gem', @installer.work_dir, false)
+    end.should.raise Gem::Micro::Installer::UnpackError
   end
 end
 
