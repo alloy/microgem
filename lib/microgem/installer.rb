@@ -45,6 +45,8 @@ module Gem
         @gem_spec.dependencies.each do |dep|
           dep.gem_spec.install! unless dep.meets_requirements?
         end
+        
+        download
       end
     end
   end

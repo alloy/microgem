@@ -32,11 +32,20 @@ end
 
 describe "Gem::Micro::Installer.install" do
   def setup
-    @gem_spec = Gem::SourceIndex.instance.gem_specs('rails').last
+    @gem_spec = Gem::SourceIndex.instance.gem_specs('rake').last
     @installer = Gem::Micro::Installer.new(@gem_spec)
+    @installer.stubs(:download)
+  end
+  
+  it "should download the gem" do
+    @installer.expects(:download)
+    @installer.install!
   end
   
   it "should install its dependencies that are not installed yet" do
+    @gem_spec = Gem::SourceIndex.instance.gem_specs('rails').last
+    @installer.instance_variable_set(:@gem_spec, @gem_spec)
+    
     Gem::Micro.stubs(:gem_paths).returns(fixture('gems'))
     
     @gem_spec.dependencies.each do |dep|
