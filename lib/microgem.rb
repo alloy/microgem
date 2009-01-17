@@ -25,12 +25,6 @@ module Gem
       def run(*arguments)
         if arguments.length >= 2 && arguments.first == 'install'
           gem_spec = SourceIndex.instance.gem_specs(arguments[1]).last
-          
-          # gem_spec.dependencies.each do |dep|
-          #   installed = dep.meets_requirements? ? "Installed." : "Not installed."
-          #   log(:info, "Has dependency: #{dep}. #{installed}")
-          # end
-          
           gem_spec.install!
         end
       end
