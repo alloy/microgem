@@ -12,9 +12,9 @@ require 'microgem/version'
 module Gem
   module Micro
     Gem::Micro::Config = {
-      :gem_source_url => 'http://gems.rubyforge.org/gems/',
-      :source_index_path => File.expand_path("~/Downloads/source_index.yaml"),
-      :install_dir => File.expand_path("~/Downloads")
+      :source_index_path => File.expand_path("../../tmp/source_index.yaml", __FILE__),
+      :gem_source_url    => 'http://gems.rubyforge.org/gems/',
+      :install_dir       => File.expand_path("../../tmp/gems", __FILE__)
     }
     
     class << self

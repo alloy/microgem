@@ -72,18 +72,23 @@ module Gem
         untar(data_file, data_dir, true)
       end
       
+      # Installs all dependencies and then the gem itself.
       def install!
+        install_dependencies!
+        
         log(:info, "Installing: #{@gem_spec}")
-        
-        @gem_spec.dependencies.each do |dep|
-          dep.gem_spec.install! unless dep.meets_requirements?
-        end
-        
         download
         unpack
+        FileUtils.mv(data_dir, install_path)
       end
       
       private
+      
+      def install_dependencies!
+        @gem_spec.dependencies.each do |dep|
+          dep.gem_spec.install! unless dep.meets_requirements?
+        end
+      end
       
       def curl(url, to)
         unless system("/usr/bin/curl --silent --location --output '#{to}' #{url}")

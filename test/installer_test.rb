@@ -69,6 +69,7 @@ describe "Gem::Micro::Installer.install" do
     @installer = Gem::Micro::Installer.new(@gem_spec)
     @installer.stubs(:download)
     @installer.stubs(:unpack)
+    FileUtils.stubs(:mv)
   end
   
   it "should install its dependencies that are not installed yet" do
@@ -95,6 +96,11 @@ describe "Gem::Micro::Installer.install" do
   
   it "should unpack the gem" do
     @installer.expects(:unpack)
+    @installer.install!
+  end
+  
+  it "should move the unpacked data directory of the gem to install_path" do
+    FileUtils.expects(:mv).with(@installer.data_dir, @installer.install_path)
     @installer.install!
   end
 end
