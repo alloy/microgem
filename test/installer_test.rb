@@ -38,7 +38,7 @@ describe "Gem::Micro::Installer, in general" do
   
   it "should download the gem to the work directory using curl" do
     @installer.expects(:system).
-      with("/usr/bin/curl --silent --location --output '#{@installer.work_path}' #{@installer.url}").
+      with("/usr/bin/curl --silent --location --output '#{@installer.gem_file}' #{@installer.url}").
         returns(true)
     
     @installer.download
@@ -50,7 +50,7 @@ describe "Gem::Micro::Installer, in general" do
   end
   
   it "should unpack the gem using tar" do
-    @installer.stubs(:work_path).returns(fixture('rake-0.8.1.gem'))
+    @installer.stubs(:gem_file).returns(fixture('rake-0.8.1.gem'))
     
     @installer.unpack
     File.should.exist File.join(@installer.work_dir, 'data', 'README')

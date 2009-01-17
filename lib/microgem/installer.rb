@@ -26,8 +26,8 @@ module Gem
       
       # Returns the full path to the gem in the temporary directory.
       #
-      #   installer.work_path # => "/path/to/tmp/microgem/rake-0.8.1.gem"
-      def work_path
+      #   installer.gem_file # => "/path/to/tmp/microgem/rake-0.8.1.gem"
+      def gem_file
         File.join(tmpdir, @gem_spec.gem_filename)
       end
       
@@ -54,21 +54,21 @@ module Gem
         File.join(Config[:install_dir], @gem_spec.gem_dirname)
       end
       
-      # Downloads the gem to work_path.
+      # Downloads the gem to gem_file.
       #
       # Raises a Gem::Micro::Installer::DownloadError if downloading fails.
       def download
-        log(:debug, "Downloading `#{url}' to `#{work_path}'")
-        curl(url, work_path)
+        log(:debug, "Downloading `#{url}' to `#{gem_file}'")
+        curl(url, gem_file)
       end
       
       # Unpacks the gem to work_dir.
       #
       # Raises a Gem::Micro::Installer::UnpackError if unpacking fails.
       def unpack
-        log(:debug, "Unpacking `#{work_path}' to `#{work_dir}'")
+        log(:debug, "Unpacking `#{gem_file}' to `#{work_dir}'")
         
-        untar(work_path, work_dir, false)
+        untar(gem_file, work_dir, false)
         untar(data_file, data_dir, true)
       end
       
