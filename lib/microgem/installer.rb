@@ -1,6 +1,8 @@
 module Gem
   module Micro
     class Installer
+      class DownloadError < StandardError; end
+      
       include Utils
       
       def initialize(gem_spec)
@@ -35,13 +37,18 @@ module Gem
         File.join(Config[:install_dir], @gem_spec.gem_dirname)
       end
       
-      # Downloads the gem to work_path.
+      # Downloads the gem to work_path. Raises a
+      # Gem::Micro::Installer::DownloadError if downloading fails.
       def download
         log(:debug, "Downloading #{url} to: #{work_path}")
-        system "/usr/bin/curl -o '#{work_path}' #{url}"
+        unless system("/usr/bin/curl --silent --output '#{work_path}' #{url}")
+          raise DownloadError, "Failed to download: #{url}"
+        end
       end
       
       def install!
+        log(:info, "Installing: #{@gem_spec}")
+        
         @gem_spec.dependencies.each do |dep|
           dep.gem_spec.install! unless dep.meets_requirements?
         end

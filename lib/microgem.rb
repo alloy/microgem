@@ -31,7 +31,7 @@ module Gem
           #   log(:info, "Has dependency: #{dep}. #{installed}")
           # end
           
-          Installer.new(gem_spec).download
+          gem_spec.install!
         end
       end
       

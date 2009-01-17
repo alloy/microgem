@@ -24,9 +24,15 @@ describe "Gem::Micro::Installer, in general" do
   
   it "should download the gem using curl to the work directory" do
     @installer.expects(:system).
-      with("/usr/bin/curl -o '#{@installer.work_path}' #{@installer.url}")
+      with("/usr/bin/curl --silent --output '#{@installer.work_path}' #{@installer.url}").
+        returns(true)
     
     @installer.download
+  end
+  
+  it "should raise a DownloadError if curl failed to download the gem" do
+    @installer.stubs(:system).returns(false)
+    lambda { @installer.download }.should.raise Gem::Micro::Installer::DownloadError
   end
 end
 

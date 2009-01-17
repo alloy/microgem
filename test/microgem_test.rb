@@ -26,11 +26,9 @@ describe "Gem::Micro" do
   end
   
   it "should run the command as specified in the arguments" do
-    url = File.join(Gem::Micro::Config[:gem_source_url], 'rake-0.8.1.gem')
-    path = File.join(Gem::Micro::Utils.tmpdir, 'rake-0.8.1.gem')
-    
-    Gem::Micro::Installer.any_instance.expects(:system).
-      with("/usr/bin/curl -o '#{path}' #{url}")
+    gem_spec = Gem::SourceIndex.instance.gem_specs('rake').last
+    Gem::SourceIndex.instance.expects(:gem_specs).with('rake').returns([gem_spec])
+    gem_spec.expects(:install!)
     
     Gem::Micro.run("install", "rake")
   end

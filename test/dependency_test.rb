@@ -25,9 +25,6 @@ describe "Gem::Dependency" do
   
   it "should return its gem spec" do
     @dependency.gem_spec.should == Gem::SourceIndex.instance.gem_specs('rake').last
-    
-    @dependency.version_requirements.stubs(:version).returns(Gem::Version[:version => '0.8.0'])
-    @dependency.gem_spec.should == Gem::SourceIndex.instance.gem_specs('rake').first
   end
   
   it "should return a string representation of itself" do

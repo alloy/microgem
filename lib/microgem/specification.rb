@@ -8,6 +8,7 @@ module Gem
     def gem_dirname
       "#{name}-#{version}"
     end
+    alias_method :to_s, :gem_dirname
     
     # Returns the Specification's filename:
     #
