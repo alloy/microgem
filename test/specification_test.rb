@@ -30,4 +30,12 @@ describe "Gem::Specification" do
   it "should return its gem filename" do
     @gem_spec.gem_filename.should == 'rake-0.8.1.gem'
   end
+  
+  it "should install itself" do
+    installer = Gem::Micro::Installer.new(@gem_spec)
+    Gem::Micro::Installer.expects(:new).with(@gem_spec).returns(installer)
+    installer.expects(:install!)
+    
+    @gem_spec.install!
+  end
 end

@@ -40,6 +40,12 @@ module Gem
         log(:debug, "Downloading #{url} to: #{work_path}")
         system "/usr/bin/curl -o '#{work_path}' #{url}"
       end
+      
+      def install!
+        @gem_spec.dependencies.each do |dep|
+          dep.gem_spec.install! unless dep.meets_requirements?
+        end
+      end
     end
   end
 end

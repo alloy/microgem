@@ -15,5 +15,14 @@ module Gem
     def gem_filename
       "#{gem_dirname}.gem"
     end
+    
+    # Installs the gem for this Specification.
+    def install!
+      Micro::Installer.new(self).install!
+    end
+    
+    def inspect
+      "#<Gem::Specification:#{object_id} name=\"#{name}\" version=\"#{version}\">"
+    end
   end
 end

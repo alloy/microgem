@@ -2,7 +2,7 @@
 
 require File.expand_path('../test_helper', __FILE__)
 
-describe "Gem::Micro::Installer" do
+describe "Gem::Micro::Installer, in general" do
   def setup
     @gem_spec = Gem::SourceIndex.instance.gem_specs('rake').last
     @installer = Gem::Micro::Installer.new(@gem_spec)
@@ -27,5 +27,26 @@ describe "Gem::Micro::Installer" do
       with("/usr/bin/curl -o '#{@installer.work_path}' #{@installer.url}")
     
     @installer.download
+  end
+end
+
+describe "Gem::Micro::Installer.install" do
+  def setup
+    @gem_spec = Gem::SourceIndex.instance.gem_specs('rails').last
+    @installer = Gem::Micro::Installer.new(@gem_spec)
+  end
+  
+  it "should install its dependencies that are not installed yet" do
+    Gem::Micro.stubs(:gem_paths).returns(fixture('gems'))
+    
+    @gem_spec.dependencies.each do |dep|
+      if dep.name == 'rake'
+        dep.gem_spec.expects(:install!).never
+      else
+        dep.gem_spec.expects(:install!).once
+      end
+    end
+    
+    @installer.install!
   end
 end
