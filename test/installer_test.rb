@@ -103,4 +103,13 @@ describe "Gem::Micro::Installer.install" do
     FileUtils.expects(:mv).with(@installer.data_dir, @installer.install_path)
     @installer.install!
   end
+  
+  it "should skip the actual installation of the gem _if_ after installing the dependencies it exists" do
+    File.expects(:exist?).with(@installer.install_path).returns(true)
+    @installer.expects(:download).never
+    @installer.expects(:unpack).never
+    FileUtils.expects(:mv).never
+    
+    @installer.install!
+  end
 end

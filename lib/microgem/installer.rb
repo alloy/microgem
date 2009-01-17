@@ -76,10 +76,15 @@ module Gem
       def install!
         install_dependencies!
         
-        log(:info, "Installing: #{@gem_spec}")
-        download
-        unpack
-        FileUtils.mv(data_dir, install_path)
+        if File.exist?(install_path)
+          log(:debug, "Already installed `#{@gem_spec}'")
+        else
+          log(:info, "Installing `#{@gem_spec}'")
+          download
+          unpack
+          log(:debug, "Moving `#{data_dir}' to `#{install_path}'")
+          FileUtils.mv(data_dir, install_path)
+        end
       end
       
       private
