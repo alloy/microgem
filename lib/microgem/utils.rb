@@ -10,7 +10,9 @@ module Gem
       #
       # TODO: Add proper Logger.
       def log(level, message)
-        puts "[#{level}] #{message}"
+        unless level == :debug && Config[:log_level] != :debug
+          puts "[#{level}] #{message}"
+        end
       end
       
       # Returns a temporary directory and ensures it exists.

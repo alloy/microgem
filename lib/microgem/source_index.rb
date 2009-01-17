@@ -1,9 +1,12 @@
 module Gem
   class SourceIndex < Micro::YAMLable
     class << self
+      include Micro::Utils
+      
       attr_reader :instance
       
       def load_from_file(file)
+        log(:debug, "Loading source index `#{file}'")
         index = YAML.load(open(file))
         @instance = index
         index

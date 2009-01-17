@@ -3,6 +3,7 @@ require 'microgem/utils'
 
 require 'microgem/dependency'
 require 'microgem/installer'
+require 'microgem/options'
 require 'microgem/requirement'
 require 'microgem/stubs'
 require 'microgem/source_index'
@@ -14,7 +15,8 @@ module Gem
     Gem::Micro::Config = {
       :source_index_path => File.expand_path("../../tmp/source_index.yaml", __FILE__),
       :gem_source_url    => 'http://gems.rubyforge.org/gems/',
-      :install_dir       => File.expand_path("../../tmp/gems", __FILE__)
+      :install_dir       => File.expand_path("../../tmp/gems", __FILE__),
+      :log_level         => Options::DEFAULTS[:log_level]
     }
     
     class << self
@@ -22,10 +24,20 @@ module Gem
         SourceIndex.load_from_file Config[:source_index_path]
       end
       
-      def run(*arguments)
-        if arguments.length >= 2 && arguments.first == 'install'
-          gem_spec = SourceIndex.instance.gem_specs(arguments[1]).last
+      def run(arguments)
+        options = Options.new
+        options.parse(arguments)
+        
+        Config[:log_level] = options.log_level
+        
+        case options.command
+        when 'install'
+          load_source_index # TODO: this should happen lazily
+          
+          gem_spec = SourceIndex.instance.gem_specs(options.arguments.first).last
           gem_spec.install!
+        else
+          puts options.banner
         end
       end
       

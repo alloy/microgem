@@ -3,6 +3,4 @@
 $:.unshift File.expand_path('../../lib', __FILE__)
 require 'microgem'
 
-m = Gem::Micro
-m.load_source_index
-m.run(*ARGV)
+Gem::Micro.run(ARGV)
