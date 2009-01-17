@@ -41,7 +41,7 @@ module Gem
       # Gem::Micro::Installer::DownloadError if downloading fails.
       def download
         log(:debug, "Downloading #{url} to: #{work_path}")
-        unless system("/usr/bin/curl --silent --output '#{work_path}' #{url}")
+        unless system("/usr/bin/curl --silent --location --output '#{work_path}' #{url}")
           raise DownloadError, "Failed to download: #{url}"
         end
       end

@@ -22,9 +22,9 @@ describe "Gem::Micro::Installer, in general" do
       File.join(Gem::Micro::Utils.tmpdir, 'rake-0.8.1')
   end
   
-  it "should download the gem using curl to the work directory" do
+  it "should download the gem to the work directory using curl" do
     @installer.expects(:system).
-      with("/usr/bin/curl --silent --output '#{@installer.work_path}' #{@installer.url}").
+      with("/usr/bin/curl --silent --location --output '#{@installer.work_path}' #{@installer.url}").
         returns(true)
     
     @installer.download
@@ -43,11 +43,6 @@ describe "Gem::Micro::Installer.install" do
     @installer.stubs(:download)
   end
   
-  it "should download the gem" do
-    @installer.expects(:download)
-    @installer.install!
-  end
-  
   it "should install its dependencies that are not installed yet" do
     @gem_spec = Gem::SourceIndex.instance.gem_specs('rails').last
     @installer.instance_variable_set(:@gem_spec, @gem_spec)
@@ -62,6 +57,11 @@ describe "Gem::Micro::Installer.install" do
       end
     end
     
+    @installer.install!
+  end
+  
+  it "should download the gem" do
+    @installer.expects(:download)
     @installer.install!
   end
 end
