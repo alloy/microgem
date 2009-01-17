@@ -56,7 +56,7 @@ describe "Gem::Micro::Installer, in general" do
     File.should.exist File.join(@installer.work_dir, 'data', 'README')
   end
   
-  it "should raise an UnpackError if tar failed to extract the gem" do
+  it "should raise an UnpackError if tar failed to extract an archive" do
     lambda do
       @installer.send(:untar, '/does/not/exist/rake-0.8.1.gem', @installer.work_dir, false)
     end.should.raise Gem::Micro::Installer::UnpackError
