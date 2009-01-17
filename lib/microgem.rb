@@ -7,19 +7,21 @@ require 'microgem/options'
 require 'microgem/requirement'
 require 'microgem/stubs'
 require 'microgem/source_index'
+require 'microgem/source_index_file_tree'
 require 'microgem/specification'
 require 'microgem/version'
 
 module Gem
   module Micro
-    Gem::Micro::Config = {
-      :source_index_path => File.expand_path("../../tmp/source_index.yaml", __FILE__),
-      :gem_source_url    => 'http://gems.rubyforge.org/gems/',
-      :install_dir       => File.expand_path("../../tmp/gems", __FILE__),
-      :log_level         => Options::DEFAULTS[:log_level]
-    }
+    Config = {}
+    Config[:gem_source_url]    = 'http://gems.rubyforge.org/gems/'
+    Config[:gem_home]          = File.expand_path("../../tmp/gem_home", __FILE__)
+    Config[:source_index_path] = File.join(Config[:gem_home], 'source_index.yaml')
+    Config[:install_dir]       = File.join(Config[:gem_home], 'gems')
+    Config[:log_level]         = Options::DEFAULTS[:log_level]
     
     class << self
+      # TODO: this should happen lazily
       def load_source_index
         SourceIndex.load_from_file Config[:source_index_path]
       end
@@ -32,10 +34,16 @@ module Gem
         
         case options.command
         when 'install'
-          load_source_index # TODO: this should happen lazily
-          
+          load_source_index
           gem_spec = SourceIndex.instance.gem_specs(options.arguments.first).last
           gem_spec.install!
+          
+        when 'cache'
+          load_source_index
+          root = File.join(Config[:gem_home], 'microgem_source_index')
+          FileUtils.rm_rf(root) if File.exist?(root)
+          Gem::Micro::SourceIndexFileTree.create(root, Gem::SourceIndex.instance)
+          
         else
           puts options.banner
         end

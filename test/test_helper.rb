@@ -2,6 +2,7 @@ $:.unshift File.expand_path('../../lib', __FILE__)
 require 'microgem'
 
 FIXTURE_PATH = File.expand_path('../fixtures', __FILE__)
+TMP_PATH = File.expand_path('../../tmp', __FILE__)
 
 # load the tests source_index.yaml
 Gem::SourceIndex.load_from_file(File.join(FIXTURE_PATH, 'source_index.yaml'))

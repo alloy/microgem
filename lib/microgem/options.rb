@@ -22,6 +22,7 @@ module Gem
           opts.separator ""
           opts.separator "  Example:"
           opts.separator "        µgem install rake"
+          opts.separator "        µgem cache update"
           opts.separator ""
           opts.separator "  Options:"
           

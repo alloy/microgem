@@ -25,11 +25,25 @@ describe "Gem::Micro" do
     Gem::Micro.load_source_index
   end
   
-  it "should run the command as specified in the arguments" do
+  it "should start the installation process of a gem" do
+    Gem::Micro.stubs(:load_source_index)
+    
     gem_spec = Gem::SourceIndex.instance.gem_specs('rake').last
     Gem::SourceIndex.instance.expects(:gem_specs).with('rake').returns([gem_spec])
     gem_spec.expects(:install!)
     
-    Gem::Micro.run("install", "rake")
+    Gem::Micro.run(%w{ install rake })
+  end
+  
+  it "should update the source index cache" do
+    Gem::Micro.stubs(:load_source_index)
+    
+    root = File.join(Gem::Micro::Config[:gem_home], 'microgem_source_index')
+    
+    File.stubs(:exist?).with(root).returns(true)
+    FileUtils.expects(:rm_rf).with(root)
+    Gem::Micro::SourceIndexFileTree.expects(:create).with(root, Gem::SourceIndex.instance)
+    
+    Gem::Micro.run(%w{ cache update })
   end
 end
