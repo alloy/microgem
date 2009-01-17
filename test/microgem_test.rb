@@ -19,14 +19,18 @@ describe "Gem::Micro" do
   end
   
   it "should load the source_index.yaml file" do
-    Gem::SourceIndex.expects(:load_from_file).with(Gem::Micro::Config[:source_index_path])
+    Gem::SourceIndex.expects(:load_from_file).
+      with(Gem::Micro::Config[:source_index_path])
+    
     Gem::Micro.load_source_index
   end
   
   it "should run the command as specified in the arguments" do
     url = File.join(Gem::Micro::Config[:gem_source_url], 'rake-0.8.1.gem')
-    path = File.join(Gem::Micro::Config[:install_dir], 'rake-0.8.1.gem')
-    Gem::Micro::Installer.any_instance.expects(:system).with("/usr/bin/curl -o '#{path}' #{url}")
+    path = File.join(Gem::Micro::Utils.tmpdir, 'rake-0.8.1.gem')
+    
+    Gem::Micro::Installer.any_instance.expects(:system).
+      with("/usr/bin/curl -o '#{path}' #{url}")
     
     Gem::Micro.run("install", "rake")
   end

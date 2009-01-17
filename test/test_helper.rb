@@ -8,6 +8,13 @@ Gem::SourceIndex.load_from_file(File.join(FIXTURE_PATH, 'source_index.yaml'))
 
 Gem::Micro::Config[:install_dir] = '/path/to/download/dir'
 
+# silence the logger
+module Gem::Micro::Utils
+  def log(level, message)
+    # nada
+  end
+end
+
 require 'test/unit'
 class Test::Unit::TestCase
   private
@@ -17,9 +24,13 @@ class Test::Unit::TestCase
   end
 end
 
-# we don't want to load rubygems, so use these work arounds
-
 module Kernel
+  def remove_microgem_tmpdir!
+    FileUtils.rm_rf Gem::Micro::Utils.tmpdir
+  end
+  remove_microgem_tmpdir! # ensure it doesn't exist before test run
+  
+  # we don't want to load rubygems, so use these work arounds
   alias_method :__require_before_minigems, :require
   def require(lib)
     __require_before_minigems(lib) unless lib == 'rubygems'

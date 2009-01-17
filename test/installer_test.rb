@@ -12,14 +12,19 @@ describe "Gem::Micro::Installer" do
     @installer.url.should == "http://gems.rubyforge.org/gems/rake-0.8.1.gem"
   end
   
-  it "should return the path to the install location" do
-    @installer.install_location.should ==
-      File.join(Gem::Micro::Config[:install_dir], 'rake-0.8.1.gem')
+  it "should return the path to the install path" do
+    @installer.install_path.should ==
+      File.join(Gem::Micro::Config[:install_dir], 'rake-0.8.1')
   end
   
-  it "should download the gem using curl" do
+  it "should return the path to the gem in the temporary work directory" do
+    @installer.work_dir.should ==
+      File.join(Gem::Micro::Utils.tmpdir, 'rake-0.8.1')
+  end
+  
+  it "should download the gem using curl to the work directory" do
     @installer.expects(:system).
-      with("/usr/bin/curl -o '#{@installer.install_location}' #{@installer.url}")
+      with("/usr/bin/curl -o '#{@installer.work_path}' #{@installer.url}")
     
     @installer.download
   end
