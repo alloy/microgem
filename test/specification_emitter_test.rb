@@ -15,6 +15,11 @@ describe "Gem::Micro::SpecificationEmitter" do
     @emitter.format(time).should == time.strftime("%Y-%m-%d")
   end
   
+  it "should return a properly formatted Date" do
+    date = Date.today
+    @emitter.format(date).should == date.to_s
+  end
+  
   it "should return a properly formatted Gem::Version" do
     version = Gem::Version[:version => '0.8.1']
     @emitter.format(version).should == version.to_s
@@ -67,6 +72,12 @@ describe "Gem::Micro::SpecificationEmitter" do
   it "should generate the proper Ruby code for `required_rubygems_version'" do
     set_ivar('required_rubygems_version', Gem::Requirement[:requirements => [['>=', Gem::Version[:version => '0.8.1']]]])
     expected = 's.required_rubygems_version = Gem::Requirement.new(">= 0.8.1") if s.respond_to? :required_rubygems_version='
+    @emitter.to_ruby.should.include expected
+  end
+  
+  it "should generate the proper Ruby code for `required_rubygems_version' if it's nil" do
+    set_ivar('required_rubygems_version', nil)
+    expected = 's.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version='
     @emitter.to_ruby.should.include expected
   end
   

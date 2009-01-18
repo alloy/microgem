@@ -31,7 +31,7 @@ module Gem
         case obj
         when Time
           obj.strftime("%Y-%m-%d")
-        when Gem::Version, Gem::Requirement
+        when Date, Gem::Version, Gem::Requirement
           obj.to_s
         else
           obj
@@ -55,7 +55,7 @@ module Gem
   s.version = "#{@gem_spec.version}"
 
   s.specification_version = #{ ivar_get(:specification_version) || 2 } if s.respond_to? :specification_version=
-  s.required_rubygems_version = Gem::Requirement.new("#{ivar_get(:required_rubygems_version)}") if s.respond_to? :required_rubygems_version=
+  s.required_rubygems_version = Gem::Requirement.new("#{ivar_get(:required_rubygems_version) || '>= 0'}") if s.respond_to? :required_rubygems_version=
 
 #{gem_spec_variables.map { |k,v| "  s.#{k} = #{v.inspect}" }.join("\n") }
 
