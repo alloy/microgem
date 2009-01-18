@@ -15,6 +15,7 @@ module Gem
       # Creates the bin wrapper script in bin_wrapper_file.
       def create_bin_wrapper!
         File.open(bin_wrapper_file, 'w') { |f| f << to_ruby }
+        File.chmod(755, bin_wrapper_file)
       end
       
       # Returns a string representation of the bin wrapper file.

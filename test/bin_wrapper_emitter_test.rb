@@ -15,10 +15,11 @@ describe "Gem::Micro::BinWrapperEmitter, in general" do
     @emitter.bin_wrapper_file.should == File.join(Config::CONFIG['bindir'], 'rake')
   end
   
-  it "should create a bin wrapper" do
+  it "should create an executable bin wrapper" do
     bin_file = File.join(Gem::Micro::Utils.tmpdir, 'rake')
     @emitter.stubs(:bin_wrapper_file).returns(bin_file)
     
+    File.expects(:chmod).with(755, bin_file)
     @emitter.create_bin_wrapper!
     File.read(bin_file).should == @emitter.to_ruby
   end
