@@ -105,11 +105,8 @@ module Gem
           download
           unpack
           
-          log(:debug, "Moving `#{data_dir}' to `#{install_path}'")
-          FileUtils.mv(data_dir, install_path)
-          
-          log(:debug, "Moving `#{gem_file}' to `#{gem_cache_file}'")
-          FileUtils.mv(gem_file, gem_cache_file)
+          replace_dir(data_dir, install_path)
+          replace_dir(gem_file, gem_cache_file)
           
           create_ruby_gemspec!
         end

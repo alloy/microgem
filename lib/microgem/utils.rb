@@ -20,6 +20,13 @@ module Gem
         FileUtils.mkdir_p(dir) unless File.exist?(dir)
       end
       
+      # Removes +to+, if it exists, before moving +from+ to +to+.
+      def replace_dir(from, to)
+        log(:debug, "Moving `#{from}' to `#{to}'")
+        FileUtils.rm_rf(to) if File.exist?(to)
+        FileUtils.mv(from, to)
+      end
+      
       # Returns a temporary directory and ensures it exists.
       #
       #   File.exist?('/path/to/tmp/microgem') # => false
