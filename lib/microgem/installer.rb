@@ -77,6 +77,7 @@ module Gem
       end
       
       def create_ruby_gemspec!
+        log(:debug, "Creating gem spec file `#{ruby_gemspec_file}'")
         File.open(ruby_gemspec_file, 'w') { |f| f << @gem_spec.to_ruby }
       end
       
@@ -90,8 +91,11 @@ module Gem
           log(:info, "Installing `#{@gem_spec}'")
           download
           unpack
+          
           log(:debug, "Moving `#{data_dir}' to `#{install_path}'")
           FileUtils.mv(data_dir, install_path)
+          
+          create_ruby_gemspec!
         end
       end
       
