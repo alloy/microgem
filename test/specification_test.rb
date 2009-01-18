@@ -43,6 +43,7 @@ end
 describe "Gem::Specification, when generating a Ruby `.gemspec' file" do
   def setup
     @gem_spec = Gem::Specification.new
+    set_ivar('dependencies', [])
   end
   
   it "should return a properly formatted Time" do
@@ -105,26 +106,35 @@ describe "Gem::Specification, when generating a Ruby `.gemspec' file" do
     @gem_spec.to_ruby.should.include expected
   end
   
-  it "should return a representation of itself in ruby which is accepted by RubyGems and equals an existing gem spec created by RubyGems" do
-    begin
-      @gem_spec = Gem::Micro.source_index.gem_specs('rake').last
-      
-      spec_file = File.join(TMP_PATH, 'rake-0.8.1.gemspec.rb')
-      File.open(spec_file, 'w') do |f|
-        f << %{
-          require 'rubygems'
-          
-          spec = #{@gem_spec.to_ruby}
-          
-          # If the dynamically created one equals the fixture we quit without error
-          exit 1 unless spec == eval(File.read("#{fixture('rake-0.8.1.gemspec')}"))
-        }
+  it "should generate the proper Ruby code for a Gem::Dependency" do
+    @gem_spec = Gem::Micro.source_index.gem_specs('rails').last
+    rake_dependency = 's.add_dependency("rake", [">= 0.8.1"])'
+    @gem_spec.to_ruby.should.include rake_dependency
+  end
+  
+  %w{ rake-0.8.1 rails-2.1.1 }.each do |gem_name|
+    it "should return a representation of the Ruby #{gem_name} gemspec, which is accepted by RubyGems" do
+      begin
+        @gem_spec = Gem::Micro.source_index.gem_specs(gem_name.sub(/-[\d\.]+$/, '')).last
+        
+        spec_file = File.join(TMP_PATH, "#{gem_name}.gemspec.rb")
+        File.open(spec_file, 'w') do |f|
+          f << %{
+            require 'rubygems'
+            
+            spec = #{@gem_spec.to_ruby}
+            
+            # If the dynamically created one equals the fixture we quit without error
+            exit 1 unless spec == eval(File.read("#{fixture("#{gem_name}.gemspec")}"))
+          }
+        end
+        
+        puts @gem_spec.to_ruby unless system("ruby '#{spec_file}'")
+        assert system("ruby '#{spec_file}'")
+        
+      ensure
+        File.unlink(spec_file) rescue nil
       end
-      
-      assert system("ruby '#{spec_file}'")
-      
-    ensure
-      File.unlink(spec_file) rescue nil
     end
   end
   

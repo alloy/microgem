@@ -61,10 +61,8 @@ module Gem
     
     # Returns a Ruby syntax representation of the Specification which is used
     # to generate the gemspec files that RubyGems uses to check for gems.
-    #
-    # TODO 1: Add dependencies.
     # 
-    # TODO 2: We are still missing the following values, but it might not be a
+    # TODO: We are still missing the following values, but it might not be a
     # real problem. So we need to figure out if they are important to RubyGems
     # and if so where it gets these values from.
     #
@@ -81,6 +79,8 @@ module Gem
   s.required_rubygems_version = Gem::Requirement.new("#{@required_rubygems_version}") if s.respond_to? :required_rubygems_version=
 
 #{gem_spec_variables.map { |k,v| "  s.#{k} = #{v.inspect}" }.join("\n") }
+
+#{dependencies.map { |dep| "  s.add_dependency(\"#{dep.name}\", [\"#{dep.version_requirements.to_s}\"])" }.join("\n") }
 end}
     end
   end
