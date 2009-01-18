@@ -33,3 +33,12 @@ task :get_source_index => :create_tmp_dirs do
     File.open("source_index.yaml", 'w') { |f| f << yaml }
   end
 end
+
+desc "Copies a source index file tree to the gems site dir"
+task :copy_source_index_to_site do
+  require 'rbconfig'
+  sitelibdir = ::Config::CONFIG['sitelibdir']
+  version = ::Config::CONFIG['ruby_version']
+  dir = File.expand_path("../../Gems/#{version}", sitelibdir)
+  sh "cp -R '#{File.join(HOME, 'microgem_source_index')}' '#{dir}'"
+end

@@ -13,16 +13,29 @@ require 'microgem/version'
 
 module Gem
   module Micro
-    Config = {}
-    Config[:gem_source_url]        = 'http://gems.rubyforge.org/gems/'
-    Config[:gem_home]              = File.expand_path("../../tmp/gem_home", __FILE__)
-    Config[:microgem_source_index] = File.join(Config[:gem_home], 'microgem_source_index')
-    Config[:source_index_path]     = File.join(Config[:gem_home], 'source_index.yaml')
-    Config[:install_dir]           = File.join(Config[:gem_home], 'gems')
-    Config[:log_level]             = Options::DEFAULTS[:log_level]
-    
     class << self
       include Utils
+      
+      def config
+        config = {}
+        
+        if ENV['PRODUCTION']
+          require 'rbconfig'
+          sitelibdir = ::Config::CONFIG['sitelibdir']
+          version = ::Config::CONFIG['ruby_version']
+          config[:gem_home] = File.expand_path("../../Gems/#{version}", sitelibdir)
+        else
+          config[:gem_home] = File.expand_path("../../tmp/gem_home", __FILE__)
+        end
+        
+        config[:gem_source_url]        = 'http://gems.rubyforge.org/gems/'
+        config[:log_level]             = Options::DEFAULTS[:log_level]
+        config[:microgem_source_index] = File.join(config[:gem_home], 'microgem_source_index')
+        config[:source_index_path]     = File.join(config[:gem_home], 'source_index.yaml')
+        config[:install_dir]           = File.join(config[:gem_home], 'gems')
+        
+        config
+      end
       
       def load_source_index
         SourceIndex.load_from_file Config[:source_index_path]
@@ -73,5 +86,8 @@ module Gem
         []
       end
     end
+    
+    # Loads the configuration via Gem::Micro.config.
+    Config = self.config
   end
 end
