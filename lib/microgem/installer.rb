@@ -94,7 +94,7 @@ module Gem
       
       # Creates the executables for this gem in the Ruby bin dir.
       def create_bin_wrappers!
-        @gem_spec.executables.each { |bin| BinWrapperEmitter.new(bin).create_bin_wrapper! }
+        @gem_spec.executables.each { |bin| BinWrapperEmitter.new(@gem_spec.name, bin).create_bin_wrapper! }
       end
       
       # Installs all dependencies and then the gem itself. Skips installation
@@ -123,9 +123,9 @@ module Gem
       private
       
       def install_dependencies!(force)
-        log(:debug, "Checking dependencies for `#{@gem_spec}'")
+        log(:debug, "Checking dependencies of `#{@gem_spec}'")
         @gem_spec.dependencies.each do |dep|
-          log(:debug, "Checking dependency `#{dep}' requirements")
+          log(:debug, "Checking dependency requirements of `#{dep}'")
           dep.gem_spec.install!(force) unless dep.meets_requirements?
         end
       end

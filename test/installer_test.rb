@@ -80,8 +80,8 @@ describe "Gem::Micro::Installer, in general" do
   end
   
   it "should create bin wrappers for each executable" do
-    emitter = Gem::Micro::BinWrapperEmitter.new('rake')
-    Gem::Micro::BinWrapperEmitter.expects(:new).with('rake').returns(emitter)
+    emitter = Gem::Micro::BinWrapperEmitter.new('rake', 'rake')
+    Gem::Micro::BinWrapperEmitter.expects(:new).with('rake', 'rake').returns(emitter)
     emitter.expects(:create_bin_wrapper!)
     
     @installer.create_bin_wrappers!
