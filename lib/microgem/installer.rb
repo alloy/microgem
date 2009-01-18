@@ -96,7 +96,7 @@ module Gem
       # You can +force+ the gem to be installed even if the gem is already
       # installed.
       def install!(force = false)
-        install_dependencies!
+        install_dependencies!(force)
         
         if !force && File.exist?(install_path)
           log(:debug, "Already installed `#{@gem_spec}'")
@@ -117,11 +117,11 @@ module Gem
       
       private
       
-      def install_dependencies!
+      def install_dependencies!(force)
         log(:debug, "Checking dependencies for `#{@gem_spec}'")
         @gem_spec.dependencies.each do |dep|
           log(:debug, "Checking dependency `#{dep}' requirements")
-          dep.gem_spec.install! unless dep.meets_requirements?
+          dep.gem_spec.install!(force) unless dep.meets_requirements?
         end
       end
       

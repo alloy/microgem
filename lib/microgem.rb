@@ -61,7 +61,7 @@ module Gem
         case options.command
         when 'install'
           gem_spec = source_index.gem_specs(options.arguments.first).last
-          gem_spec.install!
+          gem_spec.install!(options.force)
           
         when 'cache'
           load_source_index
