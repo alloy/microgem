@@ -47,6 +47,10 @@ module Gem
         "#{data_dir}.tar.gz"
       end
       
+      def ruby_gemspec_file
+        File.join(Config[:gem_home], 'specifications', "#{@gem_spec.gem_dirname}.gemspec")
+      end
+      
       # Returns the path to where the gem should be installed.
       #
       #   installer.install_path # => "/usr/local/lib/ruby/gems/1.8/gems/rake-0.8.1"
@@ -70,6 +74,10 @@ module Gem
         
         untar(gem_file, work_dir, false)
         untar(data_file, data_dir, true)
+      end
+      
+      def create_ruby_gemspec!
+        File.open(ruby_gemspec_file, 'w') { |f| f << @gem_spec.to_ruby }
       end
       
       # Installs all dependencies and then the gem itself.

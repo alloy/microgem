@@ -61,6 +61,18 @@ describe "Gem::Micro::Installer, in general" do
       @installer.send(:untar, '/does/not/exist/rake-0.8.1.gem', @installer.work_dir, false)
     end.should.raise Gem::Micro::Installer::UnpackError
   end
+  
+  it "should return the path to the Ruby `.gemspec' file" do
+    @installer.ruby_gemspec_file.should ==
+      File.join(Gem::Micro::Config[:gem_home], 'specifications', 'rake-0.8.1.gemspec')
+  end
+  
+  it "should create a `.gemspec' file so RubyGems can find the gem" do
+    FileUtils.mkdir_p(File.dirname(@installer.ruby_gemspec_file))
+    @installer.create_ruby_gemspec!
+    
+    File.read(@installer.ruby_gemspec_file).should == @gem_spec.to_ruby
+  end
 end
 
 describe "Gem::Micro::Installer.install" do
