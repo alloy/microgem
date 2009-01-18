@@ -20,11 +20,11 @@ module Gem
         FileUtils.mkdir_p(dir) unless File.exist?(dir)
       end
       
-      # Removes +to+, if it exists, before moving +from+ to +to+.
-      def replace_dir(from, to)
-        log(:debug, "Moving `#{from}' to `#{to}'")
-        FileUtils.rm_rf(to) if File.exist?(to)
-        FileUtils.mv(from, to)
+      # Removes +new_path+, if it exists, before moving +old_path+ to +to+.
+      def replace(old_path, new_path)
+        log(:debug, "Moving `#{old_path}' to `#{new_path}'")
+        FileUtils.rm_rf(new_path) if File.exist?(new_path)
+        FileUtils.mv(old_path, new_path)
       end
       
       # Returns a temporary directory and ensures it exists.

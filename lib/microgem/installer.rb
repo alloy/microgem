@@ -105,8 +105,8 @@ module Gem
           download
           unpack
           
-          replace_dir(data_dir, install_path)
-          replace_dir(gem_file, gem_cache_file)
+          replace(data_dir, install_path)
+          replace(gem_file, gem_cache_file)
           
           create_ruby_gemspec!
         end

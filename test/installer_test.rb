@@ -87,7 +87,7 @@ describe "Gem::Micro::Installer.install" do
     @installer.stubs(:download)
     @installer.stubs(:unpack)
     @installer.stubs(:create_ruby_gemspec!)
-    @installer.stubs(:replace_dir)
+    @installer.stubs(:replace)
   end
   
   it "should install its dependencies that are not installed yet" do
@@ -118,12 +118,12 @@ describe "Gem::Micro::Installer.install" do
   end
   
   it "should move the unpacked data directory of the gem to install_path" do
-    @installer.expects(:replace_dir).with(@installer.data_dir, @installer.install_path)
+    @installer.expects(:replace).with(@installer.data_dir, @installer.install_path)
     @installer.install!
   end
   
   it "should move the gem file to gem_cache_file" do
-    @installer.expects(:replace_dir).with(@installer.gem_file, @installer.gem_cache_file)
+    @installer.expects(:replace).with(@installer.gem_file, @installer.gem_cache_file)
     @installer.install!
   end
   
@@ -136,7 +136,7 @@ describe "Gem::Micro::Installer.install" do
     File.expects(:exist?).with(@installer.install_path).returns(true)
     @installer.expects(:download).never
     @installer.expects(:unpack).never
-    @installer.expects(:replace_dir).never
+    @installer.expects(:replace).never
     
     @installer.install!
   end
@@ -146,7 +146,7 @@ describe "Gem::Micro::Installer.install" do
     
     @installer.expects(:download).times(1)
     @installer.expects(:unpack).times(1)
-    @installer.expects(:replace_dir).times(2)
+    @installer.expects(:replace).times(2)
     
     @installer.install!(true)
   end
