@@ -46,6 +46,12 @@ describe "Gem::Micro::SourceIndexFileTree, in general" do
     @index.add_node(node)
     @index['rake-0.8.1'].should.be node
   end
+  
+  it "should return nil for gems for which no gem spec exists" do
+    before = @index.instance_variable_get(:@nodes).length
+    @index['does-not-exist-1.2.3'].should.be nil
+    @index.instance_variable_get(:@nodes).length.should.be before
+  end
 end
 
 describe "Gem::Micro::SourceIndexFileTree::Node, with a gem spec" do
@@ -69,6 +75,11 @@ describe "Gem::Micro::SourceIndexFileTree::Node, with a gem spec" do
     
     gem_spec.should.be.instance_of Gem::Specification
     gem_spec.to_s.should == "rake-0.8.1"
+  end
+  
+  it "should return true for an existing gem spec file" do
+    @node.create_gem_spec_file!
+    assert @node.exist?
   end
 end
 
@@ -100,5 +111,9 @@ describe "Gem::Micro::SourceIndexFileTree::Node, in general" do
   
   it "should return the path to the yaml gem spec file with a downcased dirname" do
     @node.full_path.should == File.join(@root, 'c', 'CapitalGem-0.8.1.yaml')
+  end
+  
+  it "should return false for a non existing gem spec file" do
+    assert !@node.exist?
   end
 end

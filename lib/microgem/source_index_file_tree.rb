@@ -50,6 +50,10 @@ module Gem
           File.join(namespaced_directory, "#{@dirname}.yaml")
         end
         
+        def exist?
+          File.exist? full_path
+        end
+        
         # Returns the Gem::Specification for this Node.
         def gem_spec
           @gem_spec ||= YAML.load(File.read(full_path))
@@ -103,11 +107,15 @@ module Gem
         @nodes[node.dirname] = node
       end
       
-      # Returns a node. The +dirname+ should be a name and version string:
-      #
-      #   "rake-0.8.1"
+      # Returns a node if a gem spec file for it exists. The +dirname+ should
+      # be a name and version string like: <tt>"rake-0.8.1"</tt>.
       def [](dirname)
-        @nodes[dirname] ||= Node.new(@root_path, dirname)
+        if node = @nodes[dirname]
+          node
+        else
+          node = Node.new(@root_path, dirname)
+          @nodes[dirname] = node if node.exist?
+        end
       end
     end
   end
