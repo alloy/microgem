@@ -3,6 +3,24 @@ The aim of this project is, at first, to create a re-implementation of the
 RubyGems +install+ command, which should be easier to get up and running on
 Ruby implementations such as MacRuby.
 
+=== Installation
+For now there's no _real_ installation yet because it's still in a very early
+stage. To setup the development environment follow these steps.
+
+Create the tmp directories and retrieve the YAML gem source index:
+
+  $ rake dev_data
+
+You can now start using it, however this would mean µgem would use the one big
+YAML source index file. For a speed bump create a file source index:
+
+  $ ./bin/µgem cache update
+
+To be able to use this on a real Ruby installation you can copy the source
+index to its site directory with:
+
+  $ rake copy_source_index_to_site
+
 === ./bin/µgem banner
   Microgem is an unsophisticated package manager for Ruby.
   And the first commandline utility to start with a multibyte character; µ
