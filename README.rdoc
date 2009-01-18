@@ -1,9 +1,23 @@
 == MicroGem
-
 The aim of this project is, at first, to create a re-implementation of the
 RubyGems +install+ command, which should be easier to get up and running on
 Ruby implementations such as MacRuby.
 
+=== ./bin/µgem banner
+  Microgem is an unsophisticated package manager for Ruby.
+
+    Usage:
+          µgem [command] [arguments…] [options…]
+
+    Example:
+          µgem install rake
+          µgem cache update
+
+    Options:
+          --debug                      Raises the log level to `debug'
+          --help                       Show help information
+
+=== Development
 The way it's being developed is in a test and RubyGems data driven manner.
 For instance, there's a test fixture called source_index.yaml. As its name
 implies this is a YAML file which is returned by a gem server, with a listing
@@ -20,20 +34,17 @@ to make the test green is written.
 * Naive, no more code than necessary should be written. (YAGNI)
 
 === TODO (in order of priority)
-* Download and install a gem.
-* Install gem dependencies.
 * Store/update source index cache.
-* Add a +microgem+ bin tool as a UI.
 * Add support for <tt>~/.gemrc</tt>
 * Add support for multiple gem servers.
+* Make the source index file tree be updatable via git, maybe host all gem spec YAML files on github…?
 * Remove any unnecessary “complex” code.
 * Bring back to _one_ file, or at least less files if it doesn't harm
   readability.
 
 ==== Manfreds wish list
-* Be the first commandline utility to start with a multibyte character; µ
 
-==== Laurents wish list 
+==== Laurents wish list
 * More commands:
   * +uninstall+
   * +search+
