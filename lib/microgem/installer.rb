@@ -47,8 +47,15 @@ module Gem
         "#{data_dir}.tar.gz"
       end
       
+      # Returns the full path to the gems Ruby `.gemspec' file. This file is
+      # needed by RubyGems to find the gem.
       def ruby_gemspec_file
         File.join(Config[:gem_home], 'specifications', "#{@gem_spec.gem_dirname}.gemspec")
+      end
+      
+      # Returns the full path to the RubyGems gem file cache directory.
+      def gem_cache_file
+        File.join(Config[:gem_home], 'cache', @gem_spec.gem_filename)
       end
       
       # Returns the path to where the gem should be installed.
@@ -94,6 +101,9 @@ module Gem
           
           log(:debug, "Moving `#{data_dir}' to `#{install_path}'")
           FileUtils.mv(data_dir, install_path)
+          
+          log(:debug, "Moving `#{gem_file}' to `#{gem_cache_file}'")
+          FileUtils.mv(gem_file, gem_cache_file)
           
           create_ruby_gemspec!
         end

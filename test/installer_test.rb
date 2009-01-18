@@ -73,6 +73,11 @@ describe "Gem::Micro::Installer, in general" do
     
     File.read(@installer.ruby_gemspec_file).should == @gem_spec.to_ruby
   end
+  
+  it "should return the path to the gem cache directory" do
+    @installer.gem_cache_file.should ==
+      File.join(Gem::Micro::Config[:gem_home], 'cache', @gem_spec.gem_filename)
+  end
 end
 
 describe "Gem::Micro::Installer.install" do
@@ -114,6 +119,11 @@ describe "Gem::Micro::Installer.install" do
   
   it "should move the unpacked data directory of the gem to install_path" do
     FileUtils.expects(:mv).with(@installer.data_dir, @installer.install_path)
+    @installer.install!
+  end
+  
+  it "should move the gem file to gem_cache_file" do
+    FileUtils.expects(:mv).with(@installer.gem_file, @installer.gem_cache_file)
     @installer.install!
   end
   
