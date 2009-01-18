@@ -1,6 +1,7 @@
 require 'microgem/yamlable'
 require 'microgem/utils'
 
+require 'microgem/bin_wrapper_emitter'
 require 'microgem/dependency'
 require 'microgem/installer'
 require 'microgem/options'
