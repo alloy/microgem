@@ -1,10 +1,12 @@
 == MicroGem
+
 The aim of this project is, at first, to create a re-implementation of the
 RubyGems +install+ command, which should be easier to get up and running on
 Ruby implementations such as MacRuby.
 
 === ./bin/µgem banner
   Microgem is an unsophisticated package manager for Ruby.
+  And the first commandline utility to start with a multibyte character; µ
 
     Usage:
           µgem [command] [arguments…] [options…]

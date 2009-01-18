@@ -16,6 +16,7 @@ module Gem
       def parser
         @parser ||= OptionParser.new do |opts|
           opts.banner =  "Microgem is an unsophisticated package manager for Ruby."
+          opts.separator "And the first commandline utility to start with a multibyte character; µ"
           opts.separator ""
           opts.separator "  Usage:"
           opts.separator "        µgem [command] [arguments…] [options…]"
