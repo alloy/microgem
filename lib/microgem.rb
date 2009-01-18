@@ -14,16 +14,24 @@ require 'microgem/version'
 module Gem
   module Micro
     Config = {}
-    Config[:gem_source_url]    = 'http://gems.rubyforge.org/gems/'
-    Config[:gem_home]          = File.expand_path("../../tmp/gem_home", __FILE__)
-    Config[:source_index_path] = File.join(Config[:gem_home], 'source_index.yaml')
-    Config[:install_dir]       = File.join(Config[:gem_home], 'gems')
-    Config[:log_level]         = Options::DEFAULTS[:log_level]
+    Config[:gem_source_url]        = 'http://gems.rubyforge.org/gems/'
+    Config[:gem_home]              = File.expand_path("../../tmp/gem_home", __FILE__)
+    Config[:microgem_source_index] = File.join(Config[:gem_home], 'microgem_source_index')
+    Config[:source_index_path]     = File.join(Config[:gem_home], 'source_index.yaml')
+    Config[:install_dir]           = File.join(Config[:gem_home], 'gems')
+    Config[:log_level]             = Options::DEFAULTS[:log_level]
     
     class << self
-      # TODO: this should happen lazily
       def load_source_index
         SourceIndex.load_from_file Config[:source_index_path]
+      end
+      
+      def source_index
+        @source_index ||= if File.exist?(Config[:microgem_source_index])
+          SourceIndexFileTree.new Config[:microgem_source_index]
+        else
+          SourceIndex.load_from_file Config[:source_index_path]
+        end
       end
       
       def run(arguments)
@@ -34,8 +42,7 @@ module Gem
         
         case options.command
         when 'install'
-          load_source_index
-          gem_spec = SourceIndex.instance.gem_specs(options.arguments.first).last
+          gem_spec = source_index.gem_specs(options.arguments.first).last
           gem_spec.install!
           
         when 'cache'

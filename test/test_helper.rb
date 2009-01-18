@@ -6,6 +6,7 @@ TMP_PATH = File.expand_path('../../tmp', __FILE__)
 
 # load the tests source_index.yaml
 Gem::SourceIndex.load_from_file(File.join(FIXTURE_PATH, 'source_index.yaml'))
+Gem::Micro.instance_variable_set(:@source_index, Gem::SourceIndex.instance)
 
 Gem::Micro::Config[:install_dir] = '/path/to/download/dir'
 

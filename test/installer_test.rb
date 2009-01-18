@@ -4,7 +4,7 @@ require File.expand_path('../test_helper', __FILE__)
 
 describe "Gem::Micro::Installer, in general" do
   def setup
-    @gem_spec = Gem::SourceIndex.instance.gem_specs('rake').last
+    @gem_spec = Gem::Micro.source_index.gem_specs('rake').last
     @installer = Gem::Micro::Installer.new(@gem_spec)
   end
   
@@ -65,7 +65,7 @@ end
 
 describe "Gem::Micro::Installer.install" do
   def setup
-    @gem_spec = Gem::SourceIndex.instance.gem_specs('rake').last
+    @gem_spec = Gem::Micro.source_index.gem_specs('rake').last
     @installer = Gem::Micro::Installer.new(@gem_spec)
     @installer.stubs(:download)
     @installer.stubs(:unpack)
@@ -73,7 +73,7 @@ describe "Gem::Micro::Installer.install" do
   end
   
   it "should install its dependencies that are not installed yet" do
-    @gem_spec = Gem::SourceIndex.instance.gem_specs('rails').last
+    @gem_spec = Gem::Micro.source_index.gem_specs('rails').last
     @installer.instance_variable_set(:@gem_spec, @gem_spec)
     
     Gem::Micro.stubs(:gem_paths).returns(fixture('gems'))

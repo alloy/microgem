@@ -4,11 +4,11 @@ require File.expand_path('../test_helper', __FILE__)
 
 describe "Gem::Specification" do
   def setup
-    @gem_spec = Gem::SourceIndex.instance.gem_specs('rake').last
+    @gem_spec = Gem::Micro.source_index.gem_specs('rake').last
   end
   
   it "should return its dependencies" do
-    gem_spec = Gem::SourceIndex.instance.gem_specs('rails').last
+    gem_spec = Gem::Micro.source_index.gem_specs('rails').last
     
     expected_version_requirements = [[]]
     expected_dep_names = %w{

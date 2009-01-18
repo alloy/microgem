@@ -8,7 +8,7 @@ end
 
 describe "Gem::Dependency" do
   def setup
-    gem_spec = Gem::SourceIndex.instance.gem_specs('rails').last
+    gem_spec = Gem::Micro.source_index.gem_specs('rails').last
     @dependencies = gem_spec.dependencies
     @dependency = @dependencies.find { |d| d.name == 'rake' }
   end
@@ -24,7 +24,7 @@ describe "Gem::Dependency" do
   end
   
   it "should return its gem spec" do
-    @dependency.gem_spec.should == Gem::SourceIndex.instance.gem_specs('rake').last
+    @dependency.gem_spec.should == Gem::Micro.source_index.gem_specs('rake').last
   end
   
   it "should return a string representation of itself" do
