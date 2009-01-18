@@ -23,7 +23,15 @@ describe "Gem::Dependency" do
     @dependencies.find { |d| d.name == 'activeresource' }.should.not.meet_requirements
   end
   
-  it "should return its gem spec" do
+  it "should return its gem spec matching the required version" do
+    @dependency.gem_spec.should == Gem::Micro.source_index.gem_specs('rake').last
+  end
+  
+  it "should return the latest gem spec if the required version is `0'" do
+    gem_spec = Gem::Micro.source_index.gem_specs('rails').first # this has: rake >= 0
+    @dependencies = gem_spec.dependencies
+    @dependency = @dependencies.find { |d| d.name == 'rake' }
+    
     @dependency.gem_spec.should == Gem::Micro.source_index.gem_specs('rake').last
   end
   

@@ -619,7 +619,7 @@ gems:
         requirements: 
         - - ">="
           - !ruby/object:Gem::Version 
-            version: 0.8.1
+            version: 0
         version: 
     - !ruby/object:Gem::Dependency 
       name: activesupport

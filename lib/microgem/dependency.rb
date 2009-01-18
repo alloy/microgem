@@ -11,10 +11,15 @@ module Gem
       end
     end
     
-    # Returns the Gem::Specification instance for this dependency.
+    # Returns the Gem::Specification instance for this dependency. If the
+    # required version is `0' then the latest version is used.
     def gem_spec
-      @gem_spec ||= Micro.source_index.gem_specs(name).find do |gem_spec|
-        gem_spec.version == @version_requirements.version
+      @gem_spec ||= if @version_requirements.version.any?
+        Micro.source_index.gem_specs(name).last
+      else
+        Micro.source_index.gem_specs(name).find do |gem_spec|
+          gem_spec.version == @version_requirements.version
+        end
       end
     end
     
