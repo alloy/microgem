@@ -35,6 +35,15 @@ describe "Gem::Dependency" do
     @dependency.gem_spec.should == Gem::Micro.source_index.gem_specs('rake').last
   end
   
+  it "should raise a Gem::Micro::GemSpecMissingError if the gem spec for this dependency can't be found" do
+    # this has a dependency on a gem that can't be located in the source index
+    gem_spec = Gem::Micro.source_index.gem_specs('test-spec-mock').first
+    @dependencies = gem_spec.dependencies
+    @dependency = @dependencies.find { |d| d.name == 'non-existing-gem-for-sure' }
+    
+    lambda { @dependency.gem_spec }.should.raise Gem::Micro::GemSpecMissingError
+  end
+  
   it "should return a string representation of itself" do
     @dependency.to_s.should == "rake >= 0.8.1"
   end

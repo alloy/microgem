@@ -1,4 +1,8 @@
 module Gem
+  module Micro
+    class GemSpecMissingError < StandardError; end
+  end
+  
   class Dependency < Micro::YAMLable
     attr_reader :name, :version, :version_requirements
     
@@ -14,13 +18,23 @@ module Gem
     # Returns the Gem::Specification instance for this dependency. If the
     # required version is `0' then the latest version is used.
     def gem_spec
-      @gem_spec ||= if @version_requirements.version.any?
-        Micro.source_index.gem_specs(name).last
-      else
-        Micro.source_index.gem_specs(name).find do |gem_spec|
-          gem_spec.version == @version_requirements.version
+      if @gem_spec.nil?
+        gem_specs = Micro.source_index.gem_specs(name)
+        
+        @gem_spec = if @version_requirements.version.any?
+          gem_specs.last
+        else
+          gem_specs.find do |gem_spec|
+            gem_spec.version == @version_requirements.version
+          end
+        end
+        
+        unless @gem_spec
+          raise Micro::GemSpecMissingError, "Unable to locate Gem::Specification for Gem::Dependency `#{self}'"
         end
       end
+      
+      @gem_spec
     end
     
     # Returns a ‘pretty’ string representation of the Dependency instance:

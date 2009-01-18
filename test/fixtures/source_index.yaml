@@ -1084,6 +1084,15 @@ gems:
           - !ruby/object:Gem::Version 
             version: 0.3.2
         version: 
+    - !ruby/object:Gem::Dependency 
+      name: non-existing-gem-for-sure
+      version_requirement: 
+      version_requirements: !ruby/object:Gem::Requirement 
+        requirements: 
+        - - ">="
+          - !ruby/object:Gem::Version 
+            version: 0.8.7.6
+        version:
     description: a Behaviour Driven Development interface for Test::Unit
     email: chneukirchen@gmail.com
     executables: 
