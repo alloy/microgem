@@ -1,6 +1,6 @@
 module Gem
   class Specification < Micro::YAMLable
-    attr_reader :name, :version, :dependencies
+    attr_reader :name, :version, :dependencies, :executables
     
     # Returns the Specification's dirname:
     #

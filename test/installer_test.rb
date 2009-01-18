@@ -78,6 +78,14 @@ describe "Gem::Micro::Installer, in general" do
     @installer.gem_cache_file.should ==
       File.join(Gem::Micro::Config[:gem_home], 'cache', @gem_spec.gem_filename)
   end
+  
+  it "should create bin wrappers for each executable" do
+    emitter = Gem::Micro::BinWrapperEmitter.new('rake')
+    Gem::Micro::BinWrapperEmitter.expects(:new).with('rake').returns(emitter)
+    emitter.expects(:create_bin_wrapper!)
+    
+    @installer.create_bin_wrappers!
+  end
 end
 
 describe "Gem::Micro::Installer.install" do
@@ -87,6 +95,7 @@ describe "Gem::Micro::Installer.install" do
     @installer.stubs(:download)
     @installer.stubs(:unpack)
     @installer.stubs(:create_ruby_gemspec!)
+    @installer.stubs(:create_bin_wrappers!)
     @installer.stubs(:replace)
   end
   
@@ -127,6 +136,11 @@ describe "Gem::Micro::Installer.install" do
     @installer.install!
   end
   
+  it "should create bin wrappers" do
+    @installer.expects(:create_bin_wrappers!)
+    @installer.install!
+  end
+  
   it "should create a `.gemspec' file" do
     @installer.expects(:create_ruby_gemspec!)
     @installer.install!
@@ -137,6 +151,8 @@ describe "Gem::Micro::Installer.install" do
     @installer.expects(:download).never
     @installer.expects(:unpack).never
     @installer.expects(:replace).never
+    @installer.expects(:create_bin_wrappers!).never
+    @installer.expects(:create_ruby_gemspec!).never
     
     @installer.install!
   end
@@ -147,6 +163,8 @@ describe "Gem::Micro::Installer.install" do
     @installer.expects(:download).times(1)
     @installer.expects(:unpack).times(1)
     @installer.expects(:replace).times(2)
+    @installer.expects(:create_bin_wrappers!).times(1)
+    @installer.expects(:create_ruby_gemspec!).times(1)
     
     @installer.install!(true)
   end

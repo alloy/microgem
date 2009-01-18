@@ -85,9 +85,16 @@ module Gem
         untar(data_file, data_dir, true)
       end
       
+      # Creates the Ruby `.gemspec' used by RubyGems to find a gem at
+      # ruby_gemspec_file.
       def create_ruby_gemspec!
         log(:debug, "Creating gem spec file `#{ruby_gemspec_file}'")
         File.open(ruby_gemspec_file, 'w') { |f| f << @gem_spec.to_ruby }
+      end
+      
+      # Creates the executables for this gem in the Ruby bin dir.
+      def create_bin_wrappers!
+        @gem_spec.executables.each { |bin| BinWrapperEmitter.new(bin).create_bin_wrapper! }
       end
       
       # Installs all dependencies and then the gem itself. Skips installation
@@ -108,6 +115,7 @@ module Gem
           replace(data_dir, install_path)
           replace(gem_file, gem_cache_file)
           
+          create_bin_wrappers!
           create_ruby_gemspec!
         end
       end
