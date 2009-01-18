@@ -117,6 +117,14 @@ module Gem
           @nodes[dirname] = node if node.exist?
         end
       end
+      
+      def gem_specs(name)
+        namespace = name[0,1].downcase
+        Dir.glob(File.join(@root_path, namespace, "#{name}-[0-9]*")).map do |gem_spec_file|
+          dirname = File.basename(gem_spec_file, '.yaml')
+          self[dirname].gem_spec
+        end
+      end
     end
   end
 end

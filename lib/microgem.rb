@@ -22,14 +22,18 @@ module Gem
     Config[:log_level]             = Options::DEFAULTS[:log_level]
     
     class << self
+      include Utils
+      
       def load_source_index
         SourceIndex.load_from_file Config[:source_index_path]
       end
       
       def source_index
         @source_index ||= if File.exist?(Config[:microgem_source_index])
+          log(:debug, "Loading source index file tree `#{Config[:microgem_source_index]}'")
           SourceIndexFileTree.new Config[:microgem_source_index]
         else
+          log(:debug, "Loading YAML source index `#{Config[:source_index_path]}'")
           SourceIndex.load_from_file Config[:source_index_path]
         end
       end

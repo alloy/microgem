@@ -18,8 +18,9 @@ task :dev_data => :get_source_index
 
 desc "Cleans the temporary gems install directory"
 task :clean do
-  rm_rf "tmp/gems"
-  mkdir_p "tmp/gems"
+  dir = File.join(HOME, 'gems')
+  rm_rf dir
+  mkdir_p dir
 end
 
 YAML_URL = "http://gems.rubyforge.org/yaml.Z"
