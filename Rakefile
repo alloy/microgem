@@ -10,7 +10,9 @@ task :default => :test
 
 desc "Creates the temporary directories"
 task :create_tmp_dirs do
-  mkdir_p File.join(HOME, 'gems') rescue nil
+  %w{ gems specifications }.each do |gem_dir|
+    mkdir_p File.join(HOME, gem_dir) rescue nil
+  end
 end
 
 desc "Setup the development env data"
@@ -18,9 +20,11 @@ task :dev_data => :get_source_index
 
 desc "Cleans the temporary gems install directory"
 task :clean do
-  dir = File.join(HOME, 'gems')
-  rm_rf dir
-  mkdir_p dir
+  %w{ gems specifications }.each do |gem_dir|
+    dir = File.join(HOME, gem_dir)
+    rm_rf dir
+    mkdir_p dir
+  end
 end
 
 YAML_URL = "http://gems.rubyforge.org/yaml.Z"
