@@ -36,6 +36,7 @@ to make the test green is written.
 * Naive, no more code than necessary should be written. (YAGNI)
 
 === TODO (in order of priority)
+* Create bin wrappers.
 * Store/update source index cache.
 * Add support for <tt>~/.gemrc</tt>
 * Add support for multiple gem servers.
@@ -43,8 +44,6 @@ to make the test green is written.
 * Remove any unnecessary “complex” code.
 * Bring back to _one_ file, or at least less files if it doesn't harm
   readability.
-
-==== Manfreds wish list
 
 ==== Laurents wish list
 * More commands:
