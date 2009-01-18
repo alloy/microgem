@@ -90,11 +90,15 @@ module Gem
         File.open(ruby_gemspec_file, 'w') { |f| f << @gem_spec.to_ruby }
       end
       
-      # Installs all dependencies and then the gem itself.
-      def install!
+      # Installs all dependencies and then the gem itself. Skips installation
+      # if after installing the dependencies the gem is already installed.
+      #
+      # You can +force+ the gem to be installed even if the gem is already
+      # installed.
+      def install!(force = false)
         install_dependencies!
         
-        if File.exist?(install_path)
+        if !force && File.exist?(install_path)
           log(:debug, "Already installed `#{@gem_spec}'")
         else
           log(:info, "Installing `#{@gem_spec}'")

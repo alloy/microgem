@@ -1,5 +1,4 @@
 == MicroGem
-
 The aim of this project is, at first, to create a re-implementation of the
 RubyGems +install+ command, which should be easier to get up and running on
 Ruby implementations such as MacRuby.
@@ -13,10 +12,12 @@ Ruby implementations such as MacRuby.
 
     Example:
           µgem install rake
-          µgem cache update
+          µgem install rails --force
+          µgem cache update --debug
 
     Options:
           --debug                      Raises the log level to `debug'
+          --force                      Forces a command
           --help                       Show help information
 
 === Development

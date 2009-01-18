@@ -140,4 +140,14 @@ describe "Gem::Micro::Installer.install" do
     
     @installer.install!
   end
+  
+  it "should _not_ skip the actual installation of the gem _if_ after installing the dependencies it exists" do
+    File.stubs(:exist?).returns(true)
+    
+    @installer.expects(:download).times(1)
+    @installer.expects(:unpack).times(1)
+    FileUtils.expects(:mv).times(2)
+    
+    @installer.install!(true)
+  end
 end

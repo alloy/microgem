@@ -10,19 +10,27 @@ describe "Gem::Micro::Options, defaults" do
   it "should have a default log level of :info" do
     @options.log_level.should == :info
   end
+  
+  it "should not force commands by default" do
+    assert !@options.force
+  end
 end
 
 describe "Gem::Micro::Options, with options" do
   def setup
     @options = Gem::Micro::Options.new
-    @options.parse(%w{ install rake --debug })
   end
   
   it "should set the log_level" do
-    @options.log_level.should == :debug
+    @options.parse(%w{ install rake --debug }).log_level.should == :debug
+  end
+  
+  it "should force commands" do
+    assert @options.parse(%w{ install rake --force }).force
   end
   
   it "should return the command and its arguments" do
+    @options.parse(%w{ install rake --debug })
     @options.command.should == 'install'
     @options.arguments.should == ['rake']
   end

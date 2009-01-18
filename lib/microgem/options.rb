@@ -4,10 +4,11 @@ module Gem
   module Micro
     class Options
       DEFAULTS = {
-        :log_level => :info
+        :log_level => :info,
+        :force     => false
       }
       
-      attr_accessor :command, :arguments, :log_level
+      attr_accessor :command, :arguments, :log_level, :force
       
       def initialize
         DEFAULTS.each { |k,v| send("#{k}=", v) }
@@ -23,12 +24,17 @@ module Gem
           opts.separator ""
           opts.separator "  Example:"
           opts.separator "        µgem install rake"
-          opts.separator "        µgem cache update"
+          opts.separator "        µgem install rails --force"
+          opts.separator "        µgem cache update --debug"
           opts.separator ""
           opts.separator "  Options:"
           
           opts.on("--debug", "Raises the log level to `debug'") do
             self.log_level = :debug
+          end
+          
+          opts.on("--force", "Forces a command") do
+            self.force = true
           end
           
           opts.on("--help", "Show help information") do
