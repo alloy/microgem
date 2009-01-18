@@ -9,6 +9,7 @@ require 'microgem/stubs'
 require 'microgem/source_index'
 require 'microgem/source_index_file_tree'
 require 'microgem/specification'
+require 'microgem/specification_emitter'
 require 'microgem/version'
 
 module Gem
