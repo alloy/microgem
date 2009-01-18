@@ -25,5 +25,14 @@ module Gem
     def inspect
       "#<Gem::Specification:#{object_id} name=\"#{name}\" version=\"#{version}\">"
     end
+    
+    def to_ruby
+%{Gem::Specification.new do |s|
+  s.name = "#{name}"
+  s.version = "#{version}"
+
+  s.specification_version = 2 if s.respond_to? :specification_version=
+end}
+    end
   end
 end

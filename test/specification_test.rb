@@ -38,4 +38,8 @@ describe "Gem::Specification" do
     
     @gem_spec.install!
   end
+  
+  it "should return a representation of itself in ruby" do
+    @gem_spec.to_ruby.should == File.read(fixture('rake-0.8.1.gemspec'))
+  end
 end

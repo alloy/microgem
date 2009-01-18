@@ -31,7 +31,7 @@ module Gem
         config[:gem_source_url]        = 'http://gems.rubyforge.org/gems/'
         config[:log_level]             = Options::DEFAULTS[:log_level]
         config[:microgem_source_index] = File.join(config[:gem_home], 'microgem_source_index')
-        config[:source_index_path]     = File.join(config[:gem_home], 'source_index.yaml')
+        config[:source_index_path]     = File.join(config[:gem_home], 'source_index.yaml') # where does rubygems store this file?
         config[:install_dir]           = File.join(config[:gem_home], 'gems')
         
         config
