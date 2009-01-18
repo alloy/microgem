@@ -15,6 +15,11 @@ module Gem
         end
       end
       
+      # Creates a directory if it does not yet exist.
+      def ensure_dir(dir)
+        FileUtils.mkdir_p(dir) unless File.exist?(dir)
+      end
+      
       # Returns a temporary directory and ensures it exists.
       #
       #   File.exist?('/path/to/tmp/microgem') # => false
@@ -22,7 +27,7 @@ module Gem
       #   File.exist?('/path/to/tmp/microgem') # => true
       def tmpdir
         tmpdir = File.join(Dir.tmpdir, 'microgem')
-        FileUtils.mkdir(tmpdir) unless File.exist?(tmpdir)
+        ensure_dir(tmpdir)
         tmpdir
       end
     end

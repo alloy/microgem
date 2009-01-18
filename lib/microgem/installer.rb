@@ -50,11 +50,13 @@ module Gem
       # Returns the full path to the gems Ruby `.gemspec' file. This file is
       # needed by RubyGems to find the gem.
       def ruby_gemspec_file
+        ensure_dir File.join(Config[:gem_home], 'specifications')
         File.join(Config[:gem_home], 'specifications', "#{@gem_spec.gem_dirname}.gemspec")
       end
       
       # Returns the full path to the RubyGems gem file cache directory.
       def gem_cache_file
+        ensure_dir File.join(Config[:gem_home], 'cache')
         File.join(Config[:gem_home], 'cache', @gem_spec.gem_filename)
       end
       
@@ -112,7 +114,9 @@ module Gem
       private
       
       def install_dependencies!
+        log(:debug, "Checking dependencies for `#{@gem_spec}'")
         @gem_spec.dependencies.each do |dep|
+          log(:debug, "Checking dependency `#{dep}' requirements")
           dep.gem_spec.install! unless dep.meets_requirements?
         end
       end

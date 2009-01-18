@@ -12,6 +12,12 @@ describe "Gem::Micro::Utils" do
   xit "should provide a proper logger" do
   end
   
+  it "should ensure a directory exists" do
+    dir = File.join(Dir.tmpdir, 'nice', 'and', 'deep')
+    ensure_dir(dir)
+    File.should.exist dir
+  end
+  
   it "should create a temporary directory if it doesn't exist and return it" do
     expected_path = File.join(Dir.tmpdir, 'microgem')
     
