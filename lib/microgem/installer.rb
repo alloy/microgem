@@ -1,9 +1,6 @@
 module Gem
   module Micro
     class Installer
-      class DownloadError < StandardError; end
-      class UnpackError < StandardError; end
-      
       include Utils
       
       def initialize(gem_spec)
@@ -71,7 +68,6 @@ module Gem
       #
       # Raises a Gem::Micro::Installer::DownloadError if downloading fails.
       def download
-        log(:debug, "Downloading `#{url}' to `#{gem_file}'")
         curl(url, gem_file)
       end
       
@@ -79,8 +75,6 @@ module Gem
       #
       # Raises a Gem::Micro::Installer::UnpackError if unpacking fails.
       def unpack
-        log(:debug, "Unpacking `#{gem_file}' to `#{work_dir}'")
-        
         untar(gem_file, work_dir, false)
         untar(data_file, data_dir, true)
       end
@@ -127,19 +121,6 @@ module Gem
         @gem_spec.dependencies.each do |dep|
           log(:debug, "Checking dependency requirements of `#{dep}'")
           dep.gem_spec.install!(force) unless dep.meets_requirements?
-        end
-      end
-      
-      def curl(url, to)
-        unless system("/usr/bin/curl --silent --location --output '#{to}' #{url}")
-          raise DownloadError, "Failed to download `#{url}'"
-        end
-      end
-      
-      def untar(file, to, gzip)
-        FileUtils.mkdir(to) unless File.exist?(to)
-        unless system("/usr/bin/tar --directory='#{to}' -#{ 'z' if gzip }xf '#{file}' > /dev/null 2>&1")
-          raise UnpackError, "Failed to unpack `#{file}'"
         end
       end
     end

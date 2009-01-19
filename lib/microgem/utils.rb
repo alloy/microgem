@@ -3,6 +3,9 @@ require 'tmpdir'
 
 module Gem
   module Micro
+    class DownloadError < StandardError; end
+    class UnpackError < StandardError; end
+    
     module Utils
       extend self
       
@@ -36,6 +39,30 @@ module Gem
         tmpdir = File.join(Dir.tmpdir, 'microgem')
         ensure_dir(tmpdir)
         tmpdir
+      end
+      
+      # Downloads a file from +url+ to +to+ using the +curl+ commandline
+      # utility.
+      #
+      # Raises a Gem::Micro::DownloadError if it fails.
+      def curl(url, to)
+        log(:debug, "Downloading `#{url}' to `#{to}'")
+        unless system("/usr/bin/curl --silent --location --output '#{to}' #{url}")
+          raise DownloadError, "Failed to download `#{url}'"
+        end
+      end
+      
+      # Unpacks an archive from +file+ to +to+ using the +tar+ commandline
+      # utility. If +gzip+ is +true+ the archive is expected to be a gzip
+      # archive and will be decompressed.
+      #
+      # Raises a Gem::Micro::UnpackError if it fails.
+      def untar(file, to, gzip = false)
+        log(:debug, "Unpacking `#{file}' to `#{to}'")
+        ensure_dir(to)
+        unless system("/usr/bin/tar --directory='#{to}' -#{ 'z' if gzip }xf '#{file}' > /dev/null 2>&1")
+          raise UnpackError, "Failed to unpack `#{file}': #{$?}"
+        end
       end
     end
   end
