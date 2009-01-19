@@ -4,11 +4,13 @@ module Gem
   module Micro
     class Options
       DEFAULTS = {
-        :log_level => :info,
-        :force     => false
+        :log_level         => :info,
+        :force             => false,
+        :simple_downloader => false
       }
       
       attr_accessor :command, :arguments, :log_level, :force
+      attr_accessor :simple_downloader
       
       def initialize
         DEFAULTS.each { |k,v| send("#{k}=", v) }
@@ -37,10 +39,15 @@ module Gem
             self.force = true
           end
           
+          opts.on("--simple-downloader", "Use curl to download files instead of Net::HTTP") do
+            self.simple_downloader = true
+          end
+          
           opts.on("--help", "Show help information") do
             puts opts
             exit
           end
+          
         end
       end
       

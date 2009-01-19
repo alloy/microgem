@@ -33,13 +33,23 @@ module Kernel
   remove_microgem_tmpdir! # ensure it doesn't exist before test run
   
   # we don't want to load rubygems, so use these work arounds
-  alias_method :__require_before_minigems, :require
+  alias_method :__require_before_microgems, :require
   def require(lib)
-    __require_before_minigems(lib) unless lib == 'rubygems'
+    __require_before_microgems(lib) unless lib == 'rubygems'
   end
   
   def gem(*args)
     # do nothing
+  end
+end
+
+require 'net/http'
+module Net
+  class HTTP
+    class TryingToMakeHTTPConnectionException < StandardError; end
+    def connect
+      raise TryingToMakeHTTPConnectionException, "Please mock your HTTP calls so you don't do any HTTP requests."
+    end
   end
 end
 

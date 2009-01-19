@@ -41,11 +41,6 @@ describe "Gem::Micro::Installer, in general" do
     @installer.download
   end
   
-  it "should raise a DownloadError if curl failed to download the gem" do
-    Gem::Micro::Downloader.stubs(:system).returns(false)
-    lambda { @installer.download }.should.raise Gem::Micro::Downloader::DownloadError
-  end
-  
   it "should unpack the gem using tar" do
     @installer.stubs(:gem_file).returns(fixture('rake-0.8.1.gem'))
     @installer.unpack
