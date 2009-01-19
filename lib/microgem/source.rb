@@ -38,7 +38,7 @@ module Gem
       
       # Downloads and unpacks a index file to index_file.
       def get_index!
-        curl(specs_url, work_index_file)
+        Gem::Micro::Downloader.get(specs_url, work_index_file)
         untar(work_index_file, index_file, true)
       end
     end

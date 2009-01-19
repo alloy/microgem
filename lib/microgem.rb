@@ -3,6 +3,7 @@ require 'microgem/utils'
 
 require 'microgem/bin_wrapper_emitter'
 require 'microgem/dependency'
+require 'microgem/downloader'
 require 'microgem/installer'
 require 'microgem/options'
 require 'microgem/requirement'

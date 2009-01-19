@@ -39,22 +39,6 @@ describe "Gem::Micro::Utils" do
     File.should.exist expected_path
   end
   
-  it "should download a file to the specified file path using curl" do
-    url = 'http://gems.rubyforge.org/gems/rake-0.8.1.gem'
-    path = '/tmp/rake-0.8.1.gem'
-    
-    expects(:system).
-      with("/usr/bin/curl --silent --location --output '#{path}' #{url}").
-        returns(true)
-    
-    curl(url, path)
-  end
-  
-  it "should raise a DownloadError if curl failed to download the file" do
-    stubs(:system).returns(false)
-    lambda { curl('url', 'path') }.should.raise Gem::Micro::DownloadError
-  end
-  
   it "should unpack a file using tar _without_ gzip decompression" do
     path = File.join(tmpdir, 'rake-0.8.1')
     untar(fixture('rake-0.8.1.gem'), path, false)

@@ -66,9 +66,9 @@ module Gem
       
       # Downloads the gem to gem_file.
       #
-      # Raises a Gem::Micro::Installer::DownloadError if downloading fails.
+      # Raises a Gem::Micro::Downloader::DownloadError if downloading fails.
       def download
-        curl(url, gem_file)
+        Gem::Micro::Downloader.get(url, gem_file)
       end
       
       # Unpacks the gem to work_dir.

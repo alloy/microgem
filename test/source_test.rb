@@ -44,7 +44,7 @@ describe "Gem::Micro::Source, for a non existing index on disk" do
   end
   
   it "should download and unpack the index to the index_path" do
-    @source.expects(:curl).with(@source.specs_url, @source.work_index_file)
+    Gem::Micro::Downloader.expects(:get).with(@source.specs_url, @source.work_index_file)
     @source.expects(:untar).with(@source.work_index_file, @source.index_file, true)
     @source.get_index!
   end

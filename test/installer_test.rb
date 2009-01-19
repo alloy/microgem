@@ -36,9 +36,14 @@ describe "Gem::Micro::Installer, in general" do
       File.join(@installer.work_dir, 'data.tar.gz')
   end
   
-  it "should download the gem to the work directory using curl" do
-    @installer.expects(:curl).with(@installer.url, @installer.gem_file)
+  it "should download the gem to the work directory" do
+    Gem::Micro::Downloader.expects(:get).with(@installer.url, @installer.gem_file)
     @installer.download
+  end
+  
+  it "should raise a DownloadError if curl failed to download the gem" do
+    Gem::Micro::Downloader.stubs(:system).returns(false)
+    lambda { @installer.download }.should.raise Gem::Micro::Downloader::DownloadError
   end
   
   it "should unpack the gem using tar" do
