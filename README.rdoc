@@ -3,6 +3,8 @@ The aim of this project is, at first, to create a re-implementation of the
 RubyGems +install+ command, which should be easier to get up and running on
 Ruby implementations such as MacRuby.
 
+See the TODO file for a list of todo's.
+
 === Installation
 For now there's no _real_ installation yet because it's still in a very early
 stage. To setup the development environment follow these steps.
@@ -53,20 +55,3 @@ to make the test green is written.
 * Test driven.
 * Clean room design.
 * Naive, no more code than necessary should be written. (YAGNI)
-
-=== TODO (in order of priority)
-* Create bin wrappers.
-* Store/update source index cache.
-* Add support for <tt>~/.gemrc</tt>
-* Add support for multiple gem servers.
-* Make the source index file tree be updatable via git, maybe host all gem spec YAML files on github…?
-* Remove any unnecessary “complex” code.
-* Bring back to _one_ file, or at least less files if it doesn't harm
-  readability.
-
-==== Laurents wish list
-* More commands:
-  * +uninstall+
-  * +search+
-  * +update+
-  * +list+

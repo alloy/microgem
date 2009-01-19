@@ -38,6 +38,17 @@ task :get_source_index => :create_tmp_dirs do
   end
 end
 
+MARSHAL_URL = "http://gems.rubyforge.org/Marshal.4.8.Z"
+desc "Downloads and unpacks #{MARSHAL_URL}"
+task :get_marshaled_source_index => :create_tmp_dirs do
+  require 'zlib'
+  Dir.chdir(HOME) do
+    sh "curl -L -O #{MARSHAL_URL}"
+    yaml = Zlib::Inflate.inflate(File.read("Marshal.4.8.Z"))
+    File.open("Marshal.4.8", 'w') { |f| f << yaml }
+  end
+end
+
 desc "Copies a source index file tree to the gems site dir"
 task :copy_source_index_to_site do
   require 'rbconfig'
