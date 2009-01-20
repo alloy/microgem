@@ -83,6 +83,8 @@ describe "Gem::Micro::Source, for an existing index" do
     Gem::Micro::Downloader.stubs(:get)
     FileUtils.cp(fixture('specs.4.8.gz'), tmpdir)
     @source.get_index!
+    
+    @rake = ['rake', Gem::Version[:version => '0.8.1']]
   end
   
   def teardown
@@ -94,7 +96,7 @@ describe "Gem::Micro::Source, for an existing index" do
   end
   
   it "should return a spec matching the given name and version" do
-    rake_0_8_1 = @source.spec('rake', Gem::Version[:version => '0.8.1'])
+    rake_0_8_1 = @source.spec(*@rake)
     rake_0_8_1[1].to_s.should == '0.8.1'
   end
   
@@ -104,12 +106,27 @@ describe "Gem::Micro::Source, for an existing index" do
   end
   
   it "should return the url to a gemspec" do
-    @source.gem_spec_url('rake', Gem::Version[:version => '0.8.1']).should ==
+    @source.gem_spec_url(*@rake).should ==
       "http://gems.rubyforge.org/quick/Marshal.4.8/rake-0.8.1.gemspec.rz"
   end
   
-  xit "should return a gem spec matching the given name" do
-    gem_spec = @source.gem_spec('rake', Gem::Version[:version => '0.8.1'])
+  it "should return the path to the work gemspec file" do
+    @source.gem_spec_work_file(*@rake).should ==
+      File.join(tmpdir, 'rake-0.8.1.gemspec')
+  end
+  
+  it "should return the path to the work archive of the gemspec file" do
+    @source.gem_spec_work_archive_file(*@rake).should ==
+      File.join(tmpdir, 'rake-0.8.1.gemspec.rz')
+  end
+  
+  it "should return a gem spec matching the given name" do
+    Gem::Micro::Downloader.expects(:get).with(@source.gem_spec_url(*@rake), @source.gem_spec_work_archive_file(*@rake))
+    FileUtils.cp(fixture('rake-0.8.1.gemspec.rz'), tmpdir)
+    
+    gem_spec = @source.gem_spec(*@rake)
     gem_spec.should.be.instance_of Gem::Specification
+    gem_spec.name.should == 'rake'
+    gem_spec.version.should == Gem::Version[:version => '0.8.1']
   end
 end

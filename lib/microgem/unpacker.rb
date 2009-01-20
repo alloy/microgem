@@ -46,7 +46,9 @@ module Gem
       
       ZINFLATE_BIN = File.expand_path('../../../bin/zinflate', __FILE__)
       def self.inflate_with_zinflate(archive, out_file)
-        system("ruby '#{ZINFLATE_BIN}' '#{archive}' '#{out_file}'")
+        unless system("ruby '#{ZINFLATE_BIN}' '#{archive}' '#{out_file}' > /dev/null 2>&1")
+          raise UnpackError, "Failed to unpack `#{archive}' with `zinflate'"
+        end
       end
     end
   end

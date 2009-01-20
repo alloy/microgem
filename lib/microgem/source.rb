@@ -58,14 +58,30 @@ module Gem
         specs.select { |spec| spec[0] == name && (version.any? || spec[1] == version) }.last
       end
       
+      # TODO: This should all move to a ‘bare’ spec class:
+      
       def gem_spec_url(name, version)
         "http://#{@host}/quick/Marshal.4.8/#{name}-#{version}.gemspec.rz"
       end
       
-      # def gem_spec(name, version)
-      #   spec = spec(name, version)
-      #   Gem::Micro::Downloader.get(gem_spec_url(name, version), "path to where gemspec should be stored")
-      # end
+      def gem_spec_work_file(name, version)
+        File.join(tmpdir, "#{name}-#{version}.gemspec")
+      end
+      
+      def gem_spec_work_archive_file(name, version)
+        "#{gem_spec_work_file(name, version)}.rz"
+      end
+      
+      def gem_spec(name, version)
+        spec = spec(name, version)
+        archive = gem_spec_work_archive_file(name, version)
+        gemspec = gem_spec_work_file(name, version)
+        
+        Downloader.get(gem_spec_url(name, version), archive)
+        Unpacker.inflate(archive, gemspec)
+        
+        Marshal.load(File.read(gemspec))
+      end
     end
   end
 end

@@ -60,6 +60,12 @@ describe "Unpacker, in simple mode" do
     Gem::Micro::Unpacker.inflate(archive, out_file)
     Marshal.load(File.read(out_file)).should.be.instance_of Gem::Specification
   end
+  
+  it "should raise an UnpackError if zinflate failed to extract an archive" do
+    lambda do
+      Gem::Micro::Unpacker.inflate('/does/not/exist/rake-0.8.1.gemspec.rz', '/tmp')
+    end.should.raise Gem::Micro::Unpacker::UnpackError
+  end
 end
 
 describe "Unpacker, in complex mode" do
@@ -73,7 +79,7 @@ describe "Unpacker, in complex mode" do
     remove_microgem_tmpdir!
   end
   
-  it "should inflate a file using Ruby's Zlib" do
+  it "should inflate a Z archive using Ruby's Zlib" do
     out_file = File.join(tmpdir, 'marshalled_gemspec')
     Gem::Micro::Unpacker.inflate(fixture('rake-0.8.1.gemspec.rz'), out_file)
     Marshal.load(File.read(out_file)).should.be.instance_of Gem::Specification
