@@ -2,21 +2,38 @@
 
 require File.expand_path('../test_helper', __FILE__)
 
-xdescribe "Gem::Micro::Source, class methods" do
-  include Gem::Micro
+describe "Gem::Micro::Source, class methods" do
+  include Gem::Micro::Utils
+  
+  def setup
+    Gem::Micro::Source.add_source('gems.rubyforge.org', tmpdir)
+    Gem::Micro::Source.add_source('gems.github.com', tmpdir)
+    @sources = Gem::Micro::Source.sources
+  end
+  
+  def teardown
+    Gem::Micro::Source.instance_variable_set(:@sources, nil)
+  end
   
   it "should add sources" do
-    Source.add_source('gems.rubyforge.org')
-    Source.add_source('gems.github.com')
-    
-    Source.sources.should == [Source.new('gems.rubyforge.org'), Source.new('gems.github.com')]
+    @sources.length.should.be 2
+    @sources.each { |s| s.should.be.instance_of Gem::Micro::Source }
+    @sources.map { |s| s.host }.should == %w{ gems.rubyforge.org gems.github.com }
   end
   
   it "should return gem specs from all sources and mark them to know form which source they came" do
-    # stub old version from rubyforge, new version from github
-    rubyforge_gem_spec, github_gem_spec = Source.gem_specs('rake')
-    rubyforge_gem_spec.source.should == 'gems.rubyforge.org'
-    github_gem_spec.source.should == 'gems.github.com'
+    rake = ['rake', Gem::Version[:version => '0.8.1']]
+    
+    rubyforge_bare_spec = mock('Rubyforge')
+    github_bare_spec = mock('Github')
+    
+    Gem::Micro::BareSpecification.expects(:new).with(@sources.first, *rake).returns(rubyforge_bare_spec)
+    Gem::Micro::BareSpecification.expects(:new).with(@sources.last, *rake).returns(github_bare_spec)
+    
+    rubyforge_bare_spec.expects(:gem_spec).returns('rubyforge')
+    github_bare_spec.expects(:gem_spec).returns('github')
+    
+    Gem::Micro::Source.gem_spec(*rake).should == %w{ rubyforge github }
   end
 end
 
@@ -107,7 +124,7 @@ describe "Gem::Micro::Source, for an existing index" do
   
   it "should return a gem spec matching the given name" do
     spec = mock('BareSpecification')
-    Gem::Micro::BareSpecification.expects(:new).with(@source.host, *@rake).returns(spec)
+    Gem::Micro::BareSpecification.expects(:new).with(@source, *@rake).returns(spec)
     spec.expects(:gem_spec).returns("The Gem::Specification")
     
     @source.gem_spec(*@rake).should == "The Gem::Specification"

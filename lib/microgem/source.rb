@@ -1,6 +1,18 @@
 module Gem
   module Micro
     class Source
+      def self.sources
+        @sources ||= []
+      end
+      
+      def self.add_source(host, directory)
+        sources << Source.new(host, directory)
+      end
+      
+      def self.gem_spec(name, version)
+        sources.map { |source| source.gem_spec(name, version) }
+      end
+      
       include Utils
       
       SPECS_FILE = "specs.4.8"
@@ -65,7 +77,7 @@ module Gem
       
       # Returns a Gem::Specification matching the given +name+ and +version+.
       def gem_spec(name, version)
-        BareSpecification.new(@host, name, version).gem_spec
+        BareSpecification.new(self, name, version).gem_spec
       end
     end
   end

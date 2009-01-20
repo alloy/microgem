@@ -49,6 +49,7 @@ describe "Gem::Micro::SpecificationEmitter" do
   it "should not include special values in the gem_spec_variables" do
     set_ivar('name', 'rake')
     set_ivar('mocha', 'dev var')
+    set_ivar('source', 'gems.rubyforge.org')
     set_ivar('version', '0.8.1')
     set_ivar('dependencies', [])
     set_ivar('specification_version', '2')
@@ -57,6 +58,7 @@ describe "Gem::Micro::SpecificationEmitter" do
     
     keys.should.not.include 'name'
     keys.should.not.include 'mocha'
+    keys.should.not.include 'source'
     keys.should.not.include 'version'
     keys.should.not.include 'dependencies'
     keys.should.not.include 'specification_version'

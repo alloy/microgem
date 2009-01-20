@@ -4,6 +4,7 @@ module Gem
       SPECIAL_INSTANCE_VARIABLES = [
         'name',
         'mocha',
+        'source',
         'version',
         'dependencies',
         'specification_version',
