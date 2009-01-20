@@ -49,6 +49,23 @@ module Gem
         gunzip(work_archive_file)
         FileUtils.mv(work_index_file, index_file)
       end
+      
+      def specs
+        @specs ||= Marshal.load(File.read(index_file))
+      end
+      
+      def spec(name, version)
+        specs.select { |spec| spec[0] == name && (version.any? || spec[1] == version) }.last
+      end
+      
+      def gem_spec_url(name, version)
+        "http://#{@host}/quick/Marshal.4.8/#{name}-#{version}.gemspec.rz"
+      end
+      
+      # def gem_spec(name, version)
+      #   spec = spec(name, version)
+      #   Gem::Micro::Downloader.get(gem_spec_url(name, version), "path to where gemspec should be stored")
+      # end
     end
   end
 end

@@ -93,7 +93,23 @@ describe "Gem::Micro::Source, for an existing index" do
     @source.should.exist
   end
   
-  xit "should return gem specs matching the given name" do
-    
+  it "should return a spec matching the given name and version" do
+    rake_0_8_1 = @source.spec('rake', Gem::Version[:version => '0.8.1'])
+    rake_0_8_1[1].to_s.should == '0.8.1'
+  end
+  
+  it "should return the last spec matching the given name and a version of any?" do
+    rake_0_8_3 = @source.spec('rake', Gem::Version[:version => '0'])
+    rake_0_8_3[1].to_s.should == '0.8.3'
+  end
+  
+  it "should return the url to a gemspec" do
+    @source.gem_spec_url('rake', Gem::Version[:version => '0.8.1']).should ==
+      "http://gems.rubyforge.org/quick/Marshal.4.8/rake-0.8.1.gemspec.rz"
+  end
+  
+  xit "should return a gem spec matching the given name" do
+    gem_spec = @source.gem_spec('rake', Gem::Version[:version => '0.8.1'])
+    gem_spec.should.be.instance_of Gem::Specification
   end
 end
