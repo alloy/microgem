@@ -43,4 +43,9 @@ describe "Unpacker, in simple mode" do
     end.should.raise Gem::Micro::Unpacker::UnpackError
   end
   
+  it "should inflate a file using Ruby's Zlib" do
+    archive = File.join(tmpdir, 'marshalled_gemspec')
+    Gem::Micro::Unpacker.inflate(fixture('rake-0.8.1.gemspec.rz'), archive)
+    Marshal.load(File.read(archive)).should.be.instance_of Gem::Specification
+  end
 end

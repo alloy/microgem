@@ -29,6 +29,12 @@ module Gem
           raise UnpackError, "Failed to unpack `#{archive}' with `gunzip'"
         end
       end
+      
+      def self.inflate(archive, out_file)
+        require "zlib"
+        out = Zlib::Inflate.inflate(File.read(archive))
+        File.open(out_file, 'w') { |f| f << out }
+      end
     end
   end
 end

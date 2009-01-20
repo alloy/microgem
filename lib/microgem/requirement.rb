@@ -27,5 +27,10 @@ module Gem
     def to_s
       "#{operator} #{version}"
     end
+    
+    # TODO: really test this method
+    def marshal_load(requirements)
+      @requirements = requirements.first
+    end
   end
 end
