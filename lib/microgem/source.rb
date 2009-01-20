@@ -6,6 +6,8 @@ module Gem
       SPECS_FILE = "specs.4.8"
       SPECS_ARCHIVE_FILE = "#{SPECS_FILE}.gz"
       
+      attr_reader :host
+      
       # Initializes a Source with +host+ and the +directory+ where the index
       # should be.
       #
@@ -58,29 +60,8 @@ module Gem
         specs.select { |spec| spec[0] == name && (version.any? || spec[1] == version) }.last
       end
       
-      # TODO: This should all move to a ‘bare’ spec class:
-      
-      def gem_spec_url(name, version)
-        "http://#{@host}/quick/Marshal.4.8/#{name}-#{version}.gemspec.rz"
-      end
-      
-      def gem_spec_work_file(name, version)
-        File.join(tmpdir, "#{name}-#{version}.gemspec")
-      end
-      
-      def gem_spec_work_archive_file(name, version)
-        "#{gem_spec_work_file(name, version)}.rz"
-      end
-      
       def gem_spec(name, version)
-        spec = spec(name, version)
-        archive = gem_spec_work_archive_file(name, version)
-        gemspec = gem_spec_work_file(name, version)
-        
-        Downloader.get(gem_spec_url(name, version), archive)
-        Unpacker.inflate(archive, gemspec)
-        
-        Marshal.load(File.read(gemspec))
+        BareSpecification.new(@host, name, version).gem_spec
       end
     end
   end

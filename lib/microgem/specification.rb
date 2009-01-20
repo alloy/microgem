@@ -2,6 +2,9 @@ module Gem
   class Specification < Micro::YAMLable
     attr_reader :name, :version, :dependencies, :executables
     
+    # The Gem::Micro::Source from which this Specification originates.
+    attr_accessor :source
+    
     # Returns the Specification's dirname:
     #
     #   rake.gem_dirname # => "rake-0.8.1"
