@@ -52,14 +52,18 @@ module Gem
         FileUtils.mv(work_index_file, index_file)
       end
       
+      # Loads and returns an array of all gem names and versions.
       def specs
         @specs ||= Marshal.load(File.read(index_file))
       end
       
+      # Returns a gem name and it's version matching the given +name+ and
+      # +version+.
       def spec(name, version)
         specs.select { |spec| spec[0] == name && (version.any? || spec[1] == version) }.last
       end
       
+      # Returns a Gem::Specification matching the given +name+ and +version+.
       def gem_spec(name, version)
         BareSpecification.new(@host, name, version).gem_spec
       end
