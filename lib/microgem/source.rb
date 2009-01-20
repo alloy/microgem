@@ -45,8 +45,8 @@ module Gem
       
       # Downloads and unpacks a index file to index_file.
       def get_index!
-        Gem::Micro::Downloader.get(specs_url, work_index_file)
-        gunzip(work_archive_file)
+        Downloader.get(specs_url, work_index_file)
+        Unpacker.gzip(work_archive_file)
         FileUtils.mv(work_index_file, index_file)
       end
       

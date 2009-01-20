@@ -107,7 +107,13 @@ describe "Gem::Micro::SpecificationEmitter" do
           }
         end
         
-        puts @emitter.to_ruby unless system("ruby '#{spec_file}'")
+        # debugging
+        unless system("ruby '#{spec_file}'")
+          output_file = File.join(TMP_PATH, "#{gem_name}.gemspec")
+          File.open(output_file, 'w') { |f| f << @emitter.to_ruby }
+          puts `diff -y '#{fixture("#{gem_name}.gemspec")}' '#{output_file}'`
+        end
+        
         assert system("ruby '#{spec_file}'")
         
       ensure

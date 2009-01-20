@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://www.rubyonrails.org}
   s.require_paths = ["lib"]
   s.rubyforge_project = %q{rails}
-  s.rubygems_version = `gem -v`.strip # we stub it to use the latest gem version
+  s.rubygems_version = '1.3.1'
   s.summary = %q{Web-application framework with template engine, control-flow layer, and ORM.}
 
   s.add_dependency(%q<rake>, [">= 0.8.1"])

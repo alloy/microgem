@@ -68,15 +68,15 @@ module Gem
       #
       # Raises a Gem::Micro::Downloader::DownloadError if downloading fails.
       def download
-        Gem::Micro::Downloader.get(url, gem_file)
+        Downloader.get(url, gem_file)
       end
       
       # Unpacks the gem to work_dir.
       #
       # Raises a Gem::Micro::Installer::UnpackError if unpacking fails.
       def unpack
-        untar(gem_file, work_dir, false)
-        untar(data_file, data_dir, true)
+        Unpacker.tar(gem_file, work_dir, false)
+        Unpacker.tar(data_file, data_dir, true)
       end
       
       # Creates the Ruby `.gemspec' used by RubyGems to find a gem at

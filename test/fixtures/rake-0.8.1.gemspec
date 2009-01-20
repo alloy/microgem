@@ -15,6 +15,6 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://rake.rubyforge.org}
   s.require_paths = ["lib"]
   s.rubyforge_project = %q{rake}
-  s.rubygems_version = `gem -v`.strip # we stub it to use the latest gem version
+  s.rubygems_version = '1.3.1'
   s.summary = %q{Ruby based make-like utility.}
 end
