@@ -11,7 +11,7 @@ module Gem
       #
       #   installer.url # => "http://gems.rubyforge.org/gems/rake-0.8.1.gem"
       def url
-        File.join(Config[:gem_source_url], @gem_spec.gem_filename)
+        "http://#{File.join(@gem_spec.source.host, 'gems', @gem_spec.gem_filename)}"
       end
       
       # Returns the full path to the temporary gem directory.

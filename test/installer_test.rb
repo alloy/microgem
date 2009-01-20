@@ -3,8 +3,12 @@
 require File.expand_path('../test_helper', __FILE__)
 
 describe "Gem::Micro::Installer, in general" do
+  include Gem::Micro::Utils
+  
   def setup
     @gem_spec = Gem::Micro.source_index.gem_specs('rake').last
+    @source = Gem::Micro::Source.new('gems.github.com', tmpdir)
+    @gem_spec.source = @source
     @installer = Gem::Micro::Installer.new(@gem_spec)
   end
   
@@ -13,7 +17,7 @@ describe "Gem::Micro::Installer, in general" do
   end
   
   it "should return the url to download the gem from" do
-    @installer.url.should == "http://gems.rubyforge.org/gems/rake-0.8.1.gem"
+    @installer.url.should == "http://gems.github.com/gems/rake-0.8.1.gem"
   end
   
   it "should return the path to the install path" do
@@ -23,7 +27,7 @@ describe "Gem::Micro::Installer, in general" do
   
   it "should return the path to the gem in the temporary work directory" do
     @installer.work_dir.should ==
-      File.join(Gem::Micro::Utils.tmpdir, 'rake-0.8.1')
+      File.join(tmpdir, 'rake-0.8.1')
   end
   
   it "should return the path to the gems data directory in the temporary directory" do
