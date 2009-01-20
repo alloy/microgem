@@ -60,4 +60,20 @@ describe "Gem::Micro::Utils" do
       untar('/does/not/exist/rake-0.8.1.gem', tmpdir, false)
     end.should.raise Gem::Micro::UnpackError
   end
+  
+  it "should unpack a file using gunzip" do
+    dir = File.join(tmpdir, 'specs')
+    ensure_dir(dir)
+    FileUtils.cp(fixture('specs.4.8.gz'), dir)
+    
+    gunzip(File.join(dir, 'specs.4.8.gz'))
+    File.should.exist File.join(dir, 'specs.4.8')
+    Marshal.load(File.read(File.join(dir, 'specs.4.8'))).should.be.instance_of Array
+  end
+  
+  it "should raise an UnpackError if gunzip failed to extract an archive" do
+    lambda do
+      gunzip('/does/not/exist/specs.4.8.gz')
+    end.should.raise Gem::Micro::UnpackError
+  end
 end

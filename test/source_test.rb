@@ -20,8 +20,7 @@ xdescribe "Gem::Micro::Source, class methods" do
   end
 end
 
-describe "Gem::Micro::Source, for a non existing index on disk" do
-  
+describe "Gem::Micro::Source, in general" do
   def setup
     @dir = Gem::Micro::Utils.tmpdir
     @source = Gem::Micro::Source.new('gems.rubyforge.org', @dir)
@@ -35,17 +34,66 @@ describe "Gem::Micro::Source, for a non existing index on disk" do
     @source.specs_url.should == 'http://gems.rubyforge.org/specs.4.8.gz'
   end
   
+  it "should return the path to the work archive file" do
+    @source.work_archive_file.should == File.join(@dir, 'specs.4.8.gz')
+  end
+  
   it "should return the path to the work index file" do
-    @source.work_index_file.should == File.join(@dir, 'specs.4.8.gz')
+    @source.work_index_file.should == File.join(@dir, 'specs.4.8')
+  end
+end
+
+describe "Gem::Micro::Source, for a non existing index" do
+  include Gem::Micro::Utils
+  
+  def setup
+    @dir = File.join(tmpdir, 'specs')
+    ensure_dir(@dir)
+    @source = Gem::Micro::Source.new('gems.rubyforge.org', @dir)
+  end
+  
+  def teardown
+    remove_microgem_tmpdir!
   end
   
   it "should return that it doesn't exist" do
     @source.should.not.exist
   end
   
-  it "should download and unpack the index to the index_path" do
+  it "should download and unpack the index to index_file" do
     Gem::Micro::Downloader.expects(:get).with(@source.specs_url, @source.work_index_file)
-    @source.expects(:untar).with(@source.work_index_file, @source.index_file, true)
+    FileUtils.cp(fixture('specs.4.8.gz'), tmpdir) # fake the download to the tmpdir
+    
     @source.get_index!
+    
+    File.should.exist @source.index_file
+    Marshal.load(File.read(@source.index_file)).should.be.instance_of Array
+  end
+end
+
+describe "Gem::Micro::Source, for an existing index" do
+  include Gem::Micro::Utils
+  
+  def setup
+    @dir = File.join(tmpdir, 'specs')
+    ensure_dir(@dir)
+    @source = Gem::Micro::Source.new('gems.rubyforge.org', @dir)
+    
+    # create the index
+    Gem::Micro::Downloader.stubs(:get)
+    FileUtils.cp(fixture('specs.4.8.gz'), tmpdir)
+    @source.get_index!
+  end
+  
+  def teardown
+    remove_microgem_tmpdir!
+  end
+  
+  it "should return that it exists" do
+    @source.should.exist
+  end
+  
+  xit "should return gem specs matching the given name" do
+    
   end
 end

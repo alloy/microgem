@@ -40,16 +40,23 @@ module Gem
         tmpdir
       end
       
-      # Unpacks an archive from +file+ to +to+ using the +tar+ commandline
+      # Unpacks an +archive+ to +to+ using the +tar+ commandline
       # utility. If +gzip+ is +true+ the archive is expected to be a gzip
       # archive and will be decompressed.
       #
       # Raises a Gem::Micro::UnpackError if it fails.
-      def untar(file, to, gzip = false)
-        log(:debug, "Unpacking `#{file}' to `#{to}'")
+      def untar(archive, to, gzip = false)
+        log(:debug, "Unpacking `#{archive}' to `#{to}'")
         ensure_dir(to)
-        unless system("/usr/bin/tar --directory='#{to}' -#{ 'z' if gzip }xf '#{file}' > /dev/null 2>&1")
-          raise UnpackError, "Failed to unpack `#{file}': #{$?}"
+        unless system("/usr/bin/tar --directory='#{to}' -#{ 'z' if gzip }xf '#{archive}' > /dev/null 2>&1")
+          raise UnpackError, "Failed to unpack `#{archive}' with `tar'"
+        end
+      end
+      
+      # Unpacks an +archive+ _in_ place using the +gunzip+ commandline utility.
+      def gunzip(archive)
+        unless system("/usr/bin/gunzip -d '#{archive}' > /dev/null 2>&1")
+          raise UnpackError, "Failed to unpack `#{archive}' with `gunzip'"
         end
       end
     end

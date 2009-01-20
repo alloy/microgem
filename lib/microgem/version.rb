@@ -21,5 +21,10 @@ module Gem
     def any?
       version == 0 || version == '0'
     end
+    
+    # TODO: really test this method, added for utils test
+    def marshal_load(version)
+      @version = version.first
+    end
   end
 end

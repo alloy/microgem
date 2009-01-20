@@ -3,7 +3,8 @@ module Gem
     class Source
       include Utils
       
-      SPECS_ARCHIVE_NAME = 'specs.4.8.gz'
+      SPECS_FILE = "specs.4.8"
+      SPECS_ARCHIVE_FILE = "#{SPECS_FILE}.gz"
       
       # Initializes a Source with +host+ and the +directory+ where the index
       # should be.
@@ -21,14 +22,20 @@ module Gem
       end
       
       # Returns the full path to the temporary work directory to where the
-      # index archive should be downloaded.
+      # index should be unpacked.
       def work_index_file
-        File.join(tmpdir, SPECS_ARCHIVE_NAME)
+        File.join(tmpdir, SPECS_FILE)
+      end
+      
+      # Returns the full path to the temporary work directory to where the
+      # index archive should be downloaded.
+      def work_archive_file
+        File.join(tmpdir, SPECS_ARCHIVE_FILE)
       end
       
       # Returns the url for the complete marshalled list of specs.
       def specs_url
-        "http://#{@host}/#{SPECS_ARCHIVE_NAME}"
+        "http://#{@host}/#{SPECS_ARCHIVE_FILE}"
       end
       
       # Returns whether or not the index exists at index_file.
@@ -39,7 +46,8 @@ module Gem
       # Downloads and unpacks a index file to index_file.
       def get_index!
         Gem::Micro::Downloader.get(specs_url, work_index_file)
-        untar(work_index_file, index_file, true)
+        gunzip(work_archive_file)
+        FileUtils.mv(work_index_file, index_file)
       end
     end
   end
