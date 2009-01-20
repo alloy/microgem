@@ -16,10 +16,10 @@ module Gem
     attr_reader :gems
     
     # Returns the gem specs matching the given +name+ and sorted by version.
-    def gem_specs(name)
-      gems.select { |_, spec| spec.name == name }.
-        map { |ary| ary.last }.
-          sort_by { |spec| spec.version.to_s }
-    end
+    # def gem_specs(name)
+    #   gems.select { |_, spec| spec.name == name }.
+    #     map { |ary| ary.last }.
+    #       sort_by { |spec| spec.version.to_s }
+    # end
   end
 end
