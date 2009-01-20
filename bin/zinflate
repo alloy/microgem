@@ -8,7 +8,7 @@ require File.expand_path('../../lib/microgem/unpacker', __FILE__)
 archive, out_file = ARGV[0], ARGV[1]
 
 if archive && out_file
-  Gem::Micro::Unpacker.inflate(archive, out_file)
+  Gem::Micro::Unpacker.inflate_with_zlib(archive, out_file)
 else
   puts "This is a simple bin file which is able to inflate  the .Z/.rz files returned from a gem server."
   puts "This bin can be invoked from microgem with a Ruby which does support zlib."

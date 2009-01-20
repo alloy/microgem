@@ -31,9 +31,22 @@ module Gem
       end
       
       def self.inflate(archive, out_file)
+        if Config[:simple_unpacker]
+          inflate_with_zinflate(archive, out_file)
+        else
+          inflate_with_zlib(archive, out_file)
+        end
+      end
+      
+      def self.inflate_with_zlib(archive, out_file)
         require "zlib"
         out = Zlib::Inflate.inflate(File.read(archive))
         File.open(out_file, 'w') { |f| f << out }
+      end
+      
+      ZINFLATE_BIN = File.expand_path('../../../bin/zinflate', __FILE__)
+      def self.inflate_with_zinflate(archive, out_file)
+        system("ruby '#{ZINFLATE_BIN}' '#{archive}' '#{out_file}'")
       end
     end
   end

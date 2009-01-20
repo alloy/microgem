@@ -34,9 +34,9 @@ module Gem
       
       def self.get(remote, local)
         if Config[:simple_downloader]
-          self.get_with_curl(remote, local)
+          get_with_curl(remote, local)
         else
-          self.get_with_net_http(remote, local)
+          get_with_net_http(remote, local)
         end
       end
       
