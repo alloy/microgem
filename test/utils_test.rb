@@ -38,42 +38,4 @@ describe "Gem::Micro::Utils" do
     tmpdir.should == expected_path
     File.should.exist expected_path
   end
-  
-  it "should unpack a file using tar _without_ gzip decompression" do
-    path = File.join(tmpdir, 'rake-0.8.1')
-    untar(fixture('rake-0.8.1.gem'), path, false)
-    File.should.exist File.join(path, 'data.tar.gz')
-  end
-  
-  it "should unpack a file using tar _with_ gzip decompression" do
-    path = File.join(tmpdir, 'rake-0.8.1')
-    untar(fixture('rake-0.8.1.gem'), path, false)
-    
-    archive = File.join(path, 'data.tar.gz')
-    path = File.join(path, 'data')
-    untar(archive, path, true)
-    File.should.exist File.join(path, 'README')
-  end
-  
-  it "should raise an UnpackError if tar failed to extract an archive" do
-    lambda do
-      untar('/does/not/exist/rake-0.8.1.gem', tmpdir, false)
-    end.should.raise Gem::Micro::UnpackError
-  end
-  
-  it "should unpack a file using gunzip" do
-    dir = File.join(tmpdir, 'specs')
-    ensure_dir(dir)
-    FileUtils.cp(fixture('specs.4.8.gz'), dir)
-    
-    gunzip(File.join(dir, 'specs.4.8.gz'))
-    File.should.exist File.join(dir, 'specs.4.8')
-    Marshal.load(File.read(File.join(dir, 'specs.4.8'))).should.be.instance_of Array
-  end
-  
-  it "should raise an UnpackError if gunzip failed to extract an archive" do
-    lambda do
-      gunzip('/does/not/exist/specs.4.8.gz')
-    end.should.raise Gem::Micro::UnpackError
-  end
 end
