@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+#
+# TODO: We should probably write a C version of this.
+
+require File.expand_path('../../lib/microgem/utils', __FILE__)
+require File.expand_path('../../lib/microgem/unpacker', __FILE__)
+
+archive, out_file = ARGV[0], ARGV[1]
+
+if archive && out_file
+  Gem::Micro::Unpacker.inflate(archive, out_file)
+else
+  puts "This is a simple bin file which is able to inflate  the .Z/.rz files returned from a gem server."
+  puts "This bin can be invoked from microgem with a Ruby which does support zlib."
+  puts ''
+  puts "Usage: zinflate /path/to/archive.Z /path/to/uncompressed_file"
+end
