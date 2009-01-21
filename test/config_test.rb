@@ -18,6 +18,10 @@ describe "Gem::Micro::Config.instance" do
     config.gem_home.should == rubygems_gem_paths.first
   end
   
+  it "should return a list of the available sources" do
+    config.sources.should == %w{ gems.rubyforge.org gems.github.com }
+  end
+  
   private
   
   def rubygems_gem_paths

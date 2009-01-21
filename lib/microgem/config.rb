@@ -16,6 +16,11 @@ module Gem
           File.expand_path("../../../tmp/gem_home", __FILE__)
         end
       end
+      
+      # Returns an array of source hosts from which to fetch gems.
+      def sources
+        %w{ gems.rubyforge.org gems.github.com }
+      end
     end
   end
 end
