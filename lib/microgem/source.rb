@@ -1,16 +1,20 @@
 module Gem
   module Micro
     class Source
+      # Returns an array of available Source instances as specified on
+      # Gem::Micro::Config.instance.
       def self.sources
-        @sources ||= []
-      end
-      
-      def self.add_source(host, directory)
-        sources << Source.new(host, directory)
+        @sources ||= Config.instance.sources.map do |source|
+          new(source, Config.instance.gem_home)
+        end
       end
       
       def self.gem_spec(name, version)
         sources.map { |source| source.gem_spec(name, version) }
+      end
+      
+      def self.update!
+        sources.each { |source| source.update! }
       end
       
       include Utils
@@ -58,7 +62,7 @@ module Gem
       end
       
       # Downloads and unpacks a index file to index_file.
-      def get_index!
+      def update!
         Downloader.get(specs_url, work_index_file)
         Unpacker.gzip(work_archive_file)
         FileUtils.mv(work_index_file, index_file)

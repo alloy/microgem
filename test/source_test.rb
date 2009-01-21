@@ -6,8 +6,6 @@ describe "Gem::Micro::Source, class methods" do
   include Gem::Micro::Utils
   
   def setup
-    Gem::Micro::Source.add_source('gems.rubyforge.org', tmpdir)
-    Gem::Micro::Source.add_source('gems.github.com', tmpdir)
     @sources = Gem::Micro::Source.sources
   end
   
@@ -15,10 +13,16 @@ describe "Gem::Micro::Source, class methods" do
     Gem::Micro::Source.instance_variable_set(:@sources, nil)
   end
   
-  it "should add sources" do
-    @sources.length.should.be 2
-    @sources.each { |s| s.should.be.instance_of Gem::Micro::Source }
-    @sources.map { |s| s.host }.should == %w{ gems.rubyforge.org gems.github.com }
+  it "should load the sources specified on config.sources in config.gem_home" do
+    Gem::Micro::Source.instance_variable_set(:@sources, nil)
+    
+    hosts = %w{ gems.superalloy.nl gems.fngtps.com }
+    config.stubs(:sources).returns(hosts)
+    sources = Gem::Micro::Source.sources
+    
+    sources.map { |s| s.host }.should == hosts
+    sources.map { |s| s.index_file }.should ==
+      [File.join(config.gem_home, hosts.first), File.join(config.gem_home, hosts.last)]
   end
   
   it "should return gem specs from all sources and mark them to know form which source they came" do
@@ -34,6 +38,12 @@ describe "Gem::Micro::Source, class methods" do
     github_bare_spec.expects(:gem_spec).returns('github')
     
     Gem::Micro::Source.gem_spec(*rake).should == %w{ rubyforge github }
+  end
+  
+  it "should tell the sources to update" do
+    @sources.first.expects(:update!)
+    @sources.last.expects(:update!)
+    Gem::Micro::Source.update!
   end
 end
 
@@ -81,7 +91,7 @@ describe "Gem::Micro::Source, for a non existing index" do
     Gem::Micro::Downloader.expects(:get).with(@source.specs_url, @source.work_index_file)
     FileUtils.cp(fixture('specs.4.8.gz'), tmpdir) # fake the download to the tmpdir
     
-    @source.get_index!
+    @source.update!
     
     File.should.exist @source.index_file
     Marshal.load(File.read(@source.index_file)).should.be.instance_of Array
@@ -99,7 +109,7 @@ describe "Gem::Micro::Source, for an existing index" do
     # create the index
     Gem::Micro::Downloader.stubs(:get)
     FileUtils.cp(fixture('specs.4.8.gz'), tmpdir)
-    @source.get_index!
+    @source.update!
     
     @rake = ['rake', Gem::Version[:version => '0.8.1']]
   end
