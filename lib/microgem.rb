@@ -22,41 +22,6 @@ module Gem
     class << self
       include Utils
       
-      # def config
-      #   config = {}
-      #   
-      #   if ENV['PRODUCTION']
-      #     require 'rbconfig'
-      #     sitelibdir = ::Config::CONFIG['sitelibdir']
-      #     version = ::Config::CONFIG['ruby_version']
-      #     config[:gem_home] = File.expand_path("../../Gems/#{version}", sitelibdir)
-      #   else
-      #     config[:gem_home] = File.expand_path("../../tmp/gem_home", __FILE__)
-      #   end
-      #   
-      #   config[:gem_source_url]        = 'http://gems.rubyforge.org/gems/'
-      #   config[:log_level]             = Options::DEFAULTS[:log_level]
-      #   config[:microgem_source_index] = File.join(config[:gem_home], 'microgem_source_index')
-      #   config[:source_index_path]     = File.join(config[:gem_home], 'source_index.yaml') # where does rubygems store this file?
-      #   config[:install_dir]           = File.join(config[:gem_home], 'gems')
-      #   
-      #   config
-      # end
-      
-      def load_source_index
-        SourceIndex.load_from_file Config[:source_index_path]
-      end
-      
-      # def source_index
-      #   @source_index ||= if File.exist?(Config[:microgem_source_index])
-      #     log(:debug, "Loading source index file tree `#{Config[:microgem_source_index]}'")
-      #     SourceIndexFileTree.new Config[:microgem_source_index]
-      #   else
-      #     log(:debug, "Loading YAML source index `#{Config[:source_index_path]}'")
-      #     SourceIndex.load_from_file Config[:source_index_path]
-      #   end
-      # end
-      
       def run(arguments)
         parser = OptionsParser.new
         parser.parse(arguments)
@@ -64,7 +29,6 @@ module Gem
         
         case parser.command
         when 'install'
-          #gem_spec = source_index.gem_specs(options.arguments.first).last
           gem_spec = Source.gem_spec(parser.arguments.first, Gem::Version[:version => '0']).last
           gem_spec.install!
           
