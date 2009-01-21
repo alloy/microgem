@@ -6,6 +6,11 @@ module Gem
     module Utils
       extend self
       
+      # Returns the Config.
+      def config
+        Config
+      end
+      
       # Prints a +message+ to +stdout+ with the specified log +level+.
       #
       # TODO: Add proper Logger.

@@ -38,4 +38,8 @@ describe "Gem::Micro::Utils" do
     tmpdir.should == expected_path
     File.should.exist expected_path
   end
+  
+  it "should return Gem::Micro::Config.instance" do
+    config.should.be Gem::Micro::Config
+  end
 end

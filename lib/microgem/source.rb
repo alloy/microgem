@@ -4,8 +4,8 @@ module Gem
       # Returns an array of available Source instances as specified on
       # Gem::Micro::Config.instance.
       def self.sources
-        @sources ||= Config.instance.sources.map do |source|
-          new(source, Config.instance.gem_home)
+        @sources ||= Config.sources.map do |source|
+          new(source, Config.gem_home)
         end
       end
       

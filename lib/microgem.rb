@@ -3,6 +3,7 @@ require 'microgem/utils'
 
 require 'microgem/bare_specification'
 require 'microgem/bin_wrapper_emitter'
+require 'microgem/config'
 require 'microgem/dependency'
 require 'microgem/downloader'
 require 'microgem/installer'
@@ -64,15 +65,16 @@ module Gem
         
         case options.command
         when 'install'
-          gem_spec = source_index.gem_specs(options.arguments.first).last
+          #gem_spec = source_index.gem_specs(options.arguments.first).last
+          gem_spec = Source.gem_spec(options.arguments.first, Gem::Version[:version => '0']).last
           gem_spec.install!(options.force)
           
-        when 'cache'
-          load_source_index
-          root = File.join(Config[:gem_home], 'microgem_source_index')
-          FileUtils.rm_rf(root) if File.exist?(root)
-          Gem::Micro::SourceIndexFileTree.create(root, Gem::SourceIndex.instance)
-          
+        when 'sources'
+          case options.arguments.first
+          when 'update'
+            Source.update!
+            
+          end
         else
           puts options.banner
         end
@@ -93,6 +95,6 @@ module Gem
     end
     
     # Loads the configuration via Gem::Micro.config.
-    Config = self.config
+    #Config = self.config
   end
 end

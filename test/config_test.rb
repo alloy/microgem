@@ -2,7 +2,7 @@
 
 require File.expand_path('../test_helper', __FILE__)
 
-describe "Gem::Micro::Config.instance" do
+describe "Gem::Micro::Config" do
   include Gem::Micro::Utils
   
   def teardown
