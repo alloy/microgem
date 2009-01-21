@@ -18,9 +18,10 @@ describe "Gem::Micro" do
     Gem::Micro.installed_gem_dirnames('test-spec-mock').should == %w{ test-spec-mock-0.3.0 }
   end
   
-  xit "should start the installation process of a gem" do
-    gem_spec = Gem::Micro.source_index.gem_specs('rake').last
-    Gem::SourceIndex.instance.expects(:gem_specs).with('rake').returns([gem_spec])
+  it "should start the installation process of a gem" do
+    gem_spec = Marshal.load(File.read(fixture('rake-0.8.1.gemspec.marshal')))
+    Gem::Micro::Source.expects(:gem_spec).with('rake', Gem::Version[:version => '0']).returns(gem_spec)
+    
     gem_spec.expects(:install!)
     
     Gem::Micro.run(%w{ install rake })

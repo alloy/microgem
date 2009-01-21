@@ -2,13 +2,13 @@
 
 require File.expand_path('../test_helper', __FILE__)
 
-xdescribe "Gem::Specification" do
-  # def setup
-  #   @gem_spec = Gem::Micro.source_index.gem_specs('rake').last
-  # end
+describe "Gem::Specification" do
+  def setup
+    @gem_spec = Marshal.load(File.read(fixture('rake-0.8.1.gemspec.marshal')))
+  end
   
   it "should return its dependencies" do
-    gem_spec = Gem::Micro.source_index.gem_specs('rails').last
+    gem_spec = Marshal.load(File.read(fixture('rails-2.1.1.gemspec.marshal')))
     
     expected_version_requirements = [[]]
     expected_dep_names = %w{
@@ -41,5 +41,8 @@ xdescribe "Gem::Specification" do
   
   it "should emit itself as Ruby code" do
     @gem_spec.to_ruby.should == Gem::Micro::SpecificationEmitter.new(@gem_spec).to_ruby
+  end
+  
+  xit "should load from a `quick' spec and retrieve the larger from the gems metadata.tar.gz" do
   end
 end

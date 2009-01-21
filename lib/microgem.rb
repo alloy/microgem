@@ -29,7 +29,7 @@ module Gem
         
         case parser.command
         when 'install'
-          gem_spec = Source.gem_spec(parser.arguments.first, Gem::Version[:version => '0']).last
+          gem_spec = Source.gem_spec(parser.arguments.first, Gem::Version[:version => '0'])
           gem_spec.install!
           
         when 'sources'
