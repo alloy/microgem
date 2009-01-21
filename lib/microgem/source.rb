@@ -63,7 +63,8 @@ module Gem
       
       # Downloads and unpacks a index file to index_file.
       def update!
-        Downloader.get(specs_url, work_index_file)
+        log(:info, "Updating source: #{@host}")
+        Downloader.get(specs_url, work_archive_file)
         Unpacker.gzip(work_archive_file)
         FileUtils.mv(work_index_file, index_file)
       end

@@ -88,7 +88,7 @@ describe "Gem::Micro::Source, for a non existing index" do
   end
   
   it "should download and unpack the index to index_file" do
-    Gem::Micro::Downloader.expects(:get).with(@source.specs_url, @source.work_index_file)
+    Gem::Micro::Downloader.expects(:get).with(@source.specs_url, @source.work_archive_file)
     FileUtils.cp(fixture('specs.4.8.gz'), tmpdir) # fake the download to the tmpdir
     
     @source.update!

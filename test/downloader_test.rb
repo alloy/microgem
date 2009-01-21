@@ -9,7 +9,7 @@ describe "Downloader, in simple mode" do
       :local  => File.join(TMP_PATH, 'gems', 'rake-0.8.1.gem')
     }
     FileUtils.rm_rf(File.join(TMP_PATH, 'gems'))
-    Gem::Micro::Config.stubs(:[]).with(:simple_downloader).returns(true)
+    Gem::Micro::Config.stubs(:simple_downloader?).returns(true)
   end
   
   it "should GET files with curl" do
@@ -32,7 +32,7 @@ describe "DownloadError, in complex mode" do
       :local  => File.join(TMP_PATH, 'gems', 'rake-0.8.1.gem')
     }
     FileUtils.rm_rf(File.join(TMP_PATH, 'gems'))
-    Gem::Micro::Config.stubs(:[]).with(:simple_downloader).returns(false)
+    Gem::Micro::Config.stubs(:simple_downloader?).returns(false)
   end
   
   it "should GET files with Net::HTTP" do

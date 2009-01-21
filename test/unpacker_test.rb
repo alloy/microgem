@@ -6,7 +6,7 @@ describe "Unpacker, in simple mode" do
   include Gem::Micro::Utils
   
   def setup
-    Gem::Micro::Config.stubs(:[]).with(:simple_unpacker).returns(true)
+    config.stubs(:simple_unpacker?).returns(true)
   end
   
   def teardown
@@ -72,7 +72,7 @@ describe "Unpacker, in complex mode" do
   include Gem::Micro::Utils
   
   def setup
-    Gem::Micro::Config.stubs(:[]).with(:simple_unpacker).returns(false)
+    config.stubs(:simple_unpacker?).returns(false)
   end
   
   def teardown

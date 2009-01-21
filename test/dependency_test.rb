@@ -6,12 +6,12 @@ class Gem::Dependency
   alias_method :meet_requirements?, :meets_requirements?
 end
 
-describe "Gem::Dependency" do
-  def setup
-    gem_spec = Gem::Micro.source_index.gem_specs('rails').last
-    @dependencies = gem_spec.dependencies
-    @dependency = @dependencies.find { |d| d.name == 'rake' }
-  end
+xdescribe "Gem::Dependency" do
+  # def setup
+  #   gem_spec = Gem::Micro.source_index.gem_specs('rails').last
+  #   @dependencies = gem_spec.dependencies
+  #   @dependency = @dependencies.find { |d| d.name == 'rake' }
+  # end
   
   it "should return its version requirements" do
     @dependency.version_requirements.should == Gem::Requirement[:requirements => [[">=", Gem::Version[:version => '0.8.1']]]]

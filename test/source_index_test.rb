@@ -2,10 +2,10 @@
 
 require File.expand_path('../test_helper', __FILE__)
 
-describe "Gem::SourceIndex" do
-  def setup
-    @index = Gem::SourceIndex.instance
-  end
+xdescribe "Gem::SourceIndex" do
+  # def setup
+  #   @index = Gem::SourceIndex.instance
+  # end
   
   it "should load from a YAML file" do
     @index.should.be.instance_of Gem::SourceIndex

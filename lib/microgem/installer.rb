@@ -47,21 +47,21 @@ module Gem
       # Returns the full path to the gems Ruby `.gemspec' file. This file is
       # needed by RubyGems to find the gem.
       def ruby_gemspec_file
-        ensure_dir File.join(Config[:gem_home], 'specifications')
-        File.join(Config[:gem_home], 'specifications', "#{@gem_spec.gem_dirname}.gemspec")
+        ensure_dir Config.specifications_path
+        File.join(Config.specifications_path, "#{@gem_spec.gem_dirname}.gemspec")
       end
       
       # Returns the full path to the RubyGems gem file cache directory.
       def gem_cache_file
-        ensure_dir File.join(Config[:gem_home], 'cache')
-        File.join(Config[:gem_home], 'cache', @gem_spec.gem_filename)
+        ensure_dir Config.cache_path
+        File.join(Config.cache_path, @gem_spec.gem_filename)
       end
       
       # Returns the path to where the gem should be installed.
       #
       #   installer.install_path # => "/usr/local/lib/ruby/gems/1.8/gems/rake-0.8.1"
       def install_path
-        File.join(Config[:install_dir], @gem_spec.gem_dirname)
+        File.join(Config.gems_path, @gem_spec.gem_dirname)
       end
       
       # Downloads the gem to gem_file.

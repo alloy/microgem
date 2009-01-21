@@ -18,18 +18,7 @@ describe "Gem::Micro" do
     Gem::Micro.installed_gem_dirnames('test-spec-mock').should == %w{ test-spec-mock-0.3.0 }
   end
   
-  it "should load the source_index.yaml file if no microgem_source_index exists" do
-    without_source_index do
-      File.stubs(:exist?).returns(false)
-      
-      Gem::SourceIndex.expects(:load_from_file).
-        with(Gem::Micro::Config[:source_index_path])
-      
-      Gem::Micro.source_index
-    end
-  end
-  
-  it "should load a SourceIndexFileTree file if microgem_source_index exists" do
+  xit "should load a SourceIndexFileTree file if microgem_source_index exists" do
     without_source_index do
       File.stubs(:exist?).returns(true)
       
@@ -40,7 +29,7 @@ describe "Gem::Micro" do
     end
   end
   
-  it "should start the installation process of a gem" do
+  xit "should start the installation process of a gem" do
     gem_spec = Gem::Micro.source_index.gem_specs('rake').last
     Gem::SourceIndex.instance.expects(:gem_specs).with('rake').returns([gem_spec])
     gem_spec.expects(:install!)
@@ -48,7 +37,7 @@ describe "Gem::Micro" do
     Gem::Micro.run(%w{ install rake })
   end
   
-  it "should update the source index cache" do
+  xit "should update the source index cache" do
     Gem::Micro.stubs(:load_source_index)
     
     root = File.join(Gem::Micro::Config[:gem_home], 'microgem_source_index')
@@ -58,15 +47,5 @@ describe "Gem::Micro" do
     Gem::Micro::SourceIndexFileTree.expects(:create).with(root, Gem::SourceIndex.instance)
     
     Gem::Micro.run(%w{ cache update })
-  end
-  
-  private
-  
-  def without_source_index
-    before = Gem::Micro.source_index
-    Gem::Micro.instance_variable_set(:@source_index, nil)
-    yield
-  ensure
-    Gem::Micro.instance_variable_set(:@source_index, before)
   end
 end

@@ -31,7 +31,7 @@ module Gem
       end
       
       def self.inflate(archive, out_file)
-        if Config[:simple_unpacker]
+        if Config.simple_unpacker?
           inflate_with_zinflate(archive, out_file)
         else
           inflate_with_zlib(archive, out_file)

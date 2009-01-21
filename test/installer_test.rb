@@ -7,7 +7,6 @@ describe "Gem::Micro::Installer, in general" do
   
   def setup
     @gem_spec = Marshal.load(File.read(fixture('rake-0.8.1.gemspec.marshal')))
-    p @gem_spec.instance_variables
     @source = Gem::Micro::Source.new('gems.github.com', tmpdir)
     @gem_spec.source = @source
     @installer = Gem::Micro::Installer.new(@gem_spec)
@@ -23,7 +22,7 @@ describe "Gem::Micro::Installer, in general" do
   
   it "should return the path to the install path" do
     @installer.install_path.should ==
-      File.join(Gem::Micro::Config[:install_dir], 'rake-0.8.1')
+      File.join(Gem::Micro::Config.gems_path, 'rake-0.8.1')
   end
   
   it "should return the path to the gem in the temporary work directory" do
@@ -54,7 +53,7 @@ describe "Gem::Micro::Installer, in general" do
   
   it "should return the path to the Ruby `.gemspec' file" do
     @installer.ruby_gemspec_file.should ==
-      File.join(Gem::Micro::Config[:gem_home], 'specifications', 'rake-0.8.1.gemspec')
+      File.join(Gem::Micro::Config.specifications_path, 'rake-0.8.1.gemspec')
   end
   
   it "should create a `.gemspec' file so RubyGems can find the gem" do
@@ -66,7 +65,7 @@ describe "Gem::Micro::Installer, in general" do
   
   it "should return the path to the gem cache directory" do
     @installer.gem_cache_file.should ==
-      File.join(Gem::Micro::Config[:gem_home], 'cache', @gem_spec.gem_filename)
+      File.join(Gem::Micro::Config.cache_path, @gem_spec.gem_filename)
   end
   
   # FIXME: The marshalled gemspecs don't contain all data, we need to get this
