@@ -4,7 +4,7 @@ require File.expand_path('../test_helper', __FILE__)
 
 describe "Gem::Micro" do
   def setup
-    Gem::Micro.stubs(:gem_paths).returns(fixture('gems'))
+    Gem::Micro::Config.stubs(:gems_path).returns(fixture('gems'))
   end
   
   it "should return an array of all installed gems" do
