@@ -4,10 +4,11 @@ module Gem
   module Micro
     class Config
       class << self
+        include Utils
         
         # Returns the full path to the Gem home directory.
         def gem_home
-          @gem_home ||= Utils.ensure_dir(if ENV['PRODUCTION']
+          @gem_home ||= ensure_dir(if ENV['PRODUCTION']
             sitelibdir = ::Config::CONFIG['sitelibdir']
             version = ::Config::CONFIG['ruby_version']
             File.expand_path("../../Gems/#{version}", sitelibdir)
@@ -16,20 +17,28 @@ module Gem
           end)
         end
         
+        def bin_dir
+          @bin_dir ||= if ENV['PRODUCTION']
+            ::Config::CONFIG['bindir']
+          else
+            ensure_dir(File.expand_path("../../../tmp/bin", __FILE__))
+          end
+        end
+        
         # Returns the full path to the directory where the installed gems are.
         def gems_path
-          @gems_path ||= Utils.ensure_dir(File.join(gem_home, 'gems'))
+          @gems_path ||= ensure_dir(File.join(gem_home, 'gems'))
         end
         
         # Returns the full path to the directory where the installed gem specs
         # are.
         def specifications_path
-          @specifications_path ||= Utils.ensure_dir(File.join(gem_home, 'specifications'))
+          @specifications_path ||= ensure_dir(File.join(gem_home, 'specifications'))
         end
         
         # Returns the full path to the directory where the gems are cached.
         def cache_path
-          @cache_path ||= Utils.ensure_dir(File.join(gem_home, 'cache'))
+          @cache_path ||= ensure_dir(File.join(gem_home, 'cache'))
         end
         
         # Returns an array of source hosts from which to fetch gems.

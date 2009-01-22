@@ -74,6 +74,8 @@ module Gem
       end
       
       # Loads and returns an array of all gem names and versions.
+      #
+      # Creates an index with update! if the index doesn't exist yet.
       def specs
         unless @specs
           update! unless exist?

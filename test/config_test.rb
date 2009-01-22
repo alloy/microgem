@@ -8,19 +8,39 @@ describe "Gem::Micro::Config" do
   def teardown
     ENV.delete('PRODUCTION')
     config.instance_variable_set(:@gem_home, nil)
+    config.instance_variable_set(:@bin_dir, nil)
     config.merge! :log_level => :info, :force => false, :simple_downloader => false, :simple_unpacker => false
   end
   
   it "should return the path to the development gem_home in development mode" do
-    config.gem_home.should == File.expand_path("../../tmp/gem_home", __FILE__)
+    config.instance_variable_set(:@gem_home, nil)
+    path = File.expand_path("../../tmp/gem_home", __FILE__)
+    
+    config.expects(:ensure_dir).with(path).returns(path)
+    config.gem_home.should == path
   end
   
   it "should return the path to the real rubygems gem_home in production mode" do
     ENV['PRODUCTION'] = 'true'
     path = rubygems_gem_paths.first
     
-    Gem::Micro::Utils.expects(:ensure_dir).with(path).returns(path)
+    config.expects(:ensure_dir).with(path).returns(path)
     config.gem_home.should == path
+  end
+  
+  it "should return the path to the bin dir in development mode" do
+    path = File.expand_path("../../tmp/bin", __FILE__)
+    
+    config.expects(:ensure_dir).with(path).returns(path)
+    config.bin_dir.should == path
+  end
+  
+  it "should return the path to the bin dir in production mode which should exist" do
+    ENV['PRODUCTION'] = 'true'
+    path = Config::CONFIG['bindir']
+    
+    config.expects(:ensure_dir).never
+    config.bin_dir.should == path
   end
   
   it "should return a list of the available sources" do
@@ -29,19 +49,22 @@ describe "Gem::Micro::Config" do
   
   it "should return the path to the gems path" do
     path = File.join(config.gem_home, 'gems')
-    Gem::Micro::Utils.expects(:ensure_dir).with(path).returns(path)
+    
+    config.expects(:ensure_dir).with(path).returns(path)
     config.gems_path.should == path
   end
   
   it "should return the path to the specifications path" do
     path = File.join(config.gem_home, 'specifications')
-    Gem::Micro::Utils.expects(:ensure_dir).with(path).returns(path)
+    
+    config.expects(:ensure_dir).with(path).returns(path)
     config.specifications_path.should == path
   end
   
   it "should return the path to the gem cache path" do
     path = File.join(config.gem_home, 'cache')
-    Gem::Micro::Utils.expects(:ensure_dir).with(path).returns(path)
+    
+    config.expects(:ensure_dir).with(path).returns(path)
     config.cache_path.should == path
   end
   
