@@ -91,6 +91,17 @@ describe "Gem::Micro::Source, for a non existing index" do
     File.should.exist @source.index_file
     Marshal.load(File.read(@source.index_file)).should.be.instance_of Array
   end
+  
+  it "should update! if the #specs are accessed but the index_file doesn't exist yet" do
+    # make sure the fixture is in place
+    Gem::Micro::Downloader.stubs(:get)
+    FileUtils.cp(fixture('specs.4.8.gz'), tmpdir)
+    @source.update!
+    
+    @source.stubs(:exist?).returns(false)
+    @source.expects(:update!)
+    @source.specs
+  end
 end
 
 describe "Gem::Micro::Source, for an existing index" do

@@ -75,7 +75,11 @@ module Gem
       
       # Loads and returns an array of all gem names and versions.
       def specs
-        @specs ||= Marshal.load(File.read(index_file))
+        unless @specs
+          update! unless exist?
+          @specs = Marshal.load(File.read(index_file))
+        end
+        @specs
       end
       
       # Returns a gem name and it's version matching the given +name+ and

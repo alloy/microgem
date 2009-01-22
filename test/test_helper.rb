@@ -6,7 +6,6 @@ TMP_PATH = File.expand_path('../../tmp', __FILE__)
 
 # Copy the fixtures to Gem::Micro::Config.gem_home
 c = Gem::Micro::Config
-FileUtils.mkdir_p(c.gem_home) unless File.exist?(c.gem_home)
 c.sources.each do |hostname|
   unless File.exist?(File.join(c.gem_home, hostname))
     FileUtils.cp File.join(FIXTURE_PATH, hostname), c.gem_home
@@ -26,6 +25,10 @@ class Test::Unit::TestCase
   
   def fixture(name)
     File.join(FIXTURE_PATH, name)
+  end
+  
+  def gem_spec_fixture(name, version)
+    Marshal.load(File.read(fixture("#{name}-#{version}.gemspec.marshal")))
   end
 end
 

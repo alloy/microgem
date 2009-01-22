@@ -19,17 +19,7 @@ module Gem
     # required version is `0' then the latest version is used.
     def gem_spec
       if @gem_spec.nil?
-        gem_specs = Micro.source_index.gem_specs(name)
-        
-        @gem_spec = if @version_requirements.version.any?
-          gem_specs.last
-        else
-          gem_specs.find do |gem_spec|
-            gem_spec.version == @version_requirements.version
-          end
-        end
-        
-        unless @gem_spec
+        unless @gem_spec = Micro::Source.gem_spec(@name, @version_requirements.version)
           raise Micro::GemSpecMissingError, "Unable to locate Gem::Specification for Gem::Dependency `#{self}'"
         end
       end

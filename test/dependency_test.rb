@@ -6,12 +6,12 @@ class Gem::Dependency
   alias_method :meet_requirements?, :meets_requirements?
 end
 
-xdescribe "Gem::Dependency" do
-  # def setup
-  #   gem_spec = Gem::Micro.source_index.gem_specs('rails').last
-  #   @dependencies = gem_spec.dependencies
-  #   @dependency = @dependencies.find { |d| d.name == 'rake' }
-  # end
+describe "Gem::Dependency" do
+  def setup
+    gem_spec = gem_spec_fixture('rails', '2.1.1')
+    @dependencies = gem_spec.dependencies
+    @dependency = @dependencies.find { |d| d.name == 'rake' }
+  end
   
   it "should return its version requirements" do
     @dependency.version_requirements.should == Gem::Requirement[:requirements => [[">=", Gem::Version[:version => '0.8.1']]]]
@@ -24,23 +24,13 @@ xdescribe "Gem::Dependency" do
   end
   
   it "should return its gem spec matching the required version" do
-    @dependency.gem_spec.should == Gem::Micro.source_index.gem_specs('rake').last
-  end
-  
-  it "should return the latest gem spec if the required version is `0'" do
-    gem_spec = Gem::Micro.source_index.gem_specs('rails').first # this has: rake >= 0
-    @dependencies = gem_spec.dependencies
-    @dependency = @dependencies.find { |d| d.name == 'rake' }
-    
-    @dependency.gem_spec.should == Gem::Micro.source_index.gem_specs('rake').last
+    rake = gem_spec_fixture('rake', '0.8.1')
+    Gem::Micro::Source.expects(:gem_spec).with('rake', @dependency.version_requirements.version).returns(rake)
+    @dependency.gem_spec.should == rake
   end
   
   it "should raise a Gem::Micro::GemSpecMissingError if the gem spec for this dependency can't be found" do
-    # this has a dependency on a gem that can't be located in the source index
-    gem_spec = Gem::Micro.source_index.gem_specs('test-spec-mock').first
-    @dependencies = gem_spec.dependencies
-    @dependency = @dependencies.find { |d| d.name == 'non-existing-gem-for-sure' }
-    
+    Gem::Micro::Source.stubs(:gem_spec).returns(nil)
     lambda { @dependency.gem_spec }.should.raise Gem::Micro::GemSpecMissingError
   end
   

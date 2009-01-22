@@ -6,7 +6,7 @@ describe "Gem::Micro::Installer, in general" do
   include Gem::Micro::Utils
   
   def setup
-    @gem_spec = Marshal.load(File.read(fixture('rake-0.8.1.gemspec.marshal')))
+    @gem_spec = gem_spec_fixture('rake', '0.8.1')
     @source = Gem::Micro::Source.new('gems.github.com', tmpdir)
     @gem_spec.source = @source
     @installer = Gem::Micro::Installer.new(@gem_spec)
@@ -40,6 +40,16 @@ describe "Gem::Micro::Installer, in general" do
       File.join(@installer.work_dir, 'data.tar.gz')
   end
   
+  it "should return the path to the gems metadata file in the temporary directory" do
+    @installer.metadata_file.should ==
+      File.join(@installer.work_dir, 'metadata')
+  end
+  
+  it "should return the path to the gems metadata archive in the temporary directory" do
+    @installer.metadata_archive_file.should ==
+      File.join(@installer.work_dir, 'metadata.gz')
+  end
+  
   it "should download the gem to the work directory" do
     Gem::Micro::Downloader.expects(:get).with(@installer.url, @installer.gem_file)
     @installer.download
@@ -49,6 +59,14 @@ describe "Gem::Micro::Installer, in general" do
     @installer.stubs(:gem_file).returns(fixture('rake-0.8.1.gem'))
     @installer.unpack
     File.should.exist File.join(@installer.work_dir, 'data', 'README')
+  end
+  
+  it "should reload the Gem::Specification from the metadata_file" do
+    @installer.stubs(:gem_file).returns(fixture('rake-0.8.1.gem'))
+    @installer.unpack
+    
+    @installer.load_full_spec!
+    @installer.gem_spec.executables.should == %w{ rake }
   end
   
   it "should return the path to the Ruby `.gemspec' file" do
@@ -70,10 +88,14 @@ describe "Gem::Micro::Installer, in general" do
   
   # FIXME: The marshalled gemspecs don't contain all data, we need to get this
   # from the metadata.tar.gz archive in the gem.
-  xit "should create bin wrappers for each executable" do
+  it "should create bin wrappers for each executable" do
     emitter = Gem::Micro::BinWrapperEmitter.new('rake', 'rake')
     Gem::Micro::BinWrapperEmitter.expects(:new).with('rake', 'rake').returns(emitter)
     emitter.expects(:create_bin_wrapper!)
+    
+    @installer.stubs(:gem_file).returns(fixture('rake-0.8.1.gem'))
+    @installer.unpack
+    @installer.load_full_spec!
     
     @installer.create_bin_wrappers!
   end
@@ -85,24 +107,28 @@ describe "Gem::Micro::Installer.install" do
     @installer = Gem::Micro::Installer.new(@gem_spec)
     @installer.stubs(:download)
     @installer.stubs(:unpack)
+    @installer.stubs(:load_full_spec!)
     @installer.stubs(:create_ruby_gemspec!)
     @installer.stubs(:create_bin_wrappers!)
     @installer.stubs(:replace)
   end
   
-  xit "should install its dependencies that are not installed yet" do
+  it "should install its dependencies that are not installed yet" do
     #Gem::Micro::Source.expects(:gem_spec)
     
     @gem_spec = Marshal.load(File.read(fixture('rails-2.1.1.gemspec.marshal')))
     @installer.instance_variable_set(:@gem_spec, @gem_spec)
     
-    Gem::Micro.stubs(:gem_paths).returns(fixture('gems'))
+    Gem::Micro::Config.stubs(:gems_path).returns(fixture('gems'))
     
     @gem_spec.dependencies.each do |dep|
+      dep_gem_spec = mock('Dependency gem spec mock')
+      Gem::Micro::Source.stubs(:gem_spec).with(dep.name, dep.version_requirements.version).returns(dep_gem_spec)
+      
       if dep.name == 'rake'
-        dep.gem_spec.expects(:install!).never
+        dep_gem_spec.expects(:install!).never
       else
-        dep.gem_spec.expects(:install!).once
+        dep_gem_spec.expects(:install!).once
       end
     end
     
@@ -116,6 +142,11 @@ describe "Gem::Micro::Installer.install" do
   
   it "should unpack the gem" do
     @installer.expects(:unpack)
+    @installer.install!
+  end
+  
+  it "should load the full gem spec" do
+    @installer.expects(:load_full_spec!)
     @installer.install!
   end
   
@@ -143,6 +174,7 @@ describe "Gem::Micro::Installer.install" do
     File.expects(:exist?).with(@installer.install_path).returns(true)
     @installer.expects(:download).never
     @installer.expects(:unpack).never
+    @installer.expects(:load_full_spec!).never
     @installer.expects(:replace).never
     @installer.expects(:create_bin_wrappers!).never
     @installer.expects(:create_ruby_gemspec!).never
@@ -155,6 +187,7 @@ describe "Gem::Micro::Installer.install" do
     
     @installer.expects(:download).times(1)
     @installer.expects(:unpack).times(1)
+    @installer.expects(:load_full_spec!).times(1)
     @installer.expects(:replace).times(2)
     @installer.expects(:create_bin_wrappers!).times(1)
     @installer.expects(:create_ruby_gemspec!).times(1)

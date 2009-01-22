@@ -44,5 +44,8 @@ describe "Gem::Specification" do
   end
   
   xit "should load from a `quick' spec and retrieve the larger from the gems metadata.tar.gz" do
+    @gem_spec.load_full_spec!
+    @gem_spec.should.be.loaded
+    @gem_spec.
   end
 end

@@ -3,6 +3,8 @@ module Gem
     class Installer
       include Utils
       
+      attr_reader :gem_spec
+      
       def initialize(gem_spec)
         @gem_spec = gem_spec
       end
@@ -44,6 +46,14 @@ module Gem
         "#{data_dir}.tar.gz"
       end
       
+      def metadata_file
+        File.join(work_dir, 'metadata')
+      end
+      
+      def metadata_archive_file
+        "#{metadata_file}.gz"
+      end
+      
       # Returns the full path to the gems Ruby `.gemspec' file. This file is
       # needed by RubyGems to find the gem.
       def ruby_gemspec_file
@@ -79,6 +89,11 @@ module Gem
         Unpacker.tar(data_file, data_dir, true)
       end
       
+      def load_full_spec!
+        Unpacker.gzip(metadata_archive_file)
+        @gem_spec = YAML.load(File.read(metadata_file))
+      end
+      
       # Creates the Ruby `.gemspec' used by RubyGems to find a gem at
       # ruby_gemspec_file.
       def create_ruby_gemspec!
@@ -105,6 +120,8 @@ module Gem
           log(:info, "Installing `#{@gem_spec}'")
           download
           unpack
+          
+          load_full_spec!
           
           replace(data_dir, install_path)
           replace(gem_file, gem_cache_file)
