@@ -4,11 +4,14 @@ require 'microgem'
 FIXTURE_PATH = File.expand_path('../fixtures', __FILE__)
 TMP_PATH = File.expand_path('../../tmp', __FILE__)
 
-# load the tests source_index.yaml
-# Gem::SourceIndex.load_from_file(File.join(FIXTURE_PATH, 'source_index.yaml'))
-# Gem::Micro.instance_variable_set(:@source_index, Gem::SourceIndex.instance)
-# 
-# Gem::Micro::Config[:install_dir] = '/path/to/download/dir'
+# Copy the fixtures to Gem::Micro::Config.gem_home
+c = Gem::Micro::Config
+FileUtils.mkdir_p(c.gem_home) unless File.exist?(c.gem_home)
+c.sources.each do |hostname|
+  unless File.exist?(File.join(c.gem_home, hostname))
+    FileUtils.cp File.join(FIXTURE_PATH, hostname), c.gem_home
+  end
+end
 
 # silence the logger
 module Gem::Micro::Utils
