@@ -17,7 +17,10 @@ describe "Gem::Micro::Config" do
   
   it "should return the path to the real rubygems gem_home in production mode" do
     ENV['PRODUCTION'] = 'true'
-    config.gem_home.should == rubygems_gem_paths.first
+    path = rubygems_gem_paths.first
+    
+    Gem::Micro::Utils.expects(:ensure_dir).with(path).returns(path)
+    config.gem_home.should == path
   end
   
   it "should return a list of the available sources" do
@@ -25,15 +28,21 @@ describe "Gem::Micro::Config" do
   end
   
   it "should return the path to the gems path" do
-    config.gems_path.should == File.join(config.gem_home, 'gems')
+    path = File.join(config.gem_home, 'gems')
+    Gem::Micro::Utils.expects(:ensure_dir).with(path).returns(path)
+    config.gems_path.should == path
   end
   
   it "should return the path to the specifications path" do
-    config.specifications_path.should == File.join(config.gem_home, 'specifications')
+    path = File.join(config.gem_home, 'specifications')
+    Gem::Micro::Utils.expects(:ensure_dir).with(path).returns(path)
+    config.specifications_path.should == path
   end
   
   it "should return the path to the gem cache path" do
-    config.cache_path.should == File.join(config.gem_home, 'cache')
+    path = File.join(config.gem_home, 'cache')
+    Gem::Micro::Utils.expects(:ensure_dir).with(path).returns(path)
+    config.cache_path.should == path
   end
   
   it "should return the log_level" do

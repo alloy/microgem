@@ -15,14 +15,15 @@ module Gem
       #
       # TODO: Add proper Logger.
       def log(level, message)
-        unless level == :debug && Config[:log_level] != :debug
+        unless level == :debug && config.log_level != :debug
           puts "[#{level}] #{message}"
         end
       end
       
-      # Creates a directory if it does not yet exist.
+      # Creates a directory if it does not yet exist and it.
       def ensure_dir(dir)
         FileUtils.mkdir_p(dir) unless File.exist?(dir)
+        dir
       end
       
       # Removes +new_path+, if it exists, before moving +old_path+ to +to+.

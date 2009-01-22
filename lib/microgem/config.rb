@@ -7,29 +7,29 @@ module Gem
         
         # Returns the full path to the Gem home directory.
         def gem_home
-          @gem_home ||= if ENV['PRODUCTION']
+          @gem_home ||= Utils.ensure_dir(if ENV['PRODUCTION']
             sitelibdir = ::Config::CONFIG['sitelibdir']
             version = ::Config::CONFIG['ruby_version']
             File.expand_path("../../Gems/#{version}", sitelibdir)
           else
             File.expand_path("../../../tmp/gem_home", __FILE__)
-          end
+          end)
         end
         
         # Returns the full path to the directory where the installed gems are.
         def gems_path
-          @gems_path ||= File.join(gem_home, 'gems')
+          @gems_path ||= Utils.ensure_dir(File.join(gem_home, 'gems'))
         end
         
         # Returns the full path to the directory where the installed gem specs
         # are.
         def specifications_path
-          @specifications_path ||= File.join(gem_home, 'specifications')
+          @specifications_path ||= Utils.ensure_dir(File.join(gem_home, 'specifications'))
         end
         
         # Returns the full path to the directory where the gems are cached.
         def cache_path
-          @cache_path ||= File.join(gem_home, 'cache')
+          @cache_path ||= Utils.ensure_dir(File.join(gem_home, 'cache'))
         end
         
         # Returns an array of source hosts from which to fetch gems.

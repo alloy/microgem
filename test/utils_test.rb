@@ -9,12 +9,9 @@ describe "Gem::Micro::Utils" do
     remove_microgem_tmpdir!
   end
   
-  xit "should provide a proper logger" do
-  end
-  
-  it "should ensure a directory exists" do
+  it "should ensure a directory exists and return it" do
     dir = File.join(Dir.tmpdir, 'nice', 'and', 'deep')
-    ensure_dir(dir)
+    ensure_dir(dir).should == dir
     File.should.exist dir
   end
   
