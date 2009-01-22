@@ -35,7 +35,7 @@ describe "Unpacker, in simple mode" do
     end.should.raise Gem::Micro::Unpacker::UnpackError
   end
   
-  it "should unpack a file using gunzip" do
+  it "should force unpack a file using gunzip" do
     dir = File.join(tmpdir, 'specs')
     ensure_dir(dir)
     FileUtils.cp(fixture('specs.4.8.gz'), dir)
@@ -43,6 +43,10 @@ describe "Unpacker, in simple mode" do
     Gem::Micro::Unpacker.gzip(File.join(dir, 'specs.4.8.gz'))
     File.should.exist File.join(dir, 'specs.4.8')
     Marshal.load(File.read(File.join(dir, 'specs.4.8'))).should.be.instance_of Array
+    
+    # try again to make sure we are forcing
+    FileUtils.cp(fixture('specs.4.8.gz'), dir)
+    Gem::Micro::Unpacker.gzip(File.join(dir, 'specs.4.8.gz'))
   end
   
   it "should raise an UnpackError if gunzip failed to extract an archive" do

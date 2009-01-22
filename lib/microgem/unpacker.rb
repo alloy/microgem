@@ -25,7 +25,7 @@ module Gem
       #
       # TODO: Make it work _not_ in place.
       def self.gzip(archive)
-        unless system("/usr/bin/gunzip -d '#{archive}' > /dev/null 2>&1")
+        unless system("/usr/bin/gunzip --quiet --force --decompress '#{archive}' > /dev/null 2>&1")
           raise UnpackError, "Failed to unpack `#{archive}' with `gunzip'"
         end
       end
