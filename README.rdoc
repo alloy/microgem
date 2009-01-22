@@ -5,7 +5,7 @@ Ruby implementations such as MacRuby.
 
 See the TODO file for a list of todo's.
 
-=== Installation
+=== Getting started
 
 Get the source:
 
@@ -16,6 +16,8 @@ Install a gem:
   $ ./bin/µgem install rake
 
 Note that unless you set the PRODUCTION environment variable everything is installed in ./tmp.
+
+The currently default sources are rubyforge and github.
 
 === ./bin/µgem banner
   Microgem is an unsophisticated package manager for Ruby.
