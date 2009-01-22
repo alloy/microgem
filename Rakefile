@@ -18,13 +18,9 @@ end
 desc "Setup the development env data"
 task :dev_data => :get_source_index
 
-desc "Cleans the temporary gems install directory"
+desc "Cleans the temporary development directory"
 task :clean do
-  %w{ gems specifications }.each do |gem_dir|
-    dir = File.join(HOME, gem_dir)
-    rm_rf dir
-    mkdir_p dir
-  end
+  rm_rf 'tmp'
 end
 
 YAML_URL = "http://gems.rubyforge.org/yaml.Z"

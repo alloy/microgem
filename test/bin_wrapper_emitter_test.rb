@@ -12,23 +12,23 @@ describe "Gem::Micro::BinWrapperEmitter, in general" do
   end
   
   it "should return the path to where the bin wrapper should be created" do
-    @emitter.bin_wrapper_file.should == File.join(Config::CONFIG['bindir'], 'rake')
+    @emitter.bin_wrapper_file.should == File.join(Gem::Micro::Config.bin_dir, 'rake')
   end
   
   it "should return the path to where the bin wrapper should be created if there's a program prefix" do
     def @emitter.rbconfig(name)
-      { 'bindir' => '/bindir', 'ruby_install_name' => 'macruby' }[name]
+      { 'ruby_install_name' => 'macruby' }[name]
     end
     
-    @emitter.bin_wrapper_file.should == File.join('/bindir', 'macrake')
+    @emitter.bin_wrapper_file.should == File.join(Gem::Micro::Config.bin_dir, 'macrake')
   end
   
   it "should return the path to where the bin wrapper should be created if there's a program suffix" do
     def @emitter.rbconfig(name)
-      { 'bindir' => '/bindir', 'ruby_install_name' => 'ruby19' }[name]
+      { 'ruby_install_name' => 'ruby19' }[name]
     end
     
-    @emitter.bin_wrapper_file.should == File.join('/bindir', 'rake19')
+    @emitter.bin_wrapper_file.should == File.join(Gem::Micro::Config.bin_dir, 'rake19')
   end
   
   it "should create an executable bin wrapper" do

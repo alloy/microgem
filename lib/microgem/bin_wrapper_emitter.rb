@@ -16,7 +16,7 @@ module Gem
       # be installed. With a suffix like `19' the name will be +rake19+.
       def bin_wrapper_file
         rbconfig('ruby_install_name').match /^(.*)ruby(.*)$/
-        File.join(rbconfig('bindir'), "#{$1}#{@bin_name}#{$2}")
+        File.join(Config.bin_dir, "#{$1}#{@bin_name}#{$2}")
       end
       
       # Creates the bin wrapper script in bin_wrapper_file.

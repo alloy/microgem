@@ -22,7 +22,10 @@ module Gem
       
       # Creates a directory if it does not yet exist and it.
       def ensure_dir(dir)
-        FileUtils.mkdir_p(dir) unless File.exist?(dir)
+        unless File.exist?(dir)
+          log(:debug, "Creating directory `#{dir}'")
+          FileUtils.mkdir_p(dir)
+        end
         dir
       end
       
