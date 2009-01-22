@@ -1,15 +1,6 @@
 === TODO (in order of priority)
-* Use the Marshaled specs to first lookup a gem name and version, then retrieve the gemspec:
-  * Available gems (only name and version)
-    * http://gems.rubyforge.org/specs.4.8.gz
-    * http://gems.rubyforge.org/latest_specs.4.8.gz
-  * The actual complete gem specs should apparently be downloaded on a needed basis:
-    * http://gems.rubyforge.org/quick/Marshal.4.8/rake-0.8.1.gemspec.rz
-
-* Store/update source index cache.
 * Add support for <tt>~/.gemrc</tt>
-* Add support for multiple gem servers.
-* Make the source index file tree be updatable via git, maybe host all gem spec YAML files on github…?
+* Add support for configuring multiple gem servers.
 * Remove any unnecessary “complex” code.
 * Bring back to _one_ file, or at least less files if it doesn't harm
   readability.

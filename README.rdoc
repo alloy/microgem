@@ -6,22 +6,16 @@ Ruby implementations such as MacRuby.
 See the TODO file for a list of todo's.
 
 === Installation
-For now there's no _real_ installation yet because it's still in a very early
-stage. To setup the development environment follow these steps.
 
-Create the tmp directories and retrieve the YAML gem source index:
+Get the source:
 
-  $ rake dev_data
+  $ git clone git://github.com/alloy/microgem.git
 
-You can now start using it, however this would mean µgem would use the one big
-YAML source index file. For a speed bump create a file source index:
+Install a gem:
 
-  $ ./bin/µgem cache update
+  $ ./bin/µgem install rake
 
-To be able to use this on a real Ruby installation you can copy the source
-index to its site directory with:
-
-  $ rake copy_source_index_to_site
+Note that unless you set the PRODUCTION environment variable everything is installed in ./tmp.
 
 === ./bin/µgem banner
   Microgem is an unsophisticated package manager for Ruby.
@@ -42,12 +36,7 @@ index to its site directory with:
 
 === Development
 The way it's being developed is in a test and RubyGems data driven manner.
-For instance, there's a test fixture called source_index.yaml. As its name
-implies this is a YAML file which is returned by a gem server, with a listing
-of the gems that are available on said server.  First tests and code are
-written to get the YAML file to load. Then tests for the at _minimum_ needed
-functionality to get nearer to the next TODO item is written. Finally the code
-to make the test green is written.
+We are using the `quick' marshalled specs, so we use those fixtures to run the tests.
 
 === Goals
 * Install gems.
