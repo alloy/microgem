@@ -10,7 +10,11 @@ module Gem
       end
       
       def self.gem_spec(name, version)
-        sources.map { |source| source.gem_spec(name, version) }
+        sources.each do |source|
+          if spec = source.gem_spec(name, version)
+            return spec
+          end
+        end
       end
       
       def self.update!
@@ -82,7 +86,13 @@ module Gem
       
       # Returns a Gem::Specification matching the given +name+ and +version+.
       def gem_spec(name, version)
-        BareSpecification.new(self, name, version).gem_spec
+        if spec = spec(name, version)
+          BareSpecification.new(self, name, spec[1]).gem_spec
+        end
+      end
+      
+      def inspect
+        "<#<Gem::Micro::Source:#{object_id} host=\"#{@host}\" index=\"#{index_file}\">"
       end
     end
   end

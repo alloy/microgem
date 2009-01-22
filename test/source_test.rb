@@ -25,19 +25,14 @@ describe "Gem::Micro::Source, class methods" do
       [File.join(config.gem_home, hosts.first), File.join(config.gem_home, hosts.last)]
   end
   
-  it "should return gem specs from all sources and mark them to know form which source they came" do
+  it "should return matching gem specs from any source and mark them to know from which source they came" do
     rake = ['rake', Gem::Version[:version => '0.8.1']]
     
     rubyforge_bare_spec = mock('Rubyforge')
-    github_bare_spec = mock('Github')
-    
     Gem::Micro::BareSpecification.expects(:new).with(@sources.first, *rake).returns(rubyforge_bare_spec)
-    Gem::Micro::BareSpecification.expects(:new).with(@sources.last, *rake).returns(github_bare_spec)
+    rubyforge_bare_spec.expects(:gem_spec).returns('rake from rubyforge')
     
-    rubyforge_bare_spec.expects(:gem_spec).returns('rubyforge')
-    github_bare_spec.expects(:gem_spec).returns('github')
-    
-    Gem::Micro::Source.gem_spec(*rake).should == %w{ rubyforge github }
+    Gem::Micro::Source.gem_spec(*rake).should == 'rake from rubyforge'
   end
   
   it "should tell the sources to update" do
@@ -111,7 +106,7 @@ describe "Gem::Micro::Source, for an existing index" do
     FileUtils.cp(fixture('specs.4.8.gz'), tmpdir)
     @source.update!
     
-    @rake = ['rake', Gem::Version[:version => '0.8.1']]
+    @rake = ['rake', Gem::Version[:version => '0.8.3']]
   end
   
   def teardown
@@ -123,7 +118,7 @@ describe "Gem::Micro::Source, for an existing index" do
   end
   
   it "should return a spec matching the given name and version" do
-    rake_0_8_1 = @source.spec(*@rake)
+    rake_0_8_1 = @source.spec('rake', Gem::Version[:version => '0.8.1'])
     rake_0_8_1[1].to_s.should == '0.8.1'
   end
   
@@ -138,5 +133,10 @@ describe "Gem::Micro::Source, for an existing index" do
     spec.expects(:gem_spec).returns("The Gem::Specification")
     
     @source.gem_spec(*@rake).should == "The Gem::Specification"
+  end
+  
+  it "should use the latest version if the specified version is any?" do
+    Gem::Micro::BareSpecification.expects(:new).with(@source, *@rake).returns(stub_everything)
+    @source.gem_spec('rake', Gem::Version[:version => '0'])
   end
 end
