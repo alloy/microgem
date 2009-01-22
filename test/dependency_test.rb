@@ -18,9 +18,10 @@ describe "Gem::Dependency" do
   end
   
   it "should return whether or not its requirements are met" do
-    Gem::Micro.stubs(:gem_paths).returns(fixture('gems'))
     @dependencies.find { |d| d.name == 'rake' }.should.meet_requirements
-    @dependencies.find { |d| d.name == 'activeresource' }.should.not.meet_requirements
+    
+    Gem::Micro.stubs(:installed_gem_dirnames).with('rake').returns([])
+    @dependencies.find { |d| d.name == 'rake' }.should.not.meet_requirements
   end
   
   it "should return its gem spec matching the required version" do

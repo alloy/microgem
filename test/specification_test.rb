@@ -42,10 +42,4 @@ describe "Gem::Specification" do
   it "should emit itself as Ruby code" do
     @gem_spec.to_ruby.should == Gem::Micro::SpecificationEmitter.new(@gem_spec).to_ruby
   end
-  
-  xit "should load from a `quick' spec and retrieve the larger from the gems metadata.tar.gz" do
-    @gem_spec.load_full_spec!
-    @gem_spec.should.be.loaded
-    @gem_spec.
-  end
 end
