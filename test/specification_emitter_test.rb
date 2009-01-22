@@ -52,6 +52,7 @@ describe "Gem::Micro::SpecificationEmitter" do
     set_ivar('source', 'gems.rubyforge.org')
     set_ivar('version', '0.8.1')
     set_ivar('dependencies', [])
+    set_ivar('new_platform', 'ruby')
     set_ivar('specification_version', '2')
     set_ivar('required_rubygems_version', '0')
     keys = @emitter.gem_spec_variables.map { |k,_| k }
@@ -61,6 +62,7 @@ describe "Gem::Micro::SpecificationEmitter" do
     keys.should.not.include 'source'
     keys.should.not.include 'version'
     keys.should.not.include 'dependencies'
+    keys.should.not.include 'new_platform'
     keys.should.not.include 'specification_version'
     keys.should.not.include 'required_rubygems_version'
   end
@@ -83,21 +85,26 @@ describe "Gem::Micro::SpecificationEmitter" do
     @emitter.to_ruby.should.include expected
   end
   
-  xit "should generate the proper Ruby code for a Gem::Dependency" do
-    @gem_spec = Gem::Micro.source_index.gem_specs('rails').last
+  it "should generate the proper Ruby code for a Gem::Dependency" do
+    @gem_spec = gem_spec_fixture('rails', '2.1.1')
     @emitter = Gem::Micro::SpecificationEmitter.new(@gem_spec)
     
     rake_dependency = 's.add_dependency("rake", [">= 0.8.1"])'
     @emitter.to_ruby.should.include rake_dependency
   end
   
-  %w{ rake-0.8.1 rails-2.1.1 }.each do |gem_name|
+  # For these we need to download the specific gems their metadata yaml files
+  [['rake', '0.8.1'], ['rails', '2.1.1']].each do |gem_name, gem_version|
     xit "should return a representation of the Ruby #{gem_name} gemspec, which is accepted by RubyGems" do
       begin
-        @gem_spec = Gem::Micro.source_index.gem_specs(gem_name.sub(/-[\d\.]+$/, '')).last
+        gemspec_file = "#{gem_name}-#{gem_version}.gemspec"
+        
+        @gem_spec = YAML.load(File.read(fixture("#{gemspec_file}.full")))
         @emitter = Gem::Micro::SpecificationEmitter.new(@gem_spec)
         
-        spec_file = File.join(TMP_PATH, "#{gem_name}.gemspec.rb")
+        @gem_spec.instance_variable_set(:@rubygems_version, Gem::Version[:version => '1.3.1'])
+        spec_file = File.join(TMP_PATH, "#{gemspec_file}.rb")
+        
         File.open(spec_file, 'w') do |f|
           f << %{
             require 'rubygems'
@@ -105,15 +112,15 @@ describe "Gem::Micro::SpecificationEmitter" do
             spec = #{@emitter.to_ruby}
             
             # If the dynamically created one equals the fixture we quit without error
-            exit 1 unless spec == eval(File.read("#{fixture("#{gem_name}.gemspec")}"))
+            exit 1 unless spec == eval(File.read("#{fixture(gemspec_file)}"))
           }
         end
         
         # debugging
         unless system("ruby '#{spec_file}'")
-          output_file = File.join(TMP_PATH, "#{gem_name}.gemspec")
+          output_file = File.join(TMP_PATH, gemspec_file)
           File.open(output_file, 'w') { |f| f << @emitter.to_ruby }
-          puts `diff -y '#{fixture("#{gem_name}.gemspec")}' '#{output_file}'`
+          puts `diff -y '#{fixture(gemspec_file)}' '#{output_file}'`
         end
         
         assert system("ruby '#{spec_file}'")

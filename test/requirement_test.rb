@@ -7,8 +7,8 @@ describe "Gem::Requirement" do
     @requirement = Gem::Requirement[:requirements => [['>=', Gem::Version[:version => '0.8.1']]]]
   end
   
-  xit "should be equal to one in the gem specs dependencies" do
-    gem_spec = Gem::Micro.source_index.gem_specs('rails').last
+  it "should be equal to one in the gem specs dependencies" do
+    gem_spec = gem_spec_fixture('rails', '2.1.1')
     version_requirement = gem_spec.dependencies.first.version_requirements
     
     version_requirement.should == @requirement
@@ -24,10 +24,6 @@ describe "Gem::Requirement" do
   
   it "should not be equal if the versions aren't equal" do
     Gem::Requirement[:requirements => [['>=', Gem::Version[:version => '9.8.7']]]].should.not == @requirement
-  end
-  
-  xit "should return its highest requirement" do
-    # we haven't run into these... yet
   end
   
   it "should return its highest required version" do

@@ -7,6 +7,7 @@ module Gem
         'source',
         'version',
         'dependencies',
+        'new_platform',
         'specification_version',
         'required_rubygems_version'
       ]
