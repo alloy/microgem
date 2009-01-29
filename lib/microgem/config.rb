@@ -17,6 +17,7 @@ module Gem
           end)
         end
         
+        # Returns the full path to the bin directory.
         def bin_dir
           @bin_dir ||= if ENV['PRODUCTION']
             if macruby?

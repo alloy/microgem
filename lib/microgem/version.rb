@@ -17,10 +17,12 @@ module Gem
     
     include Comparable
     
+    # Compare two Version instances.
     def <=>(other)
       version <=> other.version
     end
     
+    # Returns whether or not any version will do.
     def any?
       version == 0 || version == '0'
     end

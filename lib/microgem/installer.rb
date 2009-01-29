@@ -89,6 +89,8 @@ module Gem
         Unpacker.tar(data_file, data_dir, true)
       end
       
+      # Loads the full metadata gemspec from the unpacked gem and returns the
+      # Gem::Specification instance.
       def load_full_spec!
         Unpacker.gzip(metadata_archive_file)
         @gem_spec = YAML.load(File.read(metadata_file))
@@ -109,8 +111,8 @@ module Gem
       # Installs all dependencies and then the gem itself. Skips installation
       # if after installing the dependencies the gem is already installed.
       #
-      # You can +force+ the gem to be installed even if the gem is already
-      # installed.
+      # You can force the gem to be installed even if the gem is already
+      # installed by setting <tt>Config.force?</tt> to true.
       def install!
         install_dependencies!
         

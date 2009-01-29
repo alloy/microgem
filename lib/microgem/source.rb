@@ -9,6 +9,8 @@ module Gem
         end
       end
       
+      # Returns a gemspec from any of the sources matching the given +name+ and
+      # +version+.
       def self.gem_spec(name, version)
         sources.each do |source|
           if spec = source.gem_spec(name, version)
@@ -17,6 +19,7 @@ module Gem
         end
       end
       
+      # Calls #update! on all sources.
       def self.update!
         sources.each { |source| source.update! }
       end

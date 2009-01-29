@@ -21,6 +21,8 @@ module Gem
     class << self
       include Utils
       
+      # The main +run+ method which is used by the µgem script to perform the
+      # actions specified by the user.
       def run(arguments)
         parser = OptionsParser.new
         parser.parse(arguments)
