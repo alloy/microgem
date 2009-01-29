@@ -1,6 +1,11 @@
 #!/usr/bin/env ruby
 
-$:.unshift File.expand_path('../../lib', __FILE__)
-require 'microgem'
-
-Gem::Micro.run(ARGV)
+if defined?(Gem)
+  # Hack to make sure we don't run with RubyGems loaded
+  exec "#{File.expand_path(__FILE__)} #{ARGV.join(' ')}"
+else
+  $:.unshift File.expand_path('../../lib', __FILE__)
+  require 'microgem'
+  
+  Gem::Micro.run(ARGV)
+end
