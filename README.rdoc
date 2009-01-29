@@ -5,21 +5,11 @@ Ruby implementations such as MacRuby.
 
 See the TODO file for a list of todo's.
 
-=== Getting started
+=== Installation
 
-Get the source:
+  $ sudo gem install alloy-microgem -s http://gems.github.com
 
-  $ git clone git://github.com/alloy/microgem.git
-
-Install a gem:
-
-  $ ./bin/µgem install rake
-
-Note that unless you set the PRODUCTION environment variable everything is installed in ./tmp.
-
-The currently default sources are rubyforge and github.
-
-=== ./bin/µgem banner
+=== µgem banner
   Microgem is an unsophisticated package manager for Ruby.
   And the first commandline utility to start with a multibyte character; µ
 
@@ -34,11 +24,28 @@ The currently default sources are rubyforge and github.
     Options:
           --debug                      Raises the log level to `debug'
           --force                      Forces a command
+          --simple-downloader          Use curl to download files instead of Net::HTTP
+          --simple-unpacker            Use external tools to unpack archives instead of Zlib
+          --simple                     Enables --simple-downloader and --simple-unpacker
           --help                       Show help information
 
 === Development
 The way it's being developed is in a test and RubyGems data driven manner.
 We are using the `quick' marshalled specs, so we use those fixtures to run the tests.
+
+==== Getting started
+
+Get the source:
+
+  $ git clone git://github.com/alloy/microgem.git
+
+Install a gem:
+
+  $ ./bin/µgem install rake
+
+Note that unless you set the PRODUCTION environment variable everything is installed in ./tmp.
+
+The current default sources are rubyforge and github.
 
 === Goals
 * Install gems.
