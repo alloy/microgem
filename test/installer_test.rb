@@ -182,8 +182,9 @@ describe "Gem::Micro::Installer.install" do
     @installer.install!
   end
   
-  it "should _not_ skip the actual installation of the gem _if_ after installing the dependencies it exists" do
+  it "should _not_ skip the actual installation of the gem _if_ Config.force? returns `true'" do
     File.stubs(:exist?).returns(true)
+    Gem::Micro::Config.stubs(:force?).returns(true)
     
     @installer.expects(:download).times(1)
     @installer.expects(:unpack).times(1)
@@ -192,6 +193,6 @@ describe "Gem::Micro::Installer.install" do
     @installer.expects(:create_bin_wrappers!).times(1)
     @installer.expects(:create_ruby_gemspec!).times(1)
     
-    @installer.install!(true)
+    @installer.install!
   end
 end

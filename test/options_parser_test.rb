@@ -19,6 +19,15 @@ describe "Gem::Micro::Options, with options" do
     @parser.parse(%w{ install rake --simple-downloader }).options.should == { :simple_downloader => true }
   end
   
+  it "should enable the simple unpacker" do
+    @parser.parse(%w{ install rake --simple-unpacker }).options.should == { :simple_unpacker => true }
+  end
+  
+  it "should enable the simple downloader and unpacker" do
+    @parser.parse(%w{ install rake --simple }).options.should ==
+      { :simple_downloader => true, :simple_unpacker => true }
+  end
+  
   it "should return the command and its arguments" do
     @parser.parse(%w{ install rake --debug })
     @parser.command.should == 'install'

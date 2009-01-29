@@ -5,15 +5,17 @@ require File.expand_path('../test_helper', __FILE__)
 describe "Gem::Micro::Config" do
   include Gem::Micro::Utils
   
-  def teardown
-    ENV.delete('PRODUCTION')
+  def setup
     config.instance_variable_set(:@gem_home, nil)
     config.instance_variable_set(:@bin_dir, nil)
+    ENV.delete('PRODUCTION')
+  end
+  
+  def teardown
     config.merge! :log_level => :info, :force => false, :simple_downloader => false, :simple_unpacker => false
   end
   
   it "should return the path to the development gem_home in development mode" do
-    config.instance_variable_set(:@gem_home, nil)
     path = File.expand_path("../../tmp/gem_home", __FILE__)
     
     config.expects(:ensure_dir).with(path).returns(path)
@@ -35,9 +37,37 @@ describe "Gem::Micro::Config" do
     config.bin_dir.should == path
   end
   
-  it "should return the path to the bin dir in production mode which should exist" do
+  it "should return the path to the bin dir in production mode on a regular Ruby install" do
     ENV['PRODUCTION'] = 'true'
+    
+    config.stubs(:macruby?).returns(false)
+    config.stubs(:osx_default_ruby?).returns(false)
+    
     path = Config::CONFIG['bindir']
+    
+    config.expects(:ensure_dir).never
+    config.bin_dir.should == path
+  end
+  
+  it "should return the path to the bin dir in production mode on a default Apple Ruby install" do
+    ENV['PRODUCTION'] = 'true'
+    
+    config.stubs(:macruby?).returns(false)
+    config.stubs(:osx_default_ruby?).returns(true)
+    
+    path = "/usr/bin"
+    
+    config.expects(:ensure_dir).never
+    config.bin_dir.should == path
+  end
+  
+  it "should return the path to the bin dir in production mode on MacRuby install" do
+    ENV['PRODUCTION'] = 'true'
+    
+    config.stubs(:macruby?).returns(true)
+    config.stubs(:osx_default_ruby?).returns(true)
+    
+    path = "/usr/local/bin"
     
     config.expects(:ensure_dir).never
     config.bin_dir.should == path

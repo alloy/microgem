@@ -36,6 +36,14 @@ module Gem
             @options[:simple_downloader] = true
           end
           
+          opts.on("--simple-unpacker", "Use external tools to unpack archives instead of Zlib") do
+            @options[:simple_unpacker] = true
+          end
+          
+          opts.on("--simple", "Enables --simple-downloader and --simple-unpacker") do
+            @options[:simple_downloader] = @options[:simple_unpacker] = true
+          end
+          
           opts.on("--help", "Show help information") do
             puts opts
             exit

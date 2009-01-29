@@ -19,7 +19,13 @@ module Gem
         
         def bin_dir
           @bin_dir ||= if ENV['PRODUCTION']
-            ::Config::CONFIG['bindir']
+            if macruby?
+              '/usr/local/bin'
+            elsif osx_default_ruby?
+              '/usr/bin'
+            else
+              ::Config::CONFIG['bindir']
+            end
           else
             ensure_dir(File.expand_path("../../../tmp/bin", __FILE__))
           end
@@ -72,6 +78,16 @@ module Gem
         # Merges the values from the +options+ hash.
         def merge!(options)
           options.each { |k,v| send("#{k}=", v) }
+        end
+        
+        private
+        
+        def osx_default_ruby?
+          defined? RUBY_FRAMEWORK_VERSION
+        end
+        
+        def macruby?
+          defined? MACRUBY_VERSION
         end
       end
     end

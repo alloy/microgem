@@ -21,8 +21,8 @@ module Gem
     end
     
     # Installs the gem for this Specification.
-    def install!(force = false)
-      Micro::Installer.new(self).install!(force)
+    def install!
+      Micro::Installer.new(self).install!
     end
     
     def inspect
