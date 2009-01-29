@@ -14,6 +14,6 @@ Gem::Specification.new do |spec|
   spec.files = Dir['lib/**/*.rb', 'bin/*', '[A-Z]*', 'test/**/*']
   
   spec.has_rdoc = true
-  spec.extra_rdoc_files = %w{ README.rdoc LICENSE }
-  spec.rdoc_options << "--charset=utf-8"
+  spec.extra_rdoc_files = %w{ README.rdoc LICENSE TODO }
+  spec.rdoc_options << '--charset=utf-8' << '--main' << 'README.rdoc'
 end
