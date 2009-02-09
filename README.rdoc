@@ -40,10 +40,6 @@ Install the remote gem:
           --simple                     Enables --simple-downloader and --simple-unpacker
           --help                       Show help information
 
-=== Development
-The way it's being developed is in a test and RubyGems data driven manner.
-We are using the `quick' marshalled specs, so we use those fixtures to run the tests.
-
 ==== Getting started
 
 Get the source:
@@ -57,6 +53,14 @@ Install a gem:
 Note that unless you set the PRODUCTION environment variable everything is installed in ./tmp.
 
 The current default sources are rubyforge and github.
+
+=== Limitations
+There are a lot of limitations currently compared to RubyGems. The most important ones are:
+* Does not install C extensions yet.
+
+=== Development
+The way it's being developed is in a test and RubyGems data driven manner.
+We are using the `quick' marshalled specs, so we use those fixtures to run the tests.
 
 === Goals
 * Install gems.
