@@ -7,7 +7,18 @@ See the TODO file for a list of todo's.
 
 === Installation
 
+==== On Ruby with working RubyGems
+
   $ sudo gem install alloy-microgem -s http://gems.github.com
+
+=== On Ruby without working RubyGems (eg MacRuby)
+
+Get source:
+  $ git clone git://github.com/alloy/microgem.git
+  $ cd microgem
+
+Install the remote gem:
+  $ sudo env PRODUCTION=true macruby ./bin/µgem install alloy-microgem --simple --debug
 
 === µgem banner
   Microgem is an unsophisticated package manager for Ruby.
