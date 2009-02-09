@@ -16,9 +16,13 @@ end
 
 directory 'pkg'
 
-desc "Builds and installs the gem"
-task :install => :pkg do
-  # TODO: install gem with µgem, this is why we don't use the rake gem tasks.
+desc "Builds the gem"
+task :build => :pkg do
   sh 'gem build microgem.gemspec && mv microgem-*.gem pkg/'
+end
+
+desc "Installs the gem"
+task :install => :build do
+  # TODO: install gem with µgem, this is why we don't use the rake gem tasks.
   sh 'cd pkg && sudo gem install microgem-*.gem'
 end
