@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name = 'microgem'
-  spec.version = '0.1'
+  spec.version = '0.1.1'
   
   spec.author = 'Eloy Duran'
   spec.email = 'eloy.de.enige@gmail.com'
