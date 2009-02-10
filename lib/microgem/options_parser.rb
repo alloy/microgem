@@ -3,6 +3,8 @@ require 'optparse'
 module Gem
   module Micro
     class OptionsParser
+      EXECUTABLE = File.basename($0)
+      
       attr_accessor :command, :arguments, :options
       
       def initialize
@@ -13,14 +15,15 @@ module Gem
         @parser ||= OptionParser.new do |opts|
           opts.banner =  "Microgem is an unsophisticated package manager for Ruby."
           opts.separator "And the first commandline utility to start with a multibyte character; µ"
+          opts.separator "Although you apperantly don’t appreciate unicode enough, how lame… ;-)" if EXECUTABLE != 'µgem'
           opts.separator ""
           opts.separator "  Usage:"
-          opts.separator "        µgem [command] [arguments…] [options…]"
+          opts.separator "        #{EXECUTABLE} [command] [arguments…] [options…]"
           opts.separator ""
           opts.separator "  Example:"
-          opts.separator "        µgem install rake"
-          opts.separator "        µgem install rails --force"
-          opts.separator "        µgem cache update --debug"
+          opts.separator "        #{EXECUTABLE} install rake"
+          opts.separator "        #{EXECUTABLE} install rails --force"
+          opts.separator "        #{EXECUTABLE} cache update --debug"
           opts.separator ""
           opts.separator "  Options:"
           

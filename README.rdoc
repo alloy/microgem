@@ -1,9 +1,34 @@
 == MicroGem
+
 The aim of this project is, at first, to create a re-implementation of the
 RubyGems +install+ command, which should be easier to get up and running on
 Ruby implementations such as MacRuby.
 
-See the TODO file for a list of todo's.
+=== What's up with the ‘illegal character’ ?
+
+If a character is not in the ASCII table, it doesn’t make it illegal or however
+people are calling them nowadays. That’s problem it was trying to draw
+attention to. I see people normalizing these types of characters in places
+where unicode is very very valid. Just because it looks like a `u' does _not_
+make it one…
+
+But after multiple request it was decided to add an executable without a
+multibyte character; ugem.
+
+If you are hardcore, you can get the `µ' character on OS X with: ⌥ + M (that’s the ALT key…)
+
+==== Tell me more, more!
+
+Mu (uppercase Μ, lowercase μ; Greek: Μι or Μυ [mi]) is the 12th letter of the
+Greek alphabet. In Unicode, the upper and lower case mu are encoded at U+039C
+and U+03BC respectively. In ISO 8859-7 they are encoded at CCHEX and ECHEX.
+The micro sign or micron is considered a distinct character from the Greek
+alphabet letter by Unicode for historical reasons (although it is a homoglyph)
+
+Because µ is the abbreviation for the Metric System prefix micro-, the symbol
+is used in many word plays about the field of micro-computing.
+
+So to recap, it’s ‘micro’ in MicroGem, got it?
 
 === Installation
 
@@ -21,6 +46,7 @@ Install the remote gem:
   $ sudo env PRODUCTION=true macruby ./bin/µgem install alloy-microgem --simple --debug
 
 === µgem banner
+
   Microgem is an unsophisticated package manager for Ruby.
   And the first commandline utility to start with a multibyte character; µ
 
@@ -55,14 +81,17 @@ Note that unless you set the PRODUCTION environment variable everything is insta
 The current default sources are rubyforge and github.
 
 === Limitations
+
 There are a lot of limitations currently compared to RubyGems. The most important ones are:
 * Does not install C extensions yet.
 
 === Development
+
 The way it's being developed is in a test and RubyGems data driven manner.
 We are using the `quick' marshalled specs, so we use those fixtures to run the tests.
 
 === Goals
+
 * Install gems.
 * Small.
 * Test driven.
