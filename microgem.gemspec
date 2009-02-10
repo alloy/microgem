@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   }
   
   spec.executables << 'µgem'
-  spec.executables << 'mgem'
+  spec.executables << 'ugem'
   spec.files = Dir['lib/**/*.rb', 'bin/*', '[A-Z]*', 'test/**/*']
   
   spec.has_rdoc = true
