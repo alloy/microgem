@@ -90,6 +90,9 @@ There are a lot of limitations currently compared to RubyGems. The most importan
 The way it's being developed is in a test and RubyGems data driven manner.
 We are using the `quick' marshalled specs, so we use those fixtures to run the tests.
 
+If you encounter an invalid gemspec, RubyGems will warn you about it, then
+please add it to test/regression/gemspecs and send me a pull request.
+
 === Goals
 
 * Install gems.
